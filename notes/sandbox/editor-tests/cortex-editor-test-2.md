@@ -1,7 +1,9 @@
 ---
 title: Cortex editor test
-date: 2026-09-29
+date: 2026-01-15
 tags: [test, editor]
+pinned: true
+source: harness
 ---
 
 ## Lists
