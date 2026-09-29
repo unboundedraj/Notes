@@ -1,5 +1,5 @@
 ---
-title: Cortex editor test (renamed)
+title: "Conflict test — saved in tab A"
 date: 2026-01-15
 tags: [test, editor]
 pinned: true
