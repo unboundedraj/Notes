@@ -36,3 +36,7 @@ def greet(name):
 | ------- | ------ | ----- |
 | Tables  | done   | GFM   |
 |         |        |       |
+
+A claim.[^1]
+
+[^1]: A source.
