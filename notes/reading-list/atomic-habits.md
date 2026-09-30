@@ -31,4 +31,4 @@ This quote encapsulates the book's philosophy: success is about the systems you 
 ## Personal Reflection
 
 Highly recommend for anyone looking to understand behavior change at a deeper level. The book is accessible and filled with actionable tactics. A keeper.
-This was a wonderful book although it gets a bit boring in the middle.
+This was a wonderful book although it gets a bit boring in the middle. Overall great work by James
