@@ -13,6 +13,7 @@ Authentication is the process of verifying *who* is trying to access a system. I
   - *Something you know:* Passwords, PINs, security questions.
   - *Something you have:* Smartphones (for OTPs/push notifications), hardware security keys (FIDO2/WebAuthn).
   - *Something you are:* Fingerprints, facial recognition, iris scans.
+    ---
 
 #### 2. Authorization (AuthZ)
 
