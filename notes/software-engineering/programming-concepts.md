@@ -2,6 +2,7 @@
 title: Programming Concepts
 date: 2026-10-15
 tags: [ascii]
+pinned: true
 ---
 
 ## ASCII Values
