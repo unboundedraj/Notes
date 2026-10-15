@@ -237,9 +237,9 @@ obj . member;
 static_cast<float>(x)
 ```
 
-### Operator Precedence in C++
 
----
+
+## Operator Precedence in C++
 
 **1. Scope Resolution**
 
