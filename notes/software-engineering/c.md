@@ -81,8 +81,11 @@ The names given to a variable are called [**identifiers**](https://www.geeksforg
 - It is case sensitive.
 - The name of the variable should not contain any whitespace and special characters (i.e. #, $, %, \*, etc).
 - We cannot use [**C++ keyword**](https://www.geeksforgeeks.org/cpp/cpp-keywords/) (e.g. float, double, class) as a variable name.
-  ## **C++ Operator Types**
-  C++ operators are classified into **6 types** on the basis of type of operation they perform:
+
+## **C++ Operator Types**
+
+C++ operators are classified into **6 types** on the basis of type of operation they perform:
+
 ## **Arithmetic Operators**
 
 [**Arithmetic operators**](https://www.geeksforgeeks.org/cpp/cpp-arithmetic-operators/) are used to perform arithmetic or mathematical operations on the operands. For example, '**+**' is used for addition.
@@ -184,7 +187,7 @@ int Rectangle::area(int w, int h) {
 ```
 
 3. Accessing Static Class Members  
-Static variables and functions belong to the class itself rather than a specific object instance. They are accessed using the class name and the scope resolution operator.
+ Static variables and functions belong to the class itself rather than a specific object instance. They are accessed using the class name and the scope resolution operator.
 
 ```cpp
 class Counter {
@@ -198,7 +201,6 @@ int Counter::count = 0;
 
 ---
 
-  
 [**sizeof operator**](https://www.geeksforgeeks.org/cpp/cpp-sizeof-operator/) is a unary operator used to compute the size of its operand or variable in bytes. For example,
 
 ```cpp
@@ -235,4 +237,101 @@ obj . member;
 static_cast<float>(x)
 ```
 
+### Operator Precedence in C++
+
 ---
+
+**1. Scope Resolution**
+
+- **Operator:** `::`
+- **Description:** Global scope, namespace, and class scope resolution (Left-to-right).
+
+**2. Postfix (Unary) Operators**
+
+- **Operators:** `++`, `--` (post-increment/decrement), `()`, `[]` (function call and array subscript), `.`, `->` (member access), `typeid`, and casts (`static_cast`, etc.).
+- **Associativity:** Left-to-right.
+
+**3. Prefix (Unary) Operators**
+
+- **Operators:** `++`, `--` (pre-increment/decrement), `+`, `-` (unary plus/minus), `!`, `~` (logical/bitwise NOT), `*`, `&` (dereference/address-of), `sizeof`, `alignof`, `new`, `delete`.
+- **Associativity:** Right-to-left.
+
+**4. Pointer-to-Member Operators**
+
+- **Operators:** `.*`, `->*`
+- **Associativity:** Left-to-right.
+
+**5. Multiplicative Operators**
+
+- **Operators:** `*`, `/`, `%` (multiplication, division, modulo)
+- **Associativity:** Left-to-right.
+
+**6. Additive Operators**
+
+- **Operators:** `+`, `-` (addition and subtraction)
+- **Associativity:** Left-to-right.
+
+**7. Bitwise Shift Operators**
+
+- **Operators:** `<<`, `>>` (shift left and shift right)
+- **Associativity:** Left-to-right.
+
+**8. Three-Way Comparison Operator**
+
+- **Operator:** `<=>` (Spaceship operator, introduced in C++20)
+- **Associativity:** Left-to-right.
+
+**9. Relational Operators**
+
+- **Operators:** `<`, `<=`, `>`, `>=` (less than, less-or-equal, greater than, greater-or-equal)
+- **Associativity:** Left-to-right.
+
+**10. Equality Operators**
+
+- **Operators:** `==`, `!=` (equal to and not equal to)
+- **Associativity:** Left-to-right.
+
+**11. Bitwise AND**
+
+- **Operator:** `&`
+- **Associativity:** Left-to-right.
+
+**12. Bitwise XOR (Exclusive OR)**
+
+- **Operator:** `^`
+- **Associativity:** Left-to-right.
+
+**13. Bitwise OR (Inclusive OR)**
+
+- **Operator:** `|`
+- **Associativity:** Left-to-right.
+
+**14. Logical AND**
+
+- **Operator:** `&&`
+- **Associativity:** Left-to-right.
+
+**15. Logical OR**
+
+- **Operator:** `||`
+- **Associativity:** Left-to-right.
+
+**16. Conditional (Ternary) Operator**
+
+- **Operator:** `?:`
+- **Associativity:** Right-to-left.
+
+**17. Assignment Operators**
+
+- **Operators:** `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `<<=`, `>>=`, `&=`, `^=`, `|=`
+- **Associativity:** Right-to-left.
+
+**18. Throw Operator**
+
+- **Operator:** `throw` (for exception handling)
+- **Associativity:** Right-to-left.
+
+**19. Comma Operator**
+
+- **Operator:** `,` (separates expressions evaluated sequentially)
+- **Associativity:** Left-to-right.
