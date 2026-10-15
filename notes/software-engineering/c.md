@@ -44,11 +44,11 @@ These are the fundamental data types native to the C++ compiler.
 - **Boolean (**`bool`**):** Stores logical values, taking 1 byte of memory. It can only hold `true` (1) or `false` (0). Example: `bool is_valid = true;`
 - **Floating-Point (**`float`**):** Stores single-precision decimal numbers. Typically requires 4 bytes of memory. Example: `float pi = 3.14f;`
 - **Double Floating-Point (**`double`**):** Stores double-precision decimal numbers for higher accuracy. Typically requires 8 bytes of memory. Example: `double precise_pi = 3.14159265;`
-- **Void (**`void`**):** Represents an absence of a value. It is primarily used for functions that do not return any data.  
-  
+- **Void (**`void`**):** Represents an absence of a value. It is primarily used for functions that do not return any data.
+
 *Note on Modifiers:* C++ allows you to modify the size or range of these primitive types using **type modifiers**: `signed`, `unsigned`, `short`, and `long`. For instance, an `unsigned int` only holds positive numbers, effectively doubling its positive range, while a `long long` increases the storage capacity for massive integers.
 
-**2. Derived Data Types:**   
+**2. Derived Data Types:**  
 These types are constructed by modifying or grouping built-in data types.
 
 - **Arrays:** A collection of elements of the same data type stored in contiguous memory locations. Example: `int scores[5] = {90, 85, 92, 88, 95};`
@@ -72,4 +72,12 @@ These are custom data types defined by the programmer to group disparate data to
 **signed:** Allows an integer type to represent both positive and negative values.  
 **unsigned:** Allows an integer type to represent only non-negative values and provides a larger positive range
 
----
+## **Rules For Naming Variable**
+
+The names given to a variable are called [**identifiers**](https://www.geeksforgeeks.org/cpp/cpp-identifiers/). There are some rules for creating these identifiers (names):
+
+- A name can only contain **letters** (A-Z or a-z), **digits** (0-9), and **underscores (\_)**.
+- It should start with a **letter or an underscore only.**
+- It is case sensitive.
+- The name of the variable should not contain any whitespace and special characters (i.e. #, $, %, \*, etc).
+- We cannot use [**C++ keyword**](https://www.geeksforgeeks.org/cpp/cpp-keywords/) (e.g. float, double, class) as a variable name.
