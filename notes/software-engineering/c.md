@@ -82,9 +82,7 @@ The names given to a variable are called [**identifiers**](https://www.geeksforg
 - The name of the variable should not contain any whitespace and special characters (i.e. #, $, %, \*, etc).
 - We cannot use [**C++ keyword**](https://www.geeksforgeeks.org/cpp/cpp-keywords/) (e.g. float, double, class) as a variable name.
   ## **C++ Operator Types**
-
   C++ operators are classified into **6 types** on the basis of type of operation they perform:
-
 ## **Arithmetic Operators**
 
 [**Arithmetic operators**](https://www.geeksforgeeks.org/cpp/cpp-arithmetic-operators/) are used to perform arithmetic or mathematical operations on the operands. For example, '**+**' is used for addition.
