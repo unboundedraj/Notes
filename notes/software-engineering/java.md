@@ -36,7 +36,7 @@ This is the exact entry point of your program analogous to `int main()` in C++. 
 > `main`: The mandatory name of the entry-point method. The JVM is hardcoded to look for a method named `main`.  
 > `String[] args`: Command-line arguments. It accepts an array of strings (similar to `argv` in C++) if you pass arguments via the terminal when launching the program.
 
-### `System.out.println("Hello World!");`
+**System.out.println("Hello World!");**
 
 This line prints text to the console and moves the cursor to a new line (equivalent to `std::cout << "Hello World!" << std::endl;` in C++).
 
@@ -77,7 +77,8 @@ Data types in Java define the kind of data a variable can hold and the memory re
 
 Primitive data types store simple values directly in memory. Java provides eight primitive data types, each with a fixed size and range, which are summarized below:
 
-###   
+
+
 1. `byte`
 
 - **Size &amp; Range:** 8-bit signed integer, with a range from **-128 to 127.**
@@ -147,8 +148,7 @@ Non-primitive data types store references (memory addresses) rather than actual 
 ### 5. Enums (`enum`)
 
 - **What it is:** A special data type used to define collections of fixed, predefined constants (e.g., days of the week like `MONDAY`, `TUESDAY`, or compass directions).
-- **Key Detail:** Enums make code more readable and type-safe compared to using plain integer or string constants, and they can contain fields, constructors, and methods just like regular classes.  
-
+- **Key Detail:** Enums make code more readable and type-safe compared to using plain integer or string constants, and they can contain fields, constructors, and methods just like regular classes.
 
 # **Java Operators**
 
