@@ -47,7 +47,11 @@ These are the fundamental data types native to the C++ compiler.
 - **Double Floating-Point (**`double`**):** Stores double-precision decimal numbers for higher accuracy. Typically requires 8 bytes of memory. Example: `double precise_pi = 3.14159265;`
 - **Void (**`void`**):** Represents an absence of a value. It is primarily used for functions that do not return any data.
 
-*Note on Modifiers:* C++ allows you to modify the size or range of these primitive types using **type modifiers**: `signed`, `unsigned`, `short`, and `long`. For instance, an `unsigned int` only holds positive numbers, effectively doubling its positive range, while a `long long` increases the storage capacity for massive integers.
+> Any decimal literal without a suffix (e.g., `3.14`) is treated as a `double` by the compiler.
+>
+> **Suffixes:** To explicitly make a literal a `float`, you must append an `f` or `F` (e.g., `3.14f`).
+>
+> *Note on Modifiers:* C++ allows you to modify the size or range of these primitive types using **type modifiers**: `signed`, `unsigned`, `short`, and `long`. For instance, an `unsigned int` only holds positive numbers, effectively doubling its positive range, while a `long long` increases the storage capacity for massive integers.
 
 **2. Derived Data Types:**  
 These types are constructed by modifying or grouping built-in data types.
@@ -237,8 +241,6 @@ obj . member;
 (float)x
 static_cast<float>(x)
 ```
-
-
 
 ## Operator Precedence in C++
 
