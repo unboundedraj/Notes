@@ -421,5 +421,8 @@ class Geeks {
 - If a matching case is found, the statements associated with that case are executed.
 - The break statement terminates the switch block and transfers control outside the switch.
 - If break is omitted, execution continues to the next case statements (fall-through).
-- If no case matches the expression value, the default block is executed (if present).
+  - If no case matches the expression value, the default block is executed (if present).
 - After the switch statement finishes execution, control moves to the next statement in the program.
+  ---
+
+> **For declaring methods, Java requires specifying the return type. If omitted, it results in a compilation error.**
