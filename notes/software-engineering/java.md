@@ -77,8 +77,6 @@ Data types in Java define the kind of data a variable can hold and the memory re
 
 Primitive data types store simple values directly in memory. Java provides eight primitive data types, each with a fixed size and range, which are summarized below:
 
-
-
 1. `byte`
 
 - **Size &amp; Range:** 8-bit signed integer, with a range from **-128 to 127.**
@@ -357,3 +355,71 @@ Here is the operator precedence and associativity in Java, organized in a clear,
 - **Operators:** `=`, `+=`, `-=`, `*=`, `/=`, `%=`, etc.
 - **Associativity:** Right-to-left
 - **Description:** Assigns values or performs compound arithmetic assignments. Because they evaluate right-to-left, chained assignments like `a = b = 5;` work correctly.
+
+# **Java - Conditional Statements**
+
+---
+
+### **Java if-else-if ladder**
+
+The if-else-if ladder allows multiple independent conditions to be checked in order. As soon as one condition is true, its block executes, and the rest are skipped.
+
+```java
+import java.util.*;
+
+class Geeks {
+    public static void main(String args[])
+    {
+        int i = 20;
+
+        if (i == 10)
+            System.out.println("i is 10");
+        else if (i == 15)
+            System.out.println("i is 15");
+        else if (i == 20)
+            System.out.println("i is 20");
+        else
+            System.out.println("i is not present");
+    }
+}
+```
+
+### **Java Switch Case**
+
+The [**switch**](https://www.geeksforgeeks.org/java/switch-statement-in-java/) statement is a multiway branch statement. It provides an easy way to dispatch execution to different parts of code based on the value of the expression. 
+
+```java
+
+import java.io.*;
+
+class Geeks {
+    public static void main(String[] args)
+    {
+        int num = 20;
+        switch (num) {
+        case 5:
+            System.out.println("It is 5");
+            break;
+        case 10:
+            System.out.println("It is 10");
+            break;
+        case 15:
+            System.out.println("It is 15");
+            break;
+        case 20:
+            System.out.println("It is 20");
+            break;
+        default:
+            System.out.println("Not present");
+        }
+    }
+}
+```
+
+- The expression inside the switch statement is evaluated.
+- The value of the expression is compared with each case label.
+- If a matching case is found, the statements associated with that case are executed.
+- The break statement terminates the switch block and transfers control outside the switch.
+- If break is omitted, execution continues to the next case statements (fall-through).
+- If no case matches the expression value, the default block is executed (if present).
+- After the switch statement finishes execution, control moves to the next statement in the program.
