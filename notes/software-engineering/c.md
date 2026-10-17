@@ -2,7 +2,7 @@
 title: "C++"
 date: 2026-10-15
 tags: ["C++"]
-pinned: false
+pinned: true
 ---
 
 ## Introduction
