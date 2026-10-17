@@ -338,3 +338,68 @@ static_cast<float>(x)
 
 - **Operator:** `,` (separates expressions evaluated sequentially)
 - **Associativity:** Left-to-right.
+
+## **Loop Control Statements**
+
+Generally, the normal flow of any loop is that it will repeat till its test condition is true. In each repetition, it will execute the given set of statements. But C++ provides ways to modify this normal flow. This can be done by using loop control statements shown below:  
+The [**break**](https://www.geeksforgeeks.org/cpp/cpp-break-statement/) statement when encountered, terminates the loop regardless of its test condition. This is useful when the execution of loop is dependent on multiple conditions.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    for (int i = 0; i < 5; i++) {
+        
+        // Terminating before reaching i = 4
+        if (i == 2) break;
+        cout << "Hi" << endl; 
+    }
+    return 0;
+}
+```
+
+The [**continue**](https://www.geeksforgeeks.org/cpp/continue-statement-cpp/) statement, when encountered, skips the remaining code inside the current iteration of the loop and proceeds to the next iteration. This is useful when you want to skip specific iterations based on certain conditions but still want to continue the loop execution.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    for (int i = 0; i < 5; i++) {
+        
+        // Skipping when i equals 2
+        if (i == 2) continue;
+        cout << "Hi" << endl; 
+    }
+    return 0;
+}
+```
+
+In C++, the `goto` statement is a jump statement that provides an unconditional transfer of execution control from the `goto` statement to a labeled statement **within the same function**.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int count = 1;
+
+    // The jump destination
+    loopStart: 
+    if (count > 3) {
+        goto endProgram; // Jumps out of the loop logic
+    }
+
+    cout << "Count is: " << count << endl;
+    count++;
+    
+    goto loopStart; // Jumps back to the label
+
+    endProgram:
+    cout << "Program finished!" << endl;
+    return 0;
+}
+```
+
+> The only scenario where experienced C++ developers occasionally use `goto` is to **break out of deeply nested loops**. Standard `break` only exits the innermost loop, whereas a `goto` can instantly escape multiple layers of nested loops to an error-handling cleanup block at the bottom of a function.
