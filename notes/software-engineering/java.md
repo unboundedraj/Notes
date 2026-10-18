@@ -422,8 +422,36 @@ class Geeks {
 - If a matching case is found, the statements associated with that case are executed.
 - The break statement terminates the switch block and transfers control outside the switch.
 - If break is omitted, execution continues to the next case statements (fall-through).
-  - If no case matches the expression value, the default block is executed (if present).
-- After the switch statement finishes execution, control moves to the next statement in the program.
-  ---
+- If no case matches the expression value, the default block is executed (if present).After the switch statement finishes execution, control moves to the next statement in the program.
 
 > **For declaring methods, Java requires specifying the return type. If omitted, it results in a compilation error.**
+
+# **Java Strings**
+
+---
+
+**Java (**`String`**):** Java strings are **immutable**. Once a `String` object is created, its value cannot be changed. Any operation that appears to modify a string (like concatenation or replacement) actually creates a *brand new* string object in memory.
+
+**Java:** You must use the `.equals()` method to compare the *contents* of two strings (e.g., `str1.equals(str2)`). Using the `==` operator in Java compares **object references** (memory addresses), checking whether both variables point to the exact same object in memory, not whether their text matches.
+
+There are two ways to create a string in Java: 
+
+### **1. String literal (Static Memory)**
+
+A string literal is created by assigning a sequence of characters directly to a String variable using double quotes. Java stores string literals in the String Constant Pool, allowing identical string values to share the same object.
+
+```
+String str = “GeeksforGeeks”; 
+```
+
+### **2. Using new keyword (Heap Memory)**
+
+Using the [**new keyword**](https://www.geeksforgeeks.org/java/new-operator-java/) creates a new object in heap memory, even if the same string already exists in the pool.
+
+- One object is created in the heap memory
+- The string literal is stored in the string pool (if not already present)
+- The reference variable points to the heap object, not the pool
+
+```
+String str = new String (“GeeksforGeeks”);
+```
