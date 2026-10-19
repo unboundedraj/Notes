@@ -403,3 +403,51 @@ int main() {
 ```
 
 > The only scenario where experienced C++ developers occasionally use `goto` is to **break out of deeply nested loops**. Standard `break` only exits the innermost loop, whereas a `goto` can instantly escape multiple layers of nested loops to an error-handling cleanup block at the bottom of a function.
+
+# **Vectors in C++**
+
+---
+
+### **Using Initializer List**
+
+We can initialize a vector with the list of values enclosed in **curly braces {}** known as [**initializer list**](https://www.geeksforgeeks.org/cpp/std-initializer_list-in-cpp-11/).
+
+```
+vector<type> v = {val1, val2, val3, ...};
+```
+
+### **One by One Initialization**
+
+Vector can be initialized by pushing value one by one. In this method, an empty vector is created, and elements are added to it one by one using the [**vector::push\_back()**](https://www.geeksforgeeks.org/cpp/vector-push-back-cpp-stl/) method
+
+```
+v.push_back(val);
+```
+
+### **With a Single Value**
+
+We can initialize all the elements of the vector to a single value. We create a vector of a specified size and initialize all elements to the same value using vector constructor.
+
+```
+vector<type> v(n, val);
+```
+
+**Where:**  
+n -&gt; Size of vector  
+val -&gt; Value assigned to all elements
+
+### **From Another Vector**
+
+We can also initialize a newly created vector from an already created vector if they are of same type.
+
+```
+vector<type> v2(v1.begin(), v1.end());
+```
+
+### **From Any STL Container**
+
+Vectors are flexible containers that can be initialized by any other already existing containers such as set, multiset, map, etc. if they are of same type.
+
+```
+vector<type> v(first, last);
+```
