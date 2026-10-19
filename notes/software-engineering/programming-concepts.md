@@ -1,5 +1,5 @@
 ---
-title: Programming Concepts
+title: Data Structures and Algorithms
 date: 2026-10-15
 tags: [ascii, gk]
 pinned: true
