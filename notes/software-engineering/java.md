@@ -2,7 +2,7 @@
 title: Java
 date: 2026-10-15
 tags: [Java]
-pinned: true
+pinned: false
 ---
 
 ## Introduction
