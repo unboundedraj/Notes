@@ -408,6 +408,8 @@ int main() {
 
 ---
 
+A vector in C++ is a dynamic sequence container provided by the Standard Template Library (STL).
+
 ### **Using Initializer List**
 
 We can initialize a vector with the list of values enclosed in **curly braces {}** known as [**initializer list**](https://www.geeksforgeeks.org/cpp/std-initializer_list-in-cpp-11/).
@@ -451,3 +453,35 @@ Vectors are flexible containers that can be initialized by any other already exi
 ```
 vector<type> v(first, last);
 ```
+
+---
+
+**A list of popular vector functions can be found in the table below.**
+
+
+| **Function**                                                           | **Description**                                                 | Example                     | Importance |     |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------- | ---------- | --- |
+| [back()](https://www.w3schools.com/cpp/ref_vector_back.asp)            | Returns the last element of a vector                            | int b = vec.back();         |            |     |
+| [clear()](https://www.w3schools.com/cpp/ref_vector_clear.asp)          | Removes all of the contents of a vector                         | vec.clear();                |            |     |
+| [front()](https://www.w3schools.com/cpp/ref_vector_front.asp)          | Returns the first element of a vector                           | int f = vec.front();        |            |     |
+| [push\_back()](https://www.w3schools.com/cpp/ref_vector_push_back.asp) | Adds an element to the end of a vector                          | vec.push\_back(10);         | \*\*\*     |     |
+| [pop\_back()](https://www.w3schools.com/cpp/ref_vector_pop_back.asp)   | Removes the last element of a vector                            | vec.pop\_back();            | \*         |     |
+| [swap()](https://www.w3schools.com/cpp/ref_vector_swap.asp)            | Swaps the contents of one vector with another                   | vec1.swap(vec2);            | \*         |     |
+| size()                                                                 | Returns the number of elements currently in the vector.         | int s = vec.size();         | \*\*\*     |     |
+| empty()                                                                | Checks whether the vector is empty (returns `true` or `false`). | bool isEmpty = vec.empty(); |            |     |
+
+
+---
+
+**The** `<string>` **library has many functions that allow you to perform tasks on strings.**
+
+
+| **Function**                                                    | **Description**                                                                                       | **Example**      | Importance |     |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------- | ---------- | --- |
+| append()                                                        | Adds characters or another string to the end of the current string                                    | str.append("!"); |            |     |
+| [length()](https://www.w3schools.com/cpp/ref_string_length.asp) | Returns the number of characters in the string                                                        |                  |            |     |
+| push\_back()                                                    | Adds a single character to the end of the string                                                      |                  |            |     |
+| pop\_back()                                                     | Removes the last character from the string                                                            |                  |            |     |
+| [size()](https://www.w3schools.com/cpp/ref_string_size.asp)     | Alias of [length()](https://www.w3schools.com/cpp/ref_string_length.asp); returns the string's length |                  |            |     |
+| substr()                                                        | Returns a portion of the string, starting at a given index and length                                 |                  |            |     |
+| swap()                                                          | Exchanges the contents of two strings                                                                 |                  |            |     |
