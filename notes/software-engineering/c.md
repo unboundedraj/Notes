@@ -459,17 +459,87 @@ vector<type> v(first, last);
 **A list of popular vector functions can be found in the table below.**
 
 
-| **Function**                                                           | **Description**                                                 | Example                     | Importance |     |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------- | ---------- | --- |
-| [back()](https://www.w3schools.com/cpp/ref_vector_back.asp)            | Returns the last element of a vector                            | int b = vec.back();         |            |     |
-| [clear()](https://www.w3schools.com/cpp/ref_vector_clear.asp)          | Removes all of the contents of a vector                         | vec.clear();                |            |     |
-| [front()](https://www.w3schools.com/cpp/ref_vector_front.asp)          | Returns the first element of a vector                           | int f = vec.front();        |            |     |
-| [push\_back()](https://www.w3schools.com/cpp/ref_vector_push_back.asp) | Adds an element to the end of a vector                          | vec.push\_back(10);         | \*\*\*     |     |
-| [pop\_back()](https://www.w3schools.com/cpp/ref_vector_pop_back.asp)   | Removes the last element of a vector                            | vec.pop\_back();            | \*         |     |
-| [swap()](https://www.w3schools.com/cpp/ref_vector_swap.asp)            | Swaps the contents of one vector with another                   | vec1.swap(vec2);            | \*         |     |
-| size()                                                                 | Returns the number of elements currently in the vector.         | int s = vec.size();         | \*\*\*     |     |
-| empty()                                                                | Checks whether the vector is empty (returns `true` or `false`). | bool isEmpty = vec.empty(); |            |     |
+| **Function**                                                           | **Description**                                                  | Example                     | Importance |     |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------- | ---------- | --- |
+| [back()](https://www.w3schools.com/cpp/ref_vector_back.asp)            | Returns the last element of a vector                             | int b = vec.back();         |            |     |
+| [at()](https://www.w3schools.com/cpp/ref_string_at.asp)                | Returns the character at a specified index, with bounds checking |                             |            |     |
+| [clear()](https://www.w3schools.com/cpp/ref_vector_clear.asp)          | Removes all of the contents of a vector                          | vec.clear();                |            |     |
+| [front()](https://www.w3schools.com/cpp/ref_vector_front.asp)          | Returns the first element of a vector                            | int f = vec.front();        |            |     |
+| [push\_back()](https://www.w3schools.com/cpp/ref_vector_push_back.asp) | Adds an element to the end of a vector                           | vec.push\_back(10);         | \*\*\*     |     |
+| [pop\_back()](https://www.w3schools.com/cpp/ref_vector_pop_back.asp)   | Removes the last element of a vector                             | vec.pop\_back();            | \*         |     |
+| [swap()](https://www.w3schools.com/cpp/ref_vector_swap.asp)            | Swaps the contents of one vector with another                    | vec1.swap(vec2);            | \*         |     |
+| size()                                                                 | Returns the number of elements currently in the vector.          | int s = vec.size();         | \*\*\*     |     |
+| empty()                                                                | Checks whether the vector is empty (returns `true` or `false`).  | bool isEmpty = vec.empty(); |            |     |
 
+
+# Maps in C++
+
+---
+
+A map stores elements in "**key/value**" pairs.
+
+Elements in a map are:  
+Accessible by keys (not index), and each key is unique.  
+Automatically sorted in ascending order by their keys.  
+Maps store the pair of values in the sorted order on account of the first value however memory allocation is not sequential
+
+```
+//SYNTAX:
+map<key's data type, value's data type>map name;
+```
+
+> When accessing elements using the **\[\] operator**, if the key does not already exist, it is inserted into the map with a default-constructed value. For primitive types like int, this default construction results in zero initialization. Therefore, if you access **map\[key\]** for a non-existent key, the map will create a new entry with that key and a value of 0. If the key exists, the current value will be returned.
+
+**A list of popular vector functions can be found in the table below.**
+
+
+
+
+| Function                                                            | Description                                                                                                                             | Example                                          | Importance |     |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | ---------- | --- |
+| [map::insert()](https://www.geeksforgeeks.org/map-insert-in-c-stl/) | Insert elements with a particular key in the map container –&gt; O(log n)<br>                                                           | Map.insert({key,value})                          |            |     |
+| erase()                                                             | Removes elements by key, by iterator, or a range of iterators.                                                                          | myMap.erase("apple");                            |            |     |
+| swap()                                                              | Swaps the contents of this map with another map.                                                                                        | myMap.swap(otherMap);                            |            |     |
+| size()                                                              | Returns the number of key-value pairs currently in the map.                                                                             | int s = myMap.size();                            |            |     |
+| lower\_bound()                                                      | Returns an iterator to the first element whose key is *not less than* (&gt;=) the given key.                                            | auto it = myMap.lower\_bound(10);                |            |     |
+| upper\_bound()                                                      | Returns an iterator to the first element whose key is *strictly greater than* (&gt;) the given key.                                     | auto it = myMap.upper\_bound(10);                |            |     |
+| find()                                                              | Returns an iterator pointing to the key-value pair, or `map::end` if the key is not found.                                              | auto it = myMap.find("apple");                   |            |     |
+| count()                                                             | Returns the number of elements matching the specific key. For standard maps/sets, it only returns `1` (exists) or `0` (does not exist). | if (myMap.count("apple")) { /\* key exists \*/ } | \*\*\*     |     |
+| [map::clear()](https://www.geeksforgeeks.org/mapclear-c-stl/)       | Removes all the elements from the map.                                                                                                  |                                                  |            |     |
+|                                                                     |                                                                                                                                         |                                                  |            |     |
+
+
+## Unordered Map
+
+An `std::unordered_map` in C++ is an associative container from the Standard Template Library (STL) that stores data in key-value pairs. It is implemented internally using a hash table.
+
+> **Time Complexity:** It offers an average-case time complexity of O(1) for insertions, deletions, and lookups. This makes it significantly faster than a standard `std::map` (which takes O(log N) time) for large datasets.
+
+# Sets in C++
+
+---
+
+A `std::set` in C++ is an associative container that stores unique elements in a specifically sorted order (ascending by default). It is implemented internally as a balanced binary search tree (typically a Red-Black Tree), which means its core operations—insertion, deletion, and search execute in O(log N) time.
+
+```
+std::set<int> numbers;
+```
+
+
+| Function       | Description                                                        | Example                           | Importance |     |
+| -------------- | ------------------------------------------------------------------ | --------------------------------- | ---------- | --- |
+| insert()       | Adds a new element to the set and automatically sorts it.          | mySet.insert(15);                 |            |     |
+| erase()        | Removes a specific element by value or via an iterator.            | mySet.erase(15);                  |            |     |
+| find()         | Returns an iterator to the element if found, or `set::end` if not. | auto it = mySet.find(10);         |            |     |
+| count()        | Returns 1 if the element exists in the set, and 0 if it does not.  | if (mySet.count(10)) { }          | \*\*       |     |
+| size()         | Returns the total number of elements currently in the set          | int s = mySet.size();             |            |     |
+| empty()        | Checks whether the set is empty (returns `true` or `false`).       | bool isEmpty = mySet.empty();     |            |     |
+| clear()        | Removes all elements from the set.                                 | mySet.clear();                    |            |     |
+| lower\_bound() | Returns an iterator to the first element $\\ge$ the given value.   | auto it = mySet.lower\_bound(10); |            |     |
+| upper\_bound() | Returns an iterator to the first element $&gt;$ the given value.   | auto it = mySet.upper\_bound(10); |            |     |
+
+
+# Strings in C++
 
 ---
 
@@ -479,9 +549,23 @@ vector<type> v(first, last);
 | **Function**                                                    | **Description**                                                                                       | **Example**      | Importance |     |
 | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------- | ---------- | --- |
 | append()                                                        | Adds characters or another string to the end of the current string                                    | str.append("!"); |            |     |
+| [at()](https://www.w3schools.com/cpp/ref_string_at.asp)         | Returns the character at a specified index, with bounds checking                                      |                  |            |     |
 | [length()](https://www.w3schools.com/cpp/ref_string_length.asp) | Returns the number of characters in the string                                                        |                  |            |     |
 | push\_back()                                                    | Adds a single character to the end of the string                                                      |                  |            |     |
 | pop\_back()                                                     | Removes the last character from the string                                                            |                  |            |     |
 | [size()](https://www.w3schools.com/cpp/ref_string_size.asp)     | Alias of [length()](https://www.w3schools.com/cpp/ref_string_length.asp); returns the string's length |                  |            |     |
 | substr()                                                        | Returns a portion of the string, starting at a given index and length                                 |                  |            |     |
 | swap()                                                          | Exchanges the contents of two strings                                                                 |                  |            |     |
+
+
+# Stack in C++
+
+---
+
+A Stack is a linear data structure that strictly follows the **Last-In, First-Out (LIFO)** principle. The last element added to the stack is always the first one to be removed.
+
+**Time &amp; Space Complexity:**
+
+- **Push (Insert):** O(1)
+- **Pop (Remove):** O(1)
+- **Peek / Top (Access):** O(1)
