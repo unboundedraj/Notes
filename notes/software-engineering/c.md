@@ -493,8 +493,6 @@ map<key's data type, value's data type>map name;
 **A list of popular vector functions can be found in the table below.**
 
 
-
-
 | Function                                                            | Description                                                                                                                             | Example                                          | Importance |     |
 | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | ---------- | --- |
 | [map::insert()](https://www.geeksforgeeks.org/map-insert-in-c-stl/) | Insert elements with a particular key in the map container –&gt; O(log n)<br>                                                           | Map.insert({key,value})                          |            |     |
@@ -568,4 +566,13 @@ A Stack is a linear data structure that strictly follows the **Last-In, First-Ou
 
 - **Push (Insert):** O(1)
 - **Pop (Remove):** O(1)
-- **Peek / Top (Access):** O(1)
+- **Peek / Top (Access):** O(1)  
+
+  
+  | Function | Description                                                        | Example                              | Importance |     |
+  | -------- | ------------------------------------------------------------------ | ------------------------------------ | ---------- | --- |
+  | push()   | Pushes an element onto the stack represented by this deque.        | stack.push(10);                      |            |     |
+  | pop()    | Removes the top element. **Note: It does not return the element.** | st.pop();                            |            |     |
+  | top()    | Returns a reference to the top element without removing it.        | int val = [st.top](http://st.top)(); |            |     |
+  | empty()  | Checks if the stack is empty (returns `true` or `false`).          | bool isEmpty = st.empty();           |            |     |
+  | size()   | Returns the number of elements in the stack.                       | int s = st.size();                   |            |     |
