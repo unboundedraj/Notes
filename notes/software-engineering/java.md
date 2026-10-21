@@ -455,3 +455,16 @@ Using the [**new keyword**](https://www.geeksforgeeks.org/java/new-operator-java
 ```
 String str = new String (“GeeksforGeeks”);
 ```
+
+# Java Stack
+
+---
+
+
+| Function  | Description                                                                | Ex                                 | Imp |     |
+| --------- | -------------------------------------------------------------------------- | ---------------------------------- | --- | --- |
+| push()    | Pushes an element onto the stack represented by this deque.                | stack.push(10);                    |     |     |
+| pop()     | Removes and **returns** the top element. Throws an exception if empty.     | int val = stack.pop();             |     |     |
+| peek()    | Retrieves, but does not remove, the top element (returns `null` if empty). | Integer topVal = stack.peek();     |     |     |
+| size()    | Returns the number of elements in the deque.                               | int s = stack.size();              |     |     |
+| isEmpty() | Checks if the deque contains no elements.                                  | boolean isEmpty = stack.isEmpty(); |     |     |
