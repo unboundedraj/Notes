@@ -590,3 +590,85 @@ Dynamic memory allocation is commonly used when memory requirements cannot be de
 - Allocating memory whose size is known only during program execution.
 - Implementing dynamic data structures such as linked lists, trees, graphs, and dynamic arrays.
 - Creating objects whose lifetime must extend beyond the scope of the function in which they are created.
+
+# **Exception Handling in C++**
+
+---
+
+Exception Handling in C++ is a mechanism used to handle runtime errors and abnormal conditions, allowing a program to continue execution smoothly even in the presence of errors.\\
+
+## **Basic try-catch Example**
+
+The try block contains code that might throw an exception, while the catch block handles the exception if it occurs.
+
+```cpp
+#include <iostream> 
+using namespace std; 
+int main() 
+{ 
+    int n = 10; 
+    int m = 0; 
+    
+    try { 
+        if (m == 0) 
+        throw "Division by zero"; 
+        cout << "Answer: " << n / m; 
+        
+    } 
+    catch (const char* msg) {
+        cout << "Error: " << msg; 
+        
+    } 
+    return 0; 
+    
+}
+```
+
+## **Internal Working of try-catch Block**
+
+When an exception occurs:
+
+- The runtime executes code inside the try block.
+- If an exception is thrown, the remaining code inside the try block is skipped.
+- The runtime searches for a matching catch block.
+- If found, the exception is handled.
+- If no matching handler is found, terminate() is called.
+- During this process, stack unwinding occurs and local objects are destroyed automatically.
+
+# **File Handling in C++**
+
+---
+
+File handling in C++ refers to reading data from and writing data to files such as .txt, .csv, and binary files. It allows programs to store and retrieve data from secondary storage even after the program terminates.
+
+- Data stored only in a program's memory is lost when the program ends, while data written to a file can persist on secondary storage such as an HDD or SSD.
+- C++ provides file stream classes such as ifstream, ofstream, and fstream for performing file operations.
+- These classes are provided by the &lt;fstream&gt; header.
+
+## **Opening a File**
+
+Before reading from or writing to a file, we need to open it. Opening a file creates a connection between the program and the file; it does not load the entire file into memory. Data is transferred when read or write operations are performed.  
+In C++, a file can be opened by creating a file stream object using `ifstream`, `ofstream`, or `fstream`.
+
+```
+fstream file("filename.ext", mode);
+```
+
+where,  
+file is the name of the file stream object.  
+filename.ext specifies the file to be opened.  
+mode specifies how the file will be accessed.
+
+### **File Opening Modes**
+
+---
+
+
+| Mode            | Description                                                                              |     |
+| --------------- | ---------------------------------------------------------------------------------------- | --- |
+| **ios::in**     | File open for reading. If file does not exists, the open operation fails.                |     |
+| **ios::out**    | File open for writing: the internal stream buffer supports output operations.            |     |
+| **ios::binary** | Operations are performed in binary mode rather than text.                                |     |
+| **ios::ate**    | The output position starts at the end of the file.                                       |     |
+| **ios::app**    | All output operations happen at the end of the file, appending to its existing contents. |     |
+| **ios::trunc**  | Any contents that existed in the file before it is open are discarded.                   |     |
