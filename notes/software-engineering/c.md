@@ -566,8 +566,7 @@ A Stack is a linear data structure that strictly follows the **Last-In, First-Ou
 
 - **Push (Insert):** O(1)
 - **Pop (Remove):** O(1)
-- **Peek / Top (Access):** O(1)  
-
+- **Peek / Top (Access):** O(1)
   
   | Function | Description                                                        | Example                              | Importance |     |
   | -------- | ------------------------------------------------------------------ | ------------------------------------ | ---------- | --- |
@@ -576,3 +575,18 @@ A Stack is a linear data structure that strictly follows the **Last-In, First-Ou
   | top()    | Returns a reference to the top element without removing it.        | int val = [st.top](http://st.top)(); |            |     |
   | empty()  | Checks if the stack is empty (returns `true` or `false`).          | bool isEmpty = st.empty();           |            |     |
   | size()   | Returns the number of elements in the stack.                       | int s = st.size();                   |            |     |
+  
+
+---
+
+## New and Delete Operations in C++
+
+In C++, dynamic memory allocation allows programs to allocate and release memory during runtime. The new operator allocates memory from the free store (heap) and returns its address, while the delete operator releases the allocated memory when it is no longer needed.
+
+## **Applications of Dynamic Memory**
+
+Dynamic memory allocation is commonly used when memory requirements cannot be determined at compile time.
+
+- Allocating memory whose size is known only during program execution.
+- Implementing dynamic data structures such as linked lists, trees, graphs, and dynamic arrays.
+- Creating objects whose lifetime must extend beyond the scope of the function in which they are created.
