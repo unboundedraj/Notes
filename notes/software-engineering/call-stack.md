@@ -1,5 +1,5 @@
 ---
-title: Call Stack
+title: What is Call Stack?
 date: 2026-10-17
 tags: [call stack]
 ---
