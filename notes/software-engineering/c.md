@@ -672,3 +672,222 @@ mode specifies how the file will be accessed.
 | **ios::ate**    | The output position starts at the end of the file.                                       |     |
 | **ios::app**    | All output operations happen at the end of the file, appending to its existing contents. |     |
 | **ios::trunc**  | Any contents that existed in the file before it is open are discarded.                   |     |
+
+
+> If the file opened in write mode does not exists, a new file is created. But if the file opened in read mode doesn't exists, then no new file is created, and an exception is thrown
+
+### **Other File Streams**
+
+C++ provides three commonly used file stream classes:
+
+- **ifstream:** Used for input operations, such as reading data from a file.
+- **ofstream:** Used for output operations, such as writing data to a file.
+- **fstream:** Used for both input and output operations.
+
+## **Write Data to File**
+
+Once the file is opened in the write mode using either fstream or ofstream, we can perform the write operation in similar way as with cout using &lt;&lt; operator.
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    // Open a file
+    ofstream file("GFG.txt");
+    
+    // Write the string to the file
+    file << "Welcome to GeeksforGeeks.";
+
+    return 0;
+}
+```
+
+## **Read Data from File**
+
+Once the file is opened in read mode using either fstream or ifstream, we can perform the read operation in a similar way as with cin using the &gt;&gt; operator.
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+
+    // Open a file in read mode
+    ifstream file("GFG.txt");
+    string s;
+
+    // Read string from the file
+    file >> s;
+
+    cout << "Read String: " << s;
+
+    return 0;
+}
+```
+
+> This has same problem as cin. The input is only taken until the first whitespace character. To avoid this, we can use the **getline()**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+
+    // Open a file in read mode
+    ifstream file("GFG.txt");
+    string s;
+
+    // Read string from the file
+    getline(file, s);
+
+    cout << "Read String: " << s;
+
+    return 0;
+}
+```
+
+## **Closing the File**
+
+Closing the file means closing the associated stream and free the resources that we being used. It is important to close the file after you are done with it, especially in the long running programs to avoid memory leaks, data loss, etc.
+
+In C++, the files are closed using the **close()** member function that is present in all file streams.
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+
+    // Open a file in read mode
+    ifstream file("GFG.txt");
+    string s;
+
+    // Read string from the file
+    getline(file, s);
+
+    cout << "Read String: " << s;
+
+    // Close the file
+    file.close();
+
+    return 0;
+}
+```
+
+# **Multithreading in C++**
+
+---
+
+Multithreading is a programming technique in which a program is divided into multiple threads that can run concurrently. It helps improve performance and responsiveness by allowing multiple tasks to execute simultaneously while sharing the same memory space.
+
+- Threads allow multiple tasks to run independently within the same program.
+- Multithreading improves CPU utilization and application performance.
+- The &lt;thread&gt; header provides functions to create, manage, and synchronize threads in C++.
+
+```cpp
+#include <iostream>
+#include <thread>
+using namespace std;
+
+void task() {
+    cout << "Hello from the thread!" << endl;
+}
+
+int main() {
+    thread t(task);
+
+    t.join();
+
+    cout << "Main thread finished.";
+
+    return 0;
+}
+```
+
+**Explanation:**
+
+- thread t(task) creates a new thread that executes the task() function.
+- t.join() makes the main thread wait until t finishes.
+- After the thread completes, the main thread prints its message.
+
+```
+thread thread_name(callable);
+```
+
+**where,**
+
+- **thread\_name:** It is an object of thread class.
+- **callable:** It is a callable object like function pointer, function object.
+
+## **Joining a Thread**
+
+The join() function waits for a thread to finish its execution. It is commonly used when the calling thread must wait for the completion of another thread.
+
+```
+thread_name.join();
+```
+
+- The calling thread remains blocked until the specified thread finishes.
+- A thread should be joined only when it is in a joinable state.
+- Calling join() on a non-joinable thread throws a std::system\_error.
+
+### **Checking if a Thread is Joinable**
+
+The joinable() function checks whether a thread object represents a thread that can be joined.
+
+```
+thread_name.joinable();
+```
+
+- Returns true if the thread is joinable.
+- Returns false if the thread is not associated with a joinable thread.
+
+## **Detaching a thread**
+
+The detach() function separates a thread from its std::thread object, allowing it to execute independently.
+
+```
+thread_name.detach();
+```
+
+## **Getting Thread ID**
+
+In [**Multithreading in C++**](https://www.geeksforgeeks.org/cpp/multithreading-in-cpp/) each thread has a unique ID which can be obtained by using the get\_id() function.
+
+```
+thread_name.get_id();
+```
+
+## **Callables in Multithreading**
+
+A callable is an object that can be invoked like a function. C++ threads can execute different types of callables, including functions, lambda expressions, function objects, and member functions.
+
+- Arguments can be passed to a callable when creating a thread.
+- The callable starts executing when the thread is created.
+
+## **Problems with Multithreading**
+
+Multithreading improves the performance and utilization of CPU, but it also introduces various problems:
+
+- **Deadlock:** A [**deadlock**](https://www.geeksforgeeks.org/operating-systems/introduction-of-deadlock-in-operating-system/) occurs when two or more threads are blocked forever because they are each waiting for shared resources that the other threads hold. This creates a cycle of waiting, and none of the threads can proceed.
+- **Race Condition:** A [**race condition**](https://www.geeksforgeeks.org/operating-systems/race-condition-vulnerability/) occurs when multiple threads access shared data simultaneously and at least one thread modifies it, causing unpredictable or incorrect results.
+- **Starvation:** Starvation occurs when a thread is continuously unable to access shared resources because other threads keep getting priority, preventing it from executing and making progress.
+
+## **Thread Synchronization**
+
+[**Thread synchronization**](https://www.geeksforgeeks.org/cpp/thread-synchronization-in-cpp/) is the process of controlling multiple threads when accessing shared resources to avoid data inconsistency and race conditions. It ensures that only one thread accesses a critical resource at a time.
+
+- Synchronization helps maintain data accuracy and consistency in multithreaded programs.
+- Common synchronization tools in C++ include mutexes, locks, and condition variables.
+
+## **Context switch in multithreading**
+
+A [**context switch**](https://www.geeksforgeeks.org/operating-systems/context-switch-in-operating-system/) occurs when the CPU stops executing one thread and starts executing another thread. The state of the current thread is saved so that execution can continue later from the same point.
+
+- It enables multiple threads to share CPU time efficiently.
+- Frequent context switching may reduce performance due to overhead.
