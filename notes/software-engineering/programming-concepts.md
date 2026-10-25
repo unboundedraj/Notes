@@ -79,8 +79,7 @@ Bitwise OR (`|`) in C++ compares the corresponding bits of two integers and retu
 | Idempotent       | `a | a = a` — Repeating the same OR operation does not change the result.   |     |
 
 
-##   
-XOR(^) operator
+## XOR(^) operator
 
 XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two integers and returns `1` if the bits are different and `0` if they are the same. It is commonly used in bit manipulation and DSA problems because of its cancellation properties, which help find unique or missing numbers efficiently.
 
