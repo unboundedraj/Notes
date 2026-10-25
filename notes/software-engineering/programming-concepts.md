@@ -7,8 +7,6 @@ pinned: true
 
 ## ASCII Values
 
-The ASCII values for the English alphabet are divided into two distinct, continuous ranges for uppercase and lowercase letters:
-
 - **Uppercase letters (A - Z):** 65 to 90
   - 'A' = 65
   - 'Z' = 90
@@ -35,18 +33,31 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 >
 > - **O(1) Constant:** Execution time or space remains exactly the same regardless of input size.  
 > *Examples:* Accessing an array by index, math formulas, pushing to a stack.
->
 > - **O(log N) Logarithmic:** The algorithm repeatedly halves the search space. It is incredibly efficient, taking very few extra steps even if the dataset expands by millions.  
 > *Examples:* Binary Search, finding an item in a balanced Binary Search Tree.
->
 > - **O(N) Linear:** Execution scales at a 1:1 ratio with the input.  
 > *Examples:* Iterating through a standard array with a single `for` loop, Two Pointers.
->
 > - **O(N log N) Linearithmic:** The baseline for optimal comparison-based algorithms.  
 > *Examples:* Standard library sorting (like C++ `std::sort` or Java `Arrays.sort()`), Merge Sort.
->
 > - **O(N^2) Quadratic:** Every element interacts with every other element. Usually causes a "Time Limit Exceeded" (TLE) error on LeetCode for inputs larger than $10^4$.  
 > *Examples:* Double nested loops, Bubble Sort, Selection Sort.
->
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
+
+## XOR(^) operator
+
+XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two integers and returns `1` if the bits are different and `0` if they are the same. It is commonly used in bit manipulation and DSA problems because of its cancellation properties, which help find unique or missing numbers efficiently.
+
+
+| Property              | Description                                                                                                      |     |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- | --- |
+| XOR with zero         | `a ^ 0 = a` — XOR with `0` leaves the number unchanged.                                                          |     |
+| XOR with itself       | `a ^ a = 0` — A number XORed with itself becomes `0`.                                                            |     |
+| Commutative           | `a ^ b = b ^ a` — The order of operands does not matter.                                                         |     |
+| Associative           | `(a ^ b) ^ c = a ^ (b ^ c)` — Grouping does not matter.                                                          |     |
+| Cancellation          | `a ^ b ^ a = b` — Identical pairs cancel each other.                                                             |     |
+| Even/odd occurrences  | An even number of occurrences of a value cancel to `0`; an odd number leave one occurrence.                      |     |
+| Bit toggling          | XOR with a bit mask flips bits where the mask has `1` and leaves bits where it has `0` unchanged.                |     |
+| Find a unique number  | XOR all array elements when every number appears twice except one; duplicates cancel, leaving the unique number. |     |
+| Find a missing number | XOR the expected numbers and array elements; matching values cancel, leaving the missing number.                 |     |
+| Swap two numbers      | XOR can swap two integers without a temporary variable, though `std::swap()` is generally clearer and safer.     |     |
