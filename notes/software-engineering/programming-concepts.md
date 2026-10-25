@@ -44,7 +44,43 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
 
-## XOR(^) operator
+## Bitwise AND (`&`)
+
+Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and returns `1` only when both bits are `1`; otherwise, it returns `0`. It is commonly used in DSA for checking bits, clearing bits, identifying common set bits, and working with bit masks.
+
+
+| Property                      | Description                                                                                     |     |
+| ----------------------------- | ----------------------------------------------------------------------------------------------- | --- |
+| AND with zero                 | `a & 0 = 0` — The result is always `0`.                                                         |     |
+| AND with itself               | `a & a = a` — The number remains unchanged.                                                     |     |
+| AND with all ones             | `a & -1 = a` — For standard C++ integer types, `-1` has all bits set to `1`.                    |     |
+| Commutative                   | `a & b = b & a` — Operand order does not matter.                                                |     |
+| Associative                   | `(a & b) & c = a & (b & c)` — Grouping does not matter.                                         |     |
+| Check a bit                   | `a & (1 << k)` — Checks whether the \\(k\\)-th bit is set; a nonzero result means it is set.    |     |
+| Clear the rightmost set bit   | `a & (a - 1)` — Changes the rightmost `1` bit to `0`.                                           |     |
+| Isolate the rightmost set bit | `a & -a` — Keeps only the rightmost set bit for ordinary integer values where negation is safe. |     |
+| Check power of two            | `a > 0 && (a & (a - 1)) == 0` — True when `a` is a power of two.                                |     |
+
+
+## Bitwise OR (`|`)
+
+Bitwise OR (`|`) in C++ compares the corresponding bits of two integers and returns `1` when at least one bit is `1`; it returns `0` only when both bits are `0`. It is commonly used in DSA to set bits, combine bit masks, and enable specific flags.
+
+
+| Property         | Description                                                                 |     |
+| ---------------- | --------------------------------------------------------------------------- | --- |
+| OR with zero     | `a | 0 = a` — The number remains unchanged.                                 |     |
+| OR with itself   | `a | a = a` — The number remains unchanged.                                 |     |
+| OR with all ones | `a | -1 = -1` — For standard C++ integer types, all result bits become `1`. |     |
+| Commutative      | `a | b = b | a` — Operand order does not matter.                            |     |
+| Associative      | `(a | b) | c = a | (b | c)` — Grouping does not matter.                     |     |
+| Set a bit        | `a | (1 << k)` — Sets the (k)-th bit to `1`, leaving other bits unchanged.  |     |
+| Combine set bits | `a | b` — Combines the set bits of both numbers.                            |     |
+| Idempotent       | `a | a = a` — Repeating the same OR operation does not change the result.   |     |
+
+
+##   
+XOR(^) operator
 
 XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two integers and returns `1` if the bits are different and `0` if they are the same. It is commonly used in bit manipulation and DSA problems because of its cancellation properties, which help find unique or missing numbers efficiently.
 
