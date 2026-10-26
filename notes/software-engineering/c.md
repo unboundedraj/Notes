@@ -472,6 +472,8 @@ vector<type> v(first, last);
 | empty()                                                                | Checks whether the vector is empty (returns `true` or `false`).  | bool isEmpty = vec.empty(); |            |     |
 
 
+> The v.begin() functions points to the first element of the vector whereas the v.end() points to the location after the last elements of the vector
+
 # Maps in C++
 
 ---
