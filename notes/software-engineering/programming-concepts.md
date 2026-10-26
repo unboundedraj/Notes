@@ -1,7 +1,7 @@
 ---
 title: Data Structures and Algorithms
 date: 2026-10-15
-tags: [ascii, gk]
+tags: [ascii, gk, sorting, bit operators, time complexity, space complexity]
 pinned: true
 ---
 
@@ -43,6 +43,159 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 > *Examples:* Double nested loops, Bubble Sort, Selection Sort.
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
+
+# Sorting Algorithms
+
+---
+
+## 1. Bubble Sort
+
+Compares adjacent elements and swaps them if they are in the wrong order. Repeats until sorted. In each iteration the max element bubbles to the end of the array.
+
+- Easy to understand, but slow for large arrays.
+- Worst time: `O(n²)`
+
+```cpp
+void bubbleSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        bool swapped = false;
+
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (a[j] > a[j + 1]) {
+                swap(a[j], a[j + 1]);
+                swapped = true;
+            }
+        }
+
+        if (!swapped) break;
+    }
+}
+```
+
+## 2. Selection Sort
+
+Finds the smallest element and puts it at the beginning. Repeats for the remaining elements.
+
+- Uses fewer swaps.
+- Time: `O(n²)` 
+
+```cpp
+void selectionSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[minIndex])
+                minIndex = j;
+        }
+
+        swap(a[i], a[minIndex]);
+    }
+}
+```
+
+## 3. Insertion Sort
+
+Takes one element at a time and inserts it into the correct position in the already-sorted part.
+
+- Good for small or nearly sorted arrays.
+- Worst time: `O(n²)`
+
+```cpp
+void insertionSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 1; i < n; i++) {
+        int key = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+
+        a[j + 1] = key;
+    }
+}
+```
+
+## 4. Merge Sort
+
+Divides the array into smaller parts, sorts them, and merges them back together.
+
+- Reliable and efficient.
+- Time: `O(n log n)` 
+
+```cpp
+void merge(vector<int>& a, int l, int m, int r) {
+    vector<int> temp;
+    int i = l, j = m + 1;
+
+    while (i <= m && j <= r) {
+        if (a[i] <= a[j])
+            temp.push_back(a[i++]);
+        else
+            temp.push_back(a[j++]);
+    }
+
+    while (i <= m) temp.push_back(a[i++]);
+    while (j <= r) temp.push_back(a[j++]);
+
+    for (int k = 0; k < temp.size(); k++)
+        a[l + k] = temp[k];
+}
+
+void mergeSort(vector<int>& a, int l, int r) {
+    if (l >= r) return;
+
+    int m = l + (r - l) / 2;
+
+    mergeSort(a, l, m);
+    mergeSort(a, m + 1, r);
+    merge(a, l, m, r);
+}
+
+// Call: mergeSort(a, 0, a.size() - 1);
+```
+
+## 5.Quick Sort
+
+Picks a pivot, places smaller elements on one side and larger elements on the other, then sorts both sides.
+
+- Usually very fast in practice.
+- Worst time: `O(n²)`
+
+```cpp
+int partition(vector<int>& a, int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            swap(a[i], a[j]);
+        }
+    }
+
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quickSort(vector<int>& a, int low, int high) {
+    if (low >= high) return;
+
+    int p = partition(a, low, high);
+
+    quickSort(a, low, p - 1);
+    quickSort(a, p + 1, high);
+}
+
+// Call: quickSort(a, 0, a.size() - 1);
+```
 
 ## Bitwise AND (`&`)
 
