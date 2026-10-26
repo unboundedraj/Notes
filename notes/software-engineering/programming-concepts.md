@@ -25,7 +25,7 @@ pinned: true
 
 **Space Complexity** measures how the memory footprint of an algorithm scales with the input size. In problem-solving, this usually refers to **auxiliary space**—the temporary, extra memory your algorithm allocates (like hash maps, dynamic arrays, or the recursion call stack), excluding the memory needed to store the initial input.
 
-**Big O Notation ($O$)** is the mathematical standard used to express these complexities. It strictly defines the **worst-case scenario** (the upper bound).
+**Big O Notation (O)** is the mathematical standard used to express these complexities. It strictly defines the **worst-case scenario** (the upper bound).
 
 When calculating Big O, you drop constants and lower-order terms. For example, if an algorithm takes O(2N^2 + 50N + 5), it simplifies to O(N^2). As N approaches infinity, the constants and the 50N become statistically irrelevant; the N^2 term is the bottleneck that dictates system failure.
 
