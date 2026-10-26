@@ -39,7 +39,7 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 > *Examples:* Iterating through a standard array with a single `for` loop, Two Pointers.
 > - **O(N log N) Linearithmic:** The baseline for optimal comparison-based algorithms.  
 > *Examples:* Standard library sorting (like C++ `std::sort` or Java `Arrays.sort()`), Merge Sort.
-> - **O(N^2) Quadratic:** Every element interacts with every other element. Usually causes a "Time Limit Exceeded" (TLE) error on LeetCode for inputs larger than $10^4$.  
+> - **O(N^2) Quadratic:** Every element interacts with every other element. Usually causes a "Time Limit Exceeded" (TLE) error on LeetCode for inputs larger than 10^4.  
 > *Examples:* Double nested loops, Bubble Sort, Selection Sort.
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
@@ -79,7 +79,7 @@ void bubbleSort(vector<int>& a) {
 Finds the smallest element and puts it at the beginning. Repeats for the remaining elements.
 
 - Uses fewer swaps.
-- Time: `O(n²)` 
+- Time: `O(n²)`
 
 ```cpp
 void selectionSort(vector<int>& a) {
@@ -128,7 +128,7 @@ void insertionSort(vector<int>& a) {
 Divides the array into smaller parts, sorts them, and merges them back together.
 
 - Reliable and efficient.
-- Time: `O(n log n)` 
+- Time: `O(n log n)`
 
 ```cpp
 void merge(vector<int>& a, int l, int m, int r) {
@@ -209,7 +209,7 @@ Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and ret
 | AND with all ones             | `a & -1 = a` — For standard C++ integer types, `-1` has all bits set to `1`.                    |     |
 | Commutative                   | `a & b = b & a` — Operand order does not matter.                                                |     |
 | Associative                   | `(a & b) & c = a & (b & c)` — Grouping does not matter.                                         |     |
-| Check a bit                   | `a & (1 << k)` — Checks whether the \\(k\\)-th bit is set; a nonzero result means it is set.    |     |
+| Check a bit                   | `a & (1 << k)` — Checks whether the (k)-th bit is set; a nonzero result means it is set.        |     |
 | Clear the rightmost set bit   | `a & (a - 1)` — Changes the rightmost `1` bit to `0`.                                           |     |
 | Isolate the rightmost set bit | `a & -a` — Keeps only the rightmost set bit for ordinary integer values where negation is safe. |     |
 | Check power of two            | `a > 0 && (a & (a - 1)) == 0` — True when `a` is a power of two.                                |     |
