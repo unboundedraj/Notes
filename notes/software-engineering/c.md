@@ -339,6 +339,38 @@ static_cast<float>(x)
 - **Operator:** `,` (separates expressions evaluated sequentially)
 - **Associativity:** Left-to-right.
 
+## Set Precision in C++
+
+The `setprecision(int n)` function from the `<iomanip>` header acts as a stream manipulator to control the precision of floating-point values in output streams like `cout`. By default, without any other formatting flags, `n` determines the **total number of significant digits** displayed. However, when combined with the `fixed` manipulator (`cout << fixed;`), `n` changes behavior to specify the exact number of digits displayed **after the decimal point**.
+
+### Example Code
+
+C++
+
+```cpp
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+    double num = 3.142857142857;
+
+    // Default behavior: specifies total significant digits
+    cout << "Total significant digits (5): " << setprecision(5) << num << endl;
+
+    // With fixed: specifies digits after the decimal point
+    cout << fixed;
+    cout << "Decimal places fixed (4): " << setprecision(4) << num << endl;
+
+    return 0;
+}
+
+//OUTPUT
+Total significant digits (5): 3.1429
+Decimal places fixed (4): 3.1429
+```
+
 ## **Loop Control Statements**
 
 Generally, the normal flow of any loop is that it will repeat till its test condition is true. In each repetition, it will execute the given set of statements. But C++ provides ways to modify this normal flow. This can be done by using loop control statements shown below:  
