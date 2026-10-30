@@ -546,16 +546,17 @@ std::set<int> numbers;
 **The** `<string>` **library has many functions that allow you to perform tasks on strings.**
 
 
-| **Function**                                                    | **Description**                                                                                       | **Example**      | Importance |     |
-| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------- | ---------- | --- |
-| append()                                                        | Adds characters or another string to the end of the current string                                    | str.append("!"); |            |     |
-| [at()](https://www.w3schools.com/cpp/ref_string_at.asp)         | Returns the character at a specified index, with bounds checking                                      |                  |            |     |
-| [length()](https://www.w3schools.com/cpp/ref_string_length.asp) | Returns the number of characters in the string                                                        |                  |            |     |
-| push\_back()                                                    | Adds a single character to the end of the string                                                      |                  |            |     |
-| pop\_back()                                                     | Removes the last character from the string                                                            |                  |            |     |
-| [size()](https://www.w3schools.com/cpp/ref_string_size.asp)     | Alias of [length()](https://www.w3schools.com/cpp/ref_string_length.asp); returns the string's length |                  |            |     |
-| substr()                                                        | Returns a portion of the string, starting at a given index and length                                 |                  |            |     |
-| swap()                                                          | Exchanges the contents of two strings                                                                 |                  |            |     |
+| **Function**                                                    | **Description**                                                                                       | **Example**                      | Importance |     |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------- | ---------- | --- |
+| append()                                                        | Adds characters or another string to the end of the current string                                    | str.append("!");                 |            |     |
+| [at()](https://www.w3schools.com/cpp/ref_string_at.asp)         | Returns the character at a specified index, with bounds checking                                      |                                  |            |     |
+| [length()](https://www.w3schools.com/cpp/ref_string_length.asp) | Returns the number of characters in the string                                                        |                                  |            |     |
+| push\_back()                                                    | Adds a single character to the end of the string                                                      |                                  |            |     |
+| pop\_back()                                                     | Removes the last character from the string                                                            |                                  |            |     |
+| [size()](https://www.w3schools.com/cpp/ref_string_size.asp)     | Alias of [length()](https://www.w3schools.com/cpp/ref_string_length.asp); returns the string's length |                                  |            |     |
+| substr()                                                        | Returns a portion of the string, starting at a given index and length                                 |                                  |            |     |
+| swap()                                                          | Exchanges the contents of two strings                                                                 |                                  |            |     |
+| reverse()                                                       | The standard way to reverse data structures in C++ is by using `std::reverse()`                       | reverse(str.begin(), str.end()); |            |     |
 
 
 # Stack in C++
