@@ -397,3 +397,438 @@ console.log(Object.getPrototypeOf(child) === parent);
 ```
 
 Interview takeaway: The prototype chain is the mechanism behind JavaScript inheritance. Every ordinary object eventually inherits from `Object.prototype`, except objects created without a prototype.
+
+## What are the different ways to clone an object in JavaScript?
+
+There are two main types of cloning:
+
+1. Shallow cloning: Copies only the first level. Nested objects still share references.
+
+```
+const original = {
+    name: "John",
+    address: { city: "Pune" }
+};
+
+const copy = { ...original };
+
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Mumbai
+```
+
+Common shallow-copy methods:
+
+- `Object.assign()`
+- Spread operator (`...`)
+
+2. Deep cloning: Creates an independent copy of nested objects as well.
+
+```javascript
+const original = {
+    name: "John",
+    address: { city: "Pune" }
+};
+
+const copy = structuredClone(original);
+
+copy.address.city = "Mumbai";
+
+console.log(original.address.city); // Pune
+```
+
+Interview takeaway: `structuredClone()` supports many built-in data types and circular references, but does not clone functions or arbitrary prototype chains. JSON stringify/parse is a more limited alternative.
+
+## What is the difference between map(), filter(), reduce(), and forEach()?
+
+These are JavaScript array methods used for iterating and processing arrays.
+
+
+| Method      | Purpose                              | Returns            |
+| ----------- | ------------------------------------ | ------------------ |
+| `map()`     | Transforms each element              | New array          |
+| `filter()`  | Selects matching elements            | New array          |
+| `reduce()`  | Combines elements into one result    | Accumulator result |
+| `forEach()` | Executes a callback for each element | `undefined`        |
+
+
+```javascript
+const numbers = [1, 2, 3, 4];
+
+// map
+console.log(numbers.map(n => n * 2));
+// [2, 4, 6, 8]
+
+// filter
+console.log(numbers.filter(n => n > 2));
+// [3, 4]
+
+// reduce
+console.log(numbers.reduce((sum, n) => sum + n, 0));
+// 10
+
+// forEach
+numbers.forEach(n => console.log(n));
+```
+
+Interview takeaway: `map()`, `filter()`, and `reduce()` are useful when you need a returned result. `forEach()` is generally used for side effects.
+
+## What is the difference between find(), findIndex(), and includes()?
+
+All three methods are used to search for elements in an array, but they return different results.
+
+- `find()`: Returns the first matching element or `undefined`.
+- `findIndex()`: Returns the index of the first matching element or `-1`.
+- `includes()`: Checks whether an array contains a particular value and returns a Boolean.
+
+```
+const numbers = [10, 20, 30, 40];
+
+console.log(numbers.find(n => n > 20));
+// 30
+
+console.log(numbers.findIndex(n => n > 20));
+// 2
+
+console.log(numbers.includes(20));
+// true
+```
+
+Interview takeaway: `find()` and `findIndex()` accept callback conditions, whereas `includes()` checks for a specific value using SameValueZero equality.
+
+## What is synchronous vs asynchronous JavaScript?
+
+Synchronous execution means code executes sequentially, and each operation must finish before the next one starts.
+
+Asynchronous execution allows certain operations, such as timers and network requests, to complete later without blocking the main JavaScript thread while waiting.
+
+```javascript
+// Synchronous
+console.log("First");
+console.log("Second");
+
+// Asynchronous
+console.log("First");
+
+setTimeout(() => {
+    console.log("Second");
+}, 1000);
+
+console.log("Third");
+
+//output:
+// Synchronous part
+First
+Second
+
+// Asynchronous part
+First
+Third
+Second
+```
+
+Interview takeaway: JavaScript execution is generally single-threaded at the level of a given main execution thread, but the runtime provides asynchronous APIs and event-loop mechanisms to handle non-blocking operations.  
+
+
+## What is the event loop in JavaScript?
+
+The event loop is a mechanism that coordinates the call stack and task queues to enable asynchronous execution.
+
+When the call stack becomes empty, the event loop processes queued work. Microtasks are processed before the next task (often called a macrotask) is taken from its queue.
+
+Common examples:
+
+- Microtasks: Promise callbacks, `queueMicrotask()`.
+- Tasks: `setTimeout()`, `setInterval()`, DOM events.
+
+```
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+console.log("End");
+```
+
+Output:
+
+```
+Start
+End
+Promise
+Timeout
+```
+
+Interview takeaway: Even when `setTimeout()` has a delay of `0`, its callback does not execute immediately. Promise callbacks execute as microtasks before the next timer task.
+
+## What is a Promise? Explain its different states.
+
+A Promise is an object representing the eventual completion or failure of an asynchronous operation.
+
+It has three states:
+
+1. Pending: Initial state; operation is still in progress.
+2. Fulfilled: Operation completed successfully.
+3. Rejected: Operation failed.
+
+Once fulfilled or rejected, a Promise is settled and cannot change its state again.
+
+```javascript
+const promise = new Promise((resolve, reject) => {
+    const success = true;
+
+    if (success) {
+        resolve("Operation successful");
+    } else {
+        reject("Operation failed");
+    }
+});
+
+promise
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
+    .finally(() => console.log("Completed"));
+```
+
+Interview takeaway: Promises help manage asynchronous operations and avoid deeply nested callbacks.
+
+## What are async/await, and how do they work internally?
+
+`async/await` is syntactic sugar built on top of Promises that makes asynchronous code easier to read and maintain.
+
+An `async` function always returns a Promise. The `await` keyword pauses execution of that async function until the Promise settles, without blocking the JavaScript main thread.
+
+```javascript
+async function getData() {
+    const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users"
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+}
+
+getData();
+```
+
+Interview takeaway: `await` can only be used inside an async function or at the top level of an ES module. Internally, async functions use Promise-based mechanisms to resume execution.
+
+## How do you handle errors in Promises and async/await?
+
+Errors in Promises can be handled using `.catch()`, while errors in async/await can be handled using `try...catch`.
+
+```javascript
+// Promise error handling
+fetchData()
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
+
+// Async/await error handling
+async function getData() {
+    try {
+        const data = await fetchData();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    } finally {
+        console.log("Execution completed");
+    }
+}
+```
+
+Interview takeaway: Use `try...catch` for sequential async operations. When using multiple independent Promises, `Promise.all()` can be combined with error handling to manage concurrent operations.
+
+## What is the difference between setTimeout(), setInterval(), and requestAnimationFrame()?
+
+These are browser timing APIs used to schedule code execution.
+
+
+| Method                    | Purpose                                                |
+| ------------------------- | ------------------------------------------------------ |
+| `setTimeout()`            | Executes a callback once after a minimum delay         |
+| `setInterval()`           | Repeatedly executes a callback at a specified interval |
+| `requestAnimationFrame()` | Schedules a callback before the browser's next repaint |
+
+
+```javascript
+// Executes once
+setTimeout(() => console.log("Hello"), 1000);
+
+// Executes repeatedly
+const interval = setInterval(() => {
+    console.log("Repeated");
+}, 1000);
+
+// Stop interval
+clearInterval(interval);
+
+// Animation callback
+requestAnimationFrame(() => {
+    console.log("Before repaint");
+});
+```
+
+Interview takeaway: `requestAnimationFrame()` is preferred for browser animations because it synchronizes with the browser's rendering cycle and can improve animation smoothness.
+
+## What are JavaScript modules? Explain named exports vs default exports.
+
+JavaScript modules allow code to be divided into separate files, making applications more maintainable, reusable, and organized.
+
+There are two commonly used export types:
+
+Named exports: A module can export multiple variables or functions by name.
+
+```
+// math.js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+
+// app.js
+import { add, subtract } from "./math.js";
+```
+
+Default export: A module can have one default export.
+
+```
+// user.js
+export default function getUser() {
+    return "John";
+}
+
+// app.js
+import getUser from "./user.js";
+```
+
+Interview takeaway: Named exports generally require matching imported names (though aliases are allowed), while default exports can be imported using any local name.
+
+## What is the difference between CommonJS and ES Modules?
+
+CommonJS and ES Modules are two JavaScript module systems.
+
+
+| Feature     | CommonJS                  | ES Modules            |
+| ----------- | ------------------------- | --------------------- |
+| Syntax      | `require()`               | `import`              |
+| Export      | `module.exports`          | `export`              |
+| Loading     | Traditionally synchronous | Statically structured |
+| Evaluation  | Runtime-oriented          | Module-based          |
+| Environment | Traditionally Node.js     | Browsers and Node.js  |
+
+
+```
+// CommonJS
+const fs = require("fs");
+
+module.exports = { name: "John" };
+```
+
+```
+// ES Modules
+import fs from "node:fs";
+
+export const user = { name: "John" };
+```
+
+Interview takeaway: ES Modules support static analysis, tree shaking, and top-level `await`. Modern Node.js supports both systems.
+
+## What is debouncing and throttling? Where are they used?
+
+Debouncing and throttling are techniques used to control how frequently a function executes, especially during frequent events such as scrolling, typing, and resizing.
+
+Debouncing: Executes a function only after a specified period has passed without another event.
+
+Throttling: Ensures a function executes at most once during a specified time interval.
+
+```
+// Debouncing
+function debounce(fn, delay) {
+    let timer;
+
+    return function (...args) {
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay);
+    };
+}
+
+// Throttling
+function throttle(fn, delay) {
+    let lastCall = 0;
+
+    return function (...args) {
+        const now = Date.now();
+
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            fn.apply(this, args);
+        }
+    };
+}
+```
+
+Interview takeaway:
+
+- Debouncing: Search input, autocomplete, API calls after typing.
+- Throttling: Scroll events, resize events, mouse movement.
+
+## What is the difference between localStorage, sessionStorage, and cookies?
+
+These are browser storage mechanisms used to store information on the client side.
+
+
+| Feature                   | localStorage           | sessionStorage         | Cookies                           |
+| ------------------------- | ---------------------- | ---------------------- | --------------------------------- |
+| Lifetime                  | Until manually cleared | Until tab session ends | Based on expiry                   |
+| Capacity                  | Usually around 5–10 MB | Usually around 5–10 MB | Around 4 KB each                  |
+| Sent with HTTP requests   | No                     | No                     | Yes, when applicable              |
+| Accessible via JavaScript | Yes                    | Yes                    | Unless HttpOnly                   |
+| Scope                     | Origin                 | Origin + tab session   | Depends on domain/path attributes |
+
+
+```
+// localStorage
+localStorage.setItem("name", "John");
+localStorage.getItem("name");
+
+// sessionStorage
+sessionStorage.setItem("token", "123");
+
+// Cookies
+document.cookie = "username=John; path=/";
+```
+
+Interview takeaway: Avoid storing sensitive authentication tokens in JavaScript-accessible storage when possible. `HttpOnly`, `Secure`, and `SameSite` cookie attributes help improve cookie security.
+
+## What is the difference between JSON.stringify() and JSON.parse()?
+
+`JSON.stringify()` converts a JavaScript value into a JSON string, whereas `JSON.parse()` converts a valid JSON string into a JavaScript value.
+
+```javascript
+const user = {
+    name: "John",
+    age: 25
+};
+
+// Object to JSON string
+const jsonData = JSON.stringify(user);
+
+console.log(jsonData);
+// '{"name":"John","age":25}'
+
+// JSON string to object
+const parsedData = JSON.parse(jsonData);
+
+console.log(parsedData.name); // John
+```
+
+Interview takeaway: `JSON.stringify()` is commonly used when sending data to APIs, while `JSON.parse()` is used when reading JSON data.
+
+Be aware that JSON serialization does not preserve every JavaScript value. For example, functions and `undefined` object properties are omitted, while circular references cause an error.
