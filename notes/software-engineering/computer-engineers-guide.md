@@ -2,6 +2,7 @@
 title: Computer Engineer's Guide
 date: 2026-10-29
 tags: [GK]
+pinned: true
 ---
 
 ## Difference between Data and Information
