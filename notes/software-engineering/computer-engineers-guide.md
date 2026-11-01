@@ -4,7 +4,7 @@ date: 2026-10-29
 tags: [GK]
 ---
 
-## what is the difference between Data and Information
+## Difference between Data and Information
 
 **Data** refers to raw, unprocessed facts and figures that have no meaning on their own. It can be numbers, words, measurements, or symbols that have not yet been organized or analyzed.
 
