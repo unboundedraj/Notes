@@ -308,3 +308,312 @@ Important interview points:
 - Tokens should have expiration times.
 - HTTPS should always be used.
 - JWT signatures protect integrity, not confidentiality.
+
+## What is the difference between OAuth 2.0 and JWT?
+
+OAuth 2.0 is an authorization framework that allows applications to access protected resources on behalf of users or clients.
+
+JWT is a token format that represents claims and can be used as an access token.
+
+
+| OAuth 2.0                       | JWT                            |
+| ------------------------------- | ------------------------------ |
+| Authorization framework         | Token format                   |
+| Defines authorization flows     | Defines token structure        |
+| Can use different token formats | Has a defined structure        |
+| Supports delegated access       | Can carry user/client claims   |
+| Uses access tokens              | Can be used as an access token |
+
+
+Example:
+
+Suppose you log into an application using Google.
+
+- OAuth 2.0 handles the authorization process and permission granting.
+- Google may issue an access token.
+- That access token may be a JWT or an opaque token.
+
+Interview tip: OAuth 2.0 is not an authentication protocol by itself. OpenID Connect (OIDC) adds an authentication layer on top of OAuth 2.0.
+
+## How do you secure REST APIs against common security vulnerabilities?
+
+REST APIs should implement multiple security layers to protect data and prevent unauthorized access.
+
+Important security practices:
+
+1. HTTPS: Encrypt communication between client and server.
+2. Authentication: Verify user identity using JWT, OAuth 2.0, or other suitable mechanisms.
+3. Authorization: Implement role-based or permission-based access control.
+4. Input Validation: Validate and sanitize incoming data.
+5. Rate Limiting: Prevent excessive requests and brute-force attacks.
+6. CORS: Configure allowed origins appropriately.
+7. SQL Injection Prevention: Use parameterized queries or ORM protections.
+8. Sensitive Data Protection: Never expose passwords, secrets, or confidential information.
+9. Token Management: Implement expiration, secure storage, and appropriate revocation strategies.
+10. Logging and Monitoring: Monitor suspicious activity without logging credentials or sensitive tokens.
+
+## What are API keys, and how are they different from access tokens?
+
+API keys are unique identifiers issued to applications or clients to identify and control API usage.
+
+Access tokens are credentials used to authorize access to protected resources.
+
+
+| API Key                              | Access Token                                   |
+| ------------------------------------ | ---------------------------------------------- |
+| Identifies an application/client     | Represents granted access                      |
+| Often long-lived                     | Often short-lived                              |
+| Commonly used for API identification | Commonly used for user or client authorization |
+| May have limited permission controls | Usually associated with scopes/permissions     |
+| Usually simpler                      | Often part of an authentication framework      |
+
+
+Example API key:
+
+```
+GET /api/products
+x-api-key: abc123xyz
+```
+
+Example access token:
+
+```
+GET /api/profile
+Authorization: Bearer <access_token>
+```
+
+Interview tip: An API key is not necessarily sufficient to authenticate an individual user. Access tokens generally provide more granular authorization capabilities.
+
+## What is API versioning? What are the different approaches to versioning
+
+API versioning allows developers to introduce changes to an API without breaking existing client applications.
+
+Common approaches:
+
+1. URI Versioning:
+
+```
+GET /api/v1/users
+GET /api/v2/users
+```
+
+2. Query Parameter Versioning:
+
+```
+GET /api/users?version=2
+```
+
+## What is pagination? Explain offset-based and cursor-based pagination.
+
+Pagination divides large API responses into smaller chunks to improve performance and reduce unnecessary data transfer.
+
+1. Offset-based pagination:
+
+Uses an offset and limit to retrieve records.
+
+```
+GET /api/users?offset=20&limit=10
+```
+
+This skips the first 20 records and returns the next 10.
+
+## What is rate limiting, and how can it be implemented?
+
+Rate limiting restricts the number of API requests a client can make within a specified time period.
+
+It protects APIs from abuse, excessive traffic, and resource exhaustion.
+
+Example:
+
+An API allows 100 requests per minute per client.
+
+If a client exceeds the limit, the server returns:
+
+```
+429 Too Many Requests
+```
+
+Response:
+
+```
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 60
+}
+```
+
+Common rate-limiting algorithms:
+
+1. Fixed Window Counter
+2. Sliding Window Log
+3. Sliding Window Counter
+4. Token Bucket
+5. Leaky Bucket
+
+Rate limiting can be implemented using API gateways, Redis, middleware, or dedicated rate-limiting services.
+
+Interview tip: The Token Bucket algorithm allows controlled bursts of traffic while maintaining an average request rate.
+
+## What is idempotency? Which HTTP methods are idempotent?
+
+An operation is idempotent if performing it multiple times produces the same intended server-side effect as performing it once.
+
+Idempotent HTTP methods:
+
+- GET
+- PUT
+- DELETE
+- HEAD
+- OPTIONS
+- TRACE
+
+Non-idempotent by default:
+
+- POST
+- PATCH (not necessarily idempotent)
+
+## What is caching in APIs? Explain Cache-Control, ETag, and Last-Modified.
+
+API caching stores previously generated responses so that repeated requests can be served faster without repeatedly executing the same backend operations.
+
+1. Cache-Control
+
+Defines caching rules.
+
+```
+Cache-Control: public, max-age=3600
+```
+
+This allows shared caches to store the response for up to one hour.
+
+2. ETag
+
+A unique identifier for a particular resource representation.
+
+Server response:
+
+```
+ETag: "abc123"
+```
+
+Client request:
+
+```
+If-None-Match: "abc123"
+```
+
+If the resource has not changed, the server returns:
+
+```
+304 Not Modified
+```
+
+No response body is required.
+
+3. Last-Modified
+
+Indicates when a resource was last modified.
+
+Server response:
+
+```
+Last-Modified: Sun, 01 Nov 2026 10:00:00 GMT
+```
+
+Client request:
+
+```
+If-Modified-Since: Sun, 01 Nov 2026 10:00:00 GMT
+```
+
+If the resource has not changed since that date, the server can return `304 Not Modified`.
+
+Interview tip:
+
+- Cache-Control defines caching behaviour.
+- ETag validates a specific representation using an identifier.
+- Last-Modified validates based on modification time.
+
+## What is the difference between API throttling and rate limiting?
+
+Both techniques control API traffic, but their implementation and objectives can differ.
+
+Rate Limiting: Defines the maximum number of requests a client can make within a specified period.
+
+Throttling: Controls or slows down incoming requests when traffic exceeds a desired processing rate or capacity.
+
+
+| Rate Limiting                    | Throttling                           |
+| -------------------------------- | ------------------------------------ |
+| Enforces request limits          | Controls request processing speed    |
+| Often rejects excess requests    | May delay, queue, or reject requests |
+| Protects against excessive usage | Helps manage system capacity         |
+
+
+Example:
+
+- Rate limiting: Maximum 100 requests per minute.
+- Throttling: Process requests at a maximum rate of 10 requests per second.
+
+Interview tip: The terms are sometimes used interchangeably in API management products, so explain the intended behaviour rather than relying only on terminology.
+
+## How would you design an API that handles millions of requests?
+
+To design an API capable of handling millions of requests, I would focus on scalability, performance, reliability, and efficient resource utilization.
+
+Important approaches:
+
+1. Load Balancing: Distribute requests across multiple server instances.
+2. Horizontal Scaling: Add more application instances as traffic increases.
+3. Caching: Use Redis or CDN caching to reduce repeated database queries.
+4. Database Optimization: Use indexing, query optimization, and connection pooling.
+5. Asynchronous Processing: Use message queues such as Kafka or RabbitMQ for time-consuming operations.
+6. Rate Limiting: Prevent traffic abuse.
+7. Pagination: Avoid returning unnecessarily large datasets.
+8. Monitoring: Track latency, throughput, error rates, and resource utilization.
+9. Fault Tolerance: Use retries with backoff, timeouts, and circuit breakers where appropriate.
+10. API Gateway: Centralize routing, authentication, rate limiting, and other cross-cutting concerns.
+
+```
+         Clients
+            |
+            v
+        API Gateway
+            |
+            v
+       Load Balancer
+            |
+      +-----+-----+
+      |     |     |
+     API   API   API
+    Server Server Server
+      |     |     |
+      +-----+-----+
+            |
+       Redis Cache
+            |
+         Database
+            |
+      Message Queue
+            |
+      Background Workers
+```
+
+Interview tip: Avoid making the database the bottleneck. Caching, optimized queries, connection pooling, and asynchronous processing are important for handling high traffic.
+
+## How do you debug an API that is returning slow responses or unexpected errors?
+
+I would follow a systematic debugging approach to identify whether the problem exists at the client, network, API server, database, or external service level.
+
+Steps:
+
+1. Check HTTP Status Code: Identify whether the API is returning 4xx or 5xx errors.
+2. Inspect Request and Response: Validate headers, parameters, request body, and response.
+3. Check API Logs: Look for exceptions, stack traces, and error messages.
+4. Measure Response Time: Identify whether the delay occurs in application processing, database queries, or external API calls.
+5. Analyze Database Queries: Check slow queries, missing indexes, and connection pool exhaustion.
+6. Check Network: Investigate DNS, latency, timeouts, and connectivity.
+7. Verify External Services: Check whether dependent APIs are responding slowly or failing.
+8. Use Monitoring Tools: Analyze metrics and distributed traces.
+9. Reproduce the Issue: Use Postman, cURL, or automated tests.
+10. Apply and Verify Fixes: Fix the root cause and test again.
