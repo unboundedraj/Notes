@@ -612,6 +612,31 @@ A Stack is a linear data structure that strictly follows the **Last-In, First-Ou
   | size()   | Returns the number of elements in the stack.                       | int s = st.size();                   |            |     |
   
 
+> The `toupper()` and `tolower()` functions are standard library functions in C++ (found in the `<cctype>` header file) used to convert individual alphabet characters between uppercase and lowercase ASCII values. Both functions take an `int` representation of a character and return its converted ASCII value—or the original character unchanged if it is already in the target case, a digit, or a special symbol. You can easily use them inside a range-based loop to transform entire strings, as demonstrated below:
+>
+> ```cpp
+> #include <iostream>
+> #include <string>
+> #include <cctype>
+> using namespace std;
+>
+> int main() {
+>     string text = "GeeksforGeeks 123!";
+>
+>     for (char &c : text) {
+>         c = toupper(c); // Converts alphabetical characters to uppercase
+>     }
+>     cout << "Uppercase: " << text << endl;
+>
+>     for (char &c : text) {
+>         c = tolower(c); // Converts alphabetical characters to lowercase
+>     }
+>     cout << "Lowercase: " << text << endl;
+>
+>     return 0;
+> }
+> ```
+
 ---
 
 ## New and Delete Operations in C++
