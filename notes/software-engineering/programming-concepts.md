@@ -67,6 +67,116 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
 
+# RANGE-BASED FOR LOOPS IN C++
+
+Range-based loops provide an easier way to traverse containers like vectors, arrays, maps, etc., without using indices or iterators.
+
+### 1. Without Reference (`&`)
+
+```
+for (int value : v) {
+    cout << value << " ";
+}
+```
+
+- A **copy** of each element is stored in `value`.
+- Any modification affects only the copy, not the original vector.
+
+```
+for (int value : v) {
+    value++;  // Original vector remains unchanged
+}
+```
+
+### 2. With Reference (`&`)
+
+```
+for (int &value : v) {
+    value++;
+}
+```
+
+- `value` becomes a reference to the actual element.
+- Changes directly affect the original vector.
+- No unnecessary copying takes place.
+
+### 3. With Constant Reference
+
+```
+for (const int &value : v) {
+    cout << value << " ";
+}
+```
+
+- Avoids copying.
+- Does not allow modification of original elements.
+
+**Quick comparison:**
+
+
+| Syntax             | Meaning                |
+| ------------------ | ---------------------- |
+| `int value`        | Copy                   |
+| `int &value`       | Reference (modifiable) |
+| `const int &value` | Reference (read-only)  |
+
+
+---
+
+## TRAVERSING MAPS IN C++
+
+A map stores elements as key-value pairs.
+
+- `first` → Key
+- `second` → Value
+
+### 1. Range-Based Loop
+
+```
+for (auto &itr : mp) {
+    cout << itr.first << " " << itr.second;
+}
+```
+
+- `auto` automatically determines the data type.
+- `&` avoids copying and allows modification of values.
+- `itr.first` accesses the key.
+- `itr.second` accesses the value.
+
+**Example:**
+
+```
+for (auto &itr : mp) {
+    itr.second++;  // Modifies original map
+}
+```
+
+**Note:** Map keys are immutable, but values can be modified.
+
+### 2. Accessing Pairs Using Iterators
+
+When an iterator points to a pair, we can access its members using:
+
+```
+itr->first   // Key
+itr->second  // Value
+```
+
+This is equivalent to:
+
+```
+(*itr).first
+(*itr).second
+```
+
+**Example:**
+
+```
+for (auto itr = mp.begin(); itr != mp.end(); itr++) {
+    cout << itr->first << " " << itr->second;
+}
+```
+
 # Standard Template Library
 
 ---
