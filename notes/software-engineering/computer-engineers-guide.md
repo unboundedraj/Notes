@@ -48,6 +48,16 @@ Authorization is the process of deciding *what* an authenticated user is permitt
   - **RBAC (Role-Based Access Control):** Permissions are assigned to roles (e.g., "Manager", "Employee"), and users are assigned to those roles.
   - **ABAC (Attribute-Based Access Control):** Access is granted based on attributes like user location, time of day, and security clearance level.
 
+## What are the stages a source code file goes through from compilation to execution?
+
+### The Steps in That Pipeline:
+
+1. **Preprocessing:** The preprocessor strips comments and processes directives (like `#include` in C++), inserting header contents and expanding macros.
+2. **Compilation:** The compiler translates the high-level source code into intermediate assembly code tailored to the target CPU architecture.
+3. **Assembly:** The assembler converts the assembly code into machine-readable binary code, producing an object file (`.o` or `.obj`).
+4. **Linking:** The linker combines all compiled object files with external libraries (like the standard library) to resolve references and create a single, unified executable file.
+5. **Loading:** The operating system's loader reads the executable file from disk, allocates virtual memory in RAM, sets up the call stack and heap, and hands control over to the CPU to start execution.
+
 ## **What is Call Stack?**
 
 The **call stack** is a special region of computer memory that manages function execution in a program using a Last-In, First-Out (LIFO) structure. Whenever a function is called, a new block of memory called a **stack frame** (or activation record) is pushed onto the stack to store its parameters, local variables, and return address. Once the function finishes executing, its frame is automatically popped off, returning control and restoring the execution context of the calling function.
