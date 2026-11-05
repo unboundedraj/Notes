@@ -26,7 +26,7 @@ React identifies the required changes and commits the necessary updates to the a
 
 Example:
 
-```cpp
+```javascript
 function Counter() {
   const [count, setCount] = useState(0);
 
@@ -67,7 +67,7 @@ These are the three major phases of a component's lifecycle.
 
 Example using useEffect():
 
-```
+```javascript
 function User() {
   useEffect(() => {
     console.log("Component Mounted");
@@ -162,7 +162,7 @@ Babel is commonly paired with bundlers like Webpack. In this workflow, Webpack p
 
 Functional Component:
 
-```
+```javascript
 function Welcome() {
   const [name, setName] = useState("John");
 
@@ -172,7 +172,7 @@ function Welcome() {
 
 Class Component:
 
-```
+```javascript
 class Welcome extends React.Component {
   state = { name: "John" };
 
@@ -199,7 +199,7 @@ Props and State are both used to manage data in React, but they serve different 
 
 Example:
 
-```cpp
+```javascript
 function Child({ name }) {
   return <h1>Hello {name}</h1>;
 }
@@ -228,7 +228,7 @@ It can make applications difficult to maintain when many components need the sam
 
 Example:
 
-```
+```javascript
 function App() {
   const user = "John";
 
@@ -257,7 +257,7 @@ These concepts primarily refer to how form elements manage their values in React
 
 Controlled Components: Form data is managed by React state. Every change updates the state through an event handler.
 
-```cpp
+```javascript
 function Form() {
   const [name, setName] = useState("");
 
@@ -272,7 +272,7 @@ function Form() {
 
 Uncontrolled Components: Form data is managed by the DOM itself. React accesses the value when needed using a ref.
 
-```cpp
+```javascript
 function Form() {
   const inputRef = useRef(null);
 
@@ -304,7 +304,7 @@ Keys are unique identifiers assigned to elements when rendering lists. React use
 
 Example:
 
-```
+```javascript
 const users = [
   { id: 1, name: "John" },
   { id: 2, name: "David" }
@@ -405,7 +405,7 @@ const [state, setState] = useState(initialValue);
 
 Example:
 
-```
+```javascript
 function Counter() {
   const [count, setCount] = useState(0);
 
@@ -459,7 +459,7 @@ This correctly increments the count twice.
 
 Syntax:
 
-```
+```javascript
 useEffect(() => {
   // Side effect
 
@@ -481,7 +481,7 @@ Different dependency configurations:
 
 Example:
 
-```
+```javascript
 useEffect(() => {
   console.log("Count changed:", count);
 }, [count]);
@@ -499,7 +499,7 @@ Difference between useEffect and useLayoutEffect:
 
 Example of useLayoutEffect:
 
-```
+```javascript
 useLayoutEffect(() => {
   const height = ref.current.offsetHeight;
   console.log(height);
@@ -519,7 +519,7 @@ React executes cleanup:
 
 Example:
 
-```
+```javascript
 useEffect(() => {
   const timer = setInterval(() => {
     console.log("Running...");
@@ -546,7 +546,7 @@ Other common use cases:
 
 Example – DOM access:
 
-```cpp
+```javascript
 function Input() {
   const inputRef = useRef(null);
 
@@ -588,7 +588,7 @@ const expensiveValue = useMemo(() => {
 
 useCallback(): Caches a function definition and returns the same function reference until its dependencies change.
 
-```
+```javascript
 const handleClick = useCallback(() => {
   console.log("Button clicked");
 }, []);
@@ -619,7 +619,7 @@ It helps solve prop drilling and is useful for sharing global or application-lev
 
 Example:
 
-```
+```javascript
 import { createContext, useContext } from "react";
 
 const ThemeContext = createContext("light");
@@ -654,7 +654,7 @@ Custom Hooks are JavaScript functions whose names start with `use` and which can
 
 Example:
 
-```
+```javascript
 function useCounter() {
   const [count, setCount] = useState(0);
 
@@ -668,7 +668,7 @@ function useCounter() {
 
 Using the custom Hook:
 
-```
+```javascript
 function Counter() {
   const { count, increment } = useCounter();
 
@@ -714,7 +714,7 @@ Important rules:
 
 Example:
 
-```
+```javascript
 function App() {
   const [show, setShow] = useState(false);
 
@@ -740,7 +740,7 @@ Higher-Order Component (HOC):
 
 A Higher-Order Component is a function that takes a component as an argument and returns an enhanced component with additional functionality.
 
-```
+```javascript
 function withAuth(Component) {
   return function EnhancedComponent(props) {
     const isLoggedIn = true;
@@ -764,7 +764,7 @@ Render Props:
 
 Render Props is a pattern where a component receives a function as a prop and calls that function to determine what UI should be rendered.
 
-```
+```javascript
 function DataProvider({ render }) {
   const data = "Hello React";
 
@@ -800,7 +800,7 @@ React provides `React.lazy()` and `Suspense` to implement component-level lazy l
 
 Example:
 
-```
+```javascript
 import { lazy, Suspense } from "react";
 
 const Dashboard = lazy(
@@ -870,7 +870,7 @@ All three are used to share and manage application state, but they have differen
 
 Context API example:
 
-```cpp
+```javascript
 const UserContext = createContext();
 
 <UserContext.Provider value={user}>
@@ -880,7 +880,7 @@ const UserContext = createContext();
 
 Redux Toolkit example:
 
-```cpp
+```javascript
 const counterSlice = createSlice({
   name: "counter",
   initialState: { value: 0 },
@@ -963,7 +963,7 @@ Example: Limiting scroll event handling to once every 500ms.
 
 Debouncing implementation:
 
-```cpp
+```javascript
 function Search() {
   const [query, setQuery] = useState("");
 
@@ -989,7 +989,7 @@ Here, the API call executes only when the user stops typing for 500ms.
 
 Throttling implementation:
 
-```cpp
+```javascript
 function handleScroll() {
   console.log("Scroll event triggered");
 }
@@ -1056,3 +1056,175 @@ Important points:
 - React events generally bubble through the React component tree.
 - Use `event.nativeEvent` to access the underlying native event.
 - Modern React does not pool SyntheticEvent objects, so `event.persist()` is generally unnecessary.
+
+## How would you prevent unnecessary API calls when a user types into a search input?
+
+We can use Debouncing to prevent API calls on every keystroke. Instead, we wait for the user to stop typing for a specified duration before making the API request.
+
+Example:
+
+```javascript
+function Search() {
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (!search.trim()) {
+      setResults([]);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `/api/search?q=${encodeURIComponent(search)}`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) {
+          throw new Error("API request failed");
+        }
+
+        const data = await response.json();
+        setResults(data);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+      }
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [search]);
+
+  return (
+    <>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+
+      {results.map(item => (
+        <p key={item.id}>{item.name}</p>
+      ))}
+    </>
+  );
+}
+```
+
+How it works:
+
+1. User enters text.
+2. A 500ms timer starts.
+3. If the user types again, the previous timer is cleared.
+4. Once the user stops typing, the API request executes.
+5. If a previous request is still running, it is aborted when the effect cleans up.
+
+This reduces unnecessary API requests and helps avoid displaying outdated search results.
+
+## How would you identify and fix unnecessary re-renders in a React application?
+
+Unnecessary re-renders occur when components execute again even though their output does not need to change.
+
+How to identify them:
+
+- React DevTools Profiler: Identifies which components render and how much time they take.
+- React DevTools Components: Helps inspect component props, state, and context.
+- Console logs: Can help identify unexpected component executions.
+
+Ways to optimize:
+
+1. `React.memo()` – Prevents re-rendering when props remain shallowly equal.
+2. `useMemo()` – Memoizes expensive calculations.
+3. `useCallback()` – Maintains stable function references.
+4. Avoid unnecessary state updates.
+5. Keep state close to the components that need it.
+6. Split large components into smaller components.
+7. Avoid unnecessary context updates.
+
+Example:
+
+Without memoization:
+
+```
+function Child({ name }) {
+  console.log("Child rendered");
+
+  return <h1>{name}</h1>;
+}
+```
+
+Optimized using React.memo:
+
+```
+const Child = React.memo(({ name }) => {
+  console.log("Child rendered");
+
+  return <h1>{name}</h1>;
+});
+```
+
+Now, if the parent re-renders but `name` remains shallowly equal, React can skip rendering the child.
+
+Important: Re-rendering is not necessarily bad. Optimize only when profiling identifies an actual performance issue.
+
+## What is the difference between Fetch and Axios? How do you handle API errors?
+
+Both Fetch and Axios are used to make HTTP requests from JavaScript applications.
+
+
+| Fetch                                           | Axios                                                              |
+| ----------------------------------------------- | ------------------------------------------------------------------ |
+| Built-in browser API.                           | Third-party HTTP library.                                          |
+| Requires manual JSON parsing using `.json()`.   | Automatically parses JSON responses in common cases.               |
+| Does not reject on HTTP errors like 404 or 500. | Rejects the promise for unsuccessful HTTP status codes by default. |
+| Supports AbortController.                       | Supports AbortController.                                          |
+| Interceptors are not built in.                  | Provides request and response interceptors.                        |
+
+
+Fetch example:
+
+```javascript
+async function getUsers() {
+  try {
+    const response = await fetch("/api/users");
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    const data = await response.json();
+
+    console.log(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+```
+
+Axios example:
+
+```
+import axios from "axios";
+
+async function getUsers() {
+  try {
+    const response = await axios.get("/api/users");
+
+    console.log(response.data);
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+  }
+}
+```
+
+When to use what?
+
+- Fetch: Suitable for simple API requests without additional dependencies.
+- Axios: Useful for applications requiring interceptors, centralized configurations, and convenient request handling
