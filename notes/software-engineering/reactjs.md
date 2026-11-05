@@ -57,6 +57,43 @@ When the count changes, React updates the relevant UI instead of manually recrea
 
 Important: Virtual DOM does not automatically make every operation faster than direct DOM manipulation. Its primary benefit is enabling React to efficiently coordinate UI updates through reconciliation.
 
+## What is the difference between Mounting, Updating, and Unmounting in React?
+
+These are the three major phases of a component's lifecycle.
+
+1. Mounting: The component is created and added to the DOM for the first time.
+2. Updating: The component re-renders when its state or props change.
+3. Unmounting: The component is removed from the DOM.
+
+Example using useEffect():
+
+```
+function User() {
+  useEffect(() => {
+    console.log("Component Mounted");
+
+    return () => {
+      console.log("Component Unmounted");
+    };
+  }, []);
+
+  return <h1>User Component</h1>;
+}
+```
+
+- The effect runs after the component mounts.
+- The cleanup function runs when the component unmounts.
+
+Class component lifecycle methods:
+
+
+| Lifecycle Phase | Method                   |
+| --------------- | ------------------------ |
+| Mounting        | `componentDidMount()`    |
+| Updating        | `componentDidUpdate()`   |
+| Unmounting      | `componentWillUnmount()` |
+
+
 ## What is JSX? How does JSX work internally, and why do we use it?
 
 JSX stands for JavaScript XML. It is a syntax extension for JavaScript that allows us to write HTML-like markup inside JavaScript code.
@@ -903,6 +940,79 @@ const Child = React.memo(({ name }) => {
 React can skip rendering `Child` when its props remain shallowly equal.
 
 Interview tip: Always identify the actual performance bottleneck using profiling before applying optimization techniques.
+
+## What is the difference between Debouncing and Throttling? How would you implement them in React?
+
+Both are techniques used to control how frequently a function executes.
+
+Debouncing: Delays function execution until the user stops triggering an event for a specified period.
+
+Example: Search suggestions should appear after the user stops typing for 500ms.
+
+Throttling: Ensures a function executes at most once within a specified time interval, regardless of how frequently an event occurs.
+
+Example: Limiting scroll event handling to once every 500ms.
+
+
+| Debouncing                       | Throttling                           |
+| -------------------------------- | ------------------------------------ |
+| Executes after the event stops.  | Executes at controlled intervals.    |
+| Resets the timer on every event. | Limits execution frequency.          |
+| Useful for search inputs.        | Useful for scroll and resize events. |
+
+
+Debouncing implementation:
+
+```cpp
+function Search() {
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("API Call:", query);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+Here, the API call executes only when the user stops typing for 500ms.
+
+Throttling implementation:
+
+```cpp
+function handleScroll() {
+  console.log("Scroll event triggered");
+}
+
+useEffect(() => {
+  let lastExecution = 0;
+
+  const throttledScroll = () => {
+    const now = Date.now();
+
+    if (now - lastExecution >= 500) {
+      handleScroll();
+      lastExecution = now;
+    }
+  };
+
+  window.addEventListener("scroll", throttledScroll);
+
+  return () => {
+    window.removeEventListener("scroll", throttledScroll);
+  };
+}, []);
+```
 
 ## What are React's Synthetic Events? How are they different from Native DOM Events?
 
