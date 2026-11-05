@@ -302,8 +302,7 @@ function Counter() {
 
 Every time the count changes, React re-renders the component.
 
-Important: A re-render does not necessarily mean the actual DOM will be updated. React may determine that no DOM changes are required.  
-
+Important: A re-render does not necessarily mean the actual DOM will be updated. React may determine that no DOM changes are required.
 
 ## What are React Hooks? Why were they introduced?
 
@@ -881,3 +880,46 @@ const Child = React.memo(({ name }) => {
 React can skip rendering `Child` when its props remain shallowly equal.
 
 Interview tip: Always identify the actual performance bottleneck using profiling before applying optimization techniques.
+
+## What are React's Synthetic Events? How are they different from Native DOM Events?
+
+Synthetic Events are React's cross-browser event objects that provide a consistent interface for handling events across different browsers.
+
+React wraps native browser events in its SyntheticEvent system, exposing properties and methods similar to native DOM events.
+
+Example:
+
+```cpp
+function App() {
+  const handleClick = (event) => {
+    console.log(event.type);
+    console.log(event.target);
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Click Me
+    </button>
+  );
+}
+```
+
+Here, `event` is a React SyntheticEvent.
+
+Difference:
+
+
+| Synthetic Events                       | Native DOM Events                      |
+| -------------------------------------- | -------------------------------------- |
+| Provided through React event handling. | Provided directly by the browser.      |
+| Offers a consistent event interface.   | Browser-native event interface.        |
+| Handled through React's event system.  | Handled through DOM event APIs.        |
+| Accessed through props like `onClick`. | Registered using `addEventListener()`. |
+
+
+Important points:
+
+- React event names use camelCase, such as `onClick` and `onChange`.
+- React events generally bubble through the React component tree.
+- Use `event.nativeEvent` to access the underlying native event.
+- Modern React does not pool SyntheticEvent objects, so `event.persist()` is generally unnecessary.
