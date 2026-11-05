@@ -24,9 +24,13 @@ In competitive programming, use:
 
 ---
 
+> #Note that the newline "\\n" works faster than endl, because endl always causes a flush operation.  
+> #8 bits = 1 byte  
+> # e is a scientific way to write 10 to the power something and it works in programming languages as well e.g.: 1e24 is 10 to the power 24
+
 ## Time Complexity
 
-**Time Complexity** measures how the runtime of an algorithm scales as the input size ($N$) grows. It does not measure absolute seconds, as that depends on hardware; instead, it counts the total number of fundamental operations executed.
+**Time Complexity** measures how the runtime of an algorithm scales as the input size (N) grows. It does not measure absolute seconds, as that depends on hardware; instead, it counts the total number of fundamental operations executed.
 
 ## Space Complexity
 
