@@ -5,6 +5,13 @@ tags: [ascii, gk, sorting, bit operators, time complexity, space complexity]
 pinned: true
 ---
 
+## Approximate Range for numerical variables
+
+In competitive programming, use:
+
+- `int` for values up to around (10^9).
+- `long long` for values up to around (10^18)
+
 ## ASCII Values
 
 - **Uppercase letters (A - Z):** 65 to 90
