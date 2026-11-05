@@ -50,7 +50,7 @@ Authorization is the process of deciding *what* an authenticated user is permitt
 
 ## What are the stages a source code file goes through from compilation to execution?
 
-### The Steps in That Pipeline:
+The Steps in That Pipeline:
 
 1. **Preprocessing:** The preprocessor strips comments and processes directives (like `#include` in C++), inserting header contents and expanding macros.
 2. **Compilation:** The compiler translates the high-level source code into intermediate assembly code tailored to the target CPU architecture.
