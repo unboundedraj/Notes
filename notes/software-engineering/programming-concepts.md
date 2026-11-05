@@ -26,7 +26,8 @@ In competitive programming, use:
 
 > #Note that the newline "\\n" works faster than endl, because endl always causes a flush operation.  
 > #8 bits = 1 byte  
-> # e is a scientific way to write 10 to the power something and it works in programming languages as well e.g.: 1e24 is 10 to the power 24
+> #Note that e is a scientific way to write 10 to the power something and it works in programming languages as well e.g.: 1e24 is 10 to the power 24  
+>
 
 ## Time Complexity
 
