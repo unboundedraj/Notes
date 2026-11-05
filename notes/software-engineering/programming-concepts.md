@@ -67,7 +67,7 @@ When calculating Big O, you drop constants and lower-order terms. For example, i
 > - **O(2^N) Exponential:** The runtime doubles with every single addition to the input.  
 > *Examples:* Unoptimized branching recursion (like naive Fibonacci), generating all subsets of a set.
 
-# RANGE-BASED FOR LOOPS IN C++
+# Range based for loops in C++
 
 Range-based loops provide an easier way to traverse containers like vectors, arrays, maps, etc., without using indices or iterators.
 
@@ -123,7 +123,7 @@ for (const int &value : v) {
 
 ---
 
-## TRAVERSING MAPS IN C++
+## Traversing maps in C++
 
 A map stores elements as key-value pairs.
 
