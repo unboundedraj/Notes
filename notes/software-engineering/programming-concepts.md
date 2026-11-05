@@ -26,8 +26,19 @@ In competitive programming, use:
 
 > #Note that the newline "\\n" works faster than endl, because endl always causes a flush operation.  
 > #8 bits = 1 byte  
-> #Note that e is a scientific way to write 10 to the power something and it works in programming languages as well e.g.: 1e24 is 10 to the power 24  
+> #Note that e is a scientific way to write 10 to the power something and it works in programming languages as well e.g.: 1e24 is (1 multiplied by 10 to the power 24)
+
+> Use the below functions to find the minimum and maximum elements in vectors  
+> Note that it returns the pointer and we are dereferencing it to find the actual value  
+> The `min()` and `max()` functions work directly on two values.  
+> You cannot directly write `min(v)` or `max(v)`.  
+> Instead, use `min_element()` and `max_element()` from the `<algorithm>` library.
 >
+> ```
+>     int mn = *min_element(v.begin(), v.end());
+>     int mx = *max_element(v.begin(), v.end());
+> //Both min_element() and max_element() take O(n) time, where n is the number of elements.
+> ```
 
 ## Time Complexity
 
