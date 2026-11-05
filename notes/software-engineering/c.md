@@ -558,17 +558,17 @@ std::set<int> numbers;
 ```
 
 
-| Function       | Description                                                        | Example                           | Importance |     |
-| -------------- | ------------------------------------------------------------------ | --------------------------------- | ---------- | --- |
-| insert()       | Adds a new element to the set and automatically sorts it.          | mySet.insert(15);                 |            |     |
-| erase()        | Removes a specific element by value or via an iterator.            | mySet.erase(15);                  |            |     |
-| find()         | Returns an iterator to the element if found, or `set::end` if not. | auto it = mySet.find(10);         |            |     |
-| count()        | Returns 1 if the element exists in the set, and 0 if it does not.  | if (mySet.count(10)) { }          | \*\*       |     |
-| size()         | Returns the total number of elements currently in the set          | int s = mySet.size();             |            |     |
-| empty()        | Checks whether the set is empty (returns `true` or `false`).       | bool isEmpty = mySet.empty();     |            |     |
-| clear()        | Removes all elements from the set.                                 | mySet.clear();                    |            |     |
-| lower\_bound() | Returns an iterator to the first element $\\ge$ the given value.   | auto it = mySet.lower\_bound(10); |            |     |
-| upper\_bound() | Returns an iterator to the first element $&gt;$ the given value.   | auto it = mySet.upper\_bound(10); |            |     |
+| Function       | Description                                                                                                           | Example                           | Importance |     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ---------- | --- |
+| insert()       | Adds a new element to the set and automatically sorts it.                                                             | mySet.insert(15);                 |            |     |
+| erase()        | Removes a specific element by value or via an iterator.                                                               | mySet.erase(15);                  |            |     |
+| find()         | Returns an iterator to the element if found, or `set::end` if not.                                                    | auto it = mySet.find(10);         |            |     |
+| count()        | Returns 1 if the element exists in the set, and 0 if it does not.                                                     | if (mySet.count(10)) { }          | \*\*       |     |
+| size()         | Returns the total number of elements currently in the set                                                             | int s = mySet.size();             |            |     |
+| empty()        | Checks whether the set is empty (returns `true` or `false`).                                                          | bool isEmpty = mySet.empty();     |            |     |
+| clear()        | Removes all elements from the set.                                                                                    | mySet.clear();                    |            |     |
+| lower\_bound() | Returns an iterator to the first element strictly greater than the given value.                                       | auto it = mySet.lower\_bound(10); |            |     |
+| upper\_bound() | returns the same element's index if it exists in the array otherwise it returns the index of the next greater element | auto it = mySet.upper\_bound(10); |            |     |
 
 
 # Strings in C++
