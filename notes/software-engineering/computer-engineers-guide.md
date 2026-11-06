@@ -58,6 +58,12 @@ The Steps in That Pipeline:
 4. **Linking:** The linker combines all compiled object files with external libraries (like the standard library) to resolve references and create a single, unified executable file.
 5. **Loading:** The operating system's loader reads the executable file from disk, allocates virtual memory in RAM, sets up the call stack and heap, and hands control over to the CPU to start execution.
 
+## What is client server architecture?
+
+**Client-server architecture** is a computing model in which tasks and workloads are distributed between the service providers (**servers**) and service requesters (**clients**).
+
+In this structure, the **client** (such as a web browser, mobile app, or desktop software) initiates a request for data or functionality, and the **server** (a powerful remote computer, database, or application host) processes that request and sends back the appropriate response.
+
 ## **What is Call Stack?**
 
 The **call stack** is a special region of computer memory that manages function execution in a program using a Last-In, First-Out (LIFO) structure. Whenever a function is called, a new block of memory called a **stack frame** (or activation record) is pushed onto the stack to store its parameters, local variables, and return address. Once the function finishes executing, its frame is automatically popped off, returning control and restoring the execution context of the calling function.
