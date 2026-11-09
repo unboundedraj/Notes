@@ -67,3 +67,51 @@ In this structure, the **client** (such as a web browser, mobile app, or desktop
 ## **What is Call Stack?**
 
 The **call stack** is a special region of computer memory that manages function execution in a program using a Last-In, First-Out (LIFO) structure. Whenever a function is called, a new block of memory called a **stack frame** (or activation record) is pushed onto the stack to store its parameters, local variables, and return address. Once the function finishes executing, its frame is automatically popped off, returning control and restoring the execution context of the calling function.
+
+## What is the MVC Architecture?
+
+**MVC (Model-View-Controller)** is a software design pattern that splits an application into three connected parts, so that data, UI, and logic are kept separate. This makes code easier to organize, test, and maintain.
+
+### The three parts
+
+**1. Model**  
+Manages the application’s **data and business logic**. It talks to the database, validates data, and defines rules. It knows nothing about how data is displayed.
+
+**2. View**  
+The **user interface**: what the user sees (HTML, templates, screens). It displays data from the model and sends user actions to the controller.
+
+**3. Controller**  
+The **middleman**. It receives user input, decides what to do, asks the model to fetch or update data, and chooses which view to show.
+
+### Flow
+
+```
+User → Controller → Model
+          ↓           ↓
+        View  ←───────┘
+          ↓
+        User sees result
+```
+
+1. User interacts (clicks, submits a form)
+2. **Controller** handles the request
+3. **Model** is read or updated
+4. **View** is refreshed with the new data and shown to the user
+
+### Example: web app (e.g., Spring Boot, Django, Rails)
+
+- **Model**: `User` class + database logic
+- **View**: HTML/Thymeleaf page showing the user profile
+- **Controller**: `UserController` that handles `GET /users/1`, fetches the user from the model, and returns the profile view
+
+### Advantages
+
+- **Separation of concerns**: UI, logic, and data are independent
+- **Reusability**: one model can power multiple views
+- **Easier testing**: each layer can be tested on its own
+- **Parallel development**: frontend and backend teams can work separately
+
+### Disadvantages
+
+- Can become complex for small apps
+- In client-side apps, bidirectional updates between views and models can get tangled (the issue Flux solved)
