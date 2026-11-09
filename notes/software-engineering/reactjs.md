@@ -1254,3 +1254,68 @@ Things like prop drilling, context setup, and Redux (especially older patterns) 
 
 **8. JSX is a mixed blessing**  
 Mixing markup and logic is powerful, but some developers dislike it, and it requires a build step (Babel/TypeScript/bundler).
+
+## What is Flux?
+
+Flux is Facebook’s architecture pattern for client-side apps, built around **unidirectional data flow**, so state changes are predictable and easy to debug in React apps.
+
+**Four parts:**
+
+- **Action**: plain object describing what happened (`{ type: "ADD_TODO" }`)
+- **Dispatcher**: single central hub that sends every action to the stores
+- **Store**: holds app state and updates it in response to actions
+- **View**: React components that read from stores and trigger new actions
+
+**Diagram:**
+
+```
+Action → Dispatcher → Store → View
+   ↑                           |
+   └─────── user interaction ──┘
+```
+
+## What is Redux ?
+
+**Redux** is a predictable state management library for JavaScript apps, most commonly used with React. It keeps the entire application state in a single central **store**, and the state can only be changed by dispatching **actions**, which are handled by pure functions called **reducers**.  
+**Redux is a predictable state container for JavaScript apps that manages global state through a single store, actions, and reducers, using unidirectional data flow.**
+
+### Core concepts
+
+- **Store**: a single object that holds the whole app state
+- **Action**: a plain object describing what happened, e.g. `{ type: "INCREMENT" }`
+- **Reducer**: a pure function `(state, action) => newState` that returns the updated state
+- **Dispatch**: the method used to send an action to the store
+
+### Flow
+
+```
+View → dispatch(Action) → Reducer → Store (new state) → View re-renders
+```
+
+### Small example
+
+jsx
+
+```jsx
+import { createStore } from "redux";
+
+function counterReducer(state = { count: 0 }, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(counterReducer);
+store.dispatch({ type: "INCREMENT" });
+```
+
+In React, the **react-redux** library connects components to the store using `useSelector` (read state) and `useDispatch` (send actions). Today, the recommended way to write Redux is **Redux Toolkit**, which reduces boilerplate.
+
+### Three principles
+
+1. **Single source of truth**: one store for the whole app
+2. **State is read-only**: change it only by dispatching actions
+3. **Changes are made with pure functions**: reducers
