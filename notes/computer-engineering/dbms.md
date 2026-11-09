@@ -10,8 +10,8 @@ Definition : A Database Management System (DBMS) is collection of interrelated d
 The primary goal of DBMS is to provide a way to store and retrieve the required information from the database in convenient and efficient manner.  
 For managing the data in the database two important tasks are conducted -
 
-1.  Define the structure for storage of information.
-2.  Provide mechanism for manipulation of information.
+1. Define the structure for storage of information.
+2. Provide mechanism for manipulation of information.
 
 ## What is a DBMS, and how does it differ from a file system?
 
@@ -37,8 +37,6 @@ CREATE TABLE student (
 );
 ```
 
-
-
 > In a relational database table:
 >
 > - **Columns** are called **attributes** (or fields). They represent the specific properties or characteristics of an entity (e.g., `StudentID`, `Name`, `Email`).
@@ -51,106 +49,125 @@ Normalization organizes tables to reduce redundancy and avoid insert, update, an
 - To make normalization concrete, let's trace a poorly designed table and see how it evolves step-by-step through each normal form.
 
   Imagine we are tracking **Students**, their **Courses**, and their **Instructors** in a single unnormalized table.
-  ### Unnormalized Table (Pre-1NF)
-  
-  | StudentID | StudentName | CoursesEnrolled | InstructorName       | InstructorOffice   |
-  | --------- | ----------- | --------------- | -------------------- | ------------------ |
-  | 101       | Alice       | Math, Physics   | Dr. Smith            | Room 302           |
-  | 102       | Bob         | Chemistry       | Dr. Jones            | Room 405           |
-  | 103       | Charlie     | Math, Chemistry | Dr. Smith, Dr. Jones | Room 302, Room 405 |
-  
-  - **The Problem:** Notice that Alice has multiple courses (`Math, Physics`) jammed into a single cell, and Charlie has multiple instructors and offices listed in comma-separated strings. This violates atomicity.
-  ### 1. First Normal Form (1NF)
-  - **Rule:** Every cell must contain a single, atomic (indivisible) value, and each row must be unique. No repeating groups or lists in a single cell.
 
-  **Table after 1NF:**
-  
-  | StudentID | StudentName | Course    | InstructorName | InstructorOffice |
-  | --------- | ----------- | --------- | -------------- | ---------------- |
-  | 101       | Alice       | Math      | Dr. Smith      | Room 302         |
-  | 101       | Alice       | Physics   | Dr. Smith      | Room 302         |
-  | 102       | Bob         | Chemistry | Dr. Jones      | Room 405         |
-  | 103       | Charlie     | Math      | Dr. Smith      | Room 302         |
-  | 103       | Charlie     | Chemistry | Dr. Jones      | Room 405         |
-  
-  - **Composite Primary Key:** `(StudentID, Course)` is now required to uniquely identify each row.
-  - **Remaining Issue:** Redundancy. If Dr. Smith changes his office, we have to update multiple rows. If a student drops a course, we might accidentally delete instructor data.
-  ### 2. Second Normal Form (2NF)
-  - **Rule:** Must be in 1NF, and **no partial dependencies**. Every non-key attribute must depend on the *entire* primary key, not just a part of it.
-  - **Analysis:** Our primary key is `(StudentID, Course)`.
-    - Does `StudentName` depend on *both* StudentID and Course? No, it depends *only* on `StudentID`. (Partial dependency!)
-    - Does `InstructorName` and `InstructorOffice` depend on the student? No, they depend *only* on the `Course`.
+### Unnormalized Table (Pre-1NF)
 
-  To fix this, we split the table into separate tables:
 
-  **Table 1: Students**
-  
-  | StudentID | StudentName |
-  | --------- | ----------- |
-  | 101       | Alice       |
-  | 102       | Bob         |
-  | 103       | Charlie     |
-  
+| StudentID | StudentName | CoursesEnrolled | InstructorName       | InstructorOffice   |
+| --------- | ----------- | --------------- | -------------------- | ------------------ |
+| 101       | Alice       | Math, Physics   | Dr. Smith            | Room 302           |
+| 102       | Bob         | Chemistry       | Dr. Jones            | Room 405           |
+| 103       | Charlie     | Math, Chemistry | Dr. Smith, Dr. Jones | Room 302, Room 405 |
 
-  **Table 2: Student\_Courses (Junction Table)**
-  
-  | StudentID | Course    |
-  | --------- | --------- |
-  | 101       | Math      |
-  | 101       | Physics   |
-  | 102       | Chemistry |
-  | 103       | Math      |
-  | 103       | Chemistry |
-  
 
-  **Table 3: Courses\_Instructors**
-  
-  | Course    | InstructorName | InstructorOffice |
-  | --------- | -------------- | ---------------- |
-  | Math      | Dr. Smith      | Room 302         |
-  | Physics   | Dr. Smith      | Room 302         |
-  | Chemistry | Dr. Jones      | Room 405         |
-  
-  ### 3. Third Normal Form (3NF)
-  - **Rule:** Must be in 2NF, and **no transitive dependencies** (a non-key attribute cannot depend on another non-key attribute).
-  - **Looking at Table 3 (**`Courses_Instructors`**):**
-    - Primary Key: `Course`
-    - `InstructorName` depends on `Course`.
-    - `InstructorOffice` depends on `InstructorName` (e.g., Dr. Smith always sits in Room 302).
-    - Because `InstructorOffice` depends on a non-key attribute (`InstructorName`), we have a transitive dependency (`Course` →\\rightarrow→ `InstructorName` →\\rightarrow→ `InstructorOffice`).
+- **The Problem:** Notice that Alice has multiple courses (`Math, Physics`) jammed into a single cell, and Charlie has multiple instructors and offices listed in comma-separated strings. This violates atomicity.
 
-  To fix this, we split Table 3 into two:
+### 1. First Normal Form (1NF)
 
-  **Table A: Courses**
-  
-  | Course    | InstructorName |
-  | --------- | -------------- |
-  | Math      | Dr. Smith      |
-  | Physics   | Dr. Smith      |
-  | Chemistry | Dr. Jones      |
-  
+- **Rule:** Every cell must contain a single, atomic (indivisible) value, and each row must be unique. No repeating groups or lists in a single cell.
 
-  **Table B: Instructors**
-  
-  | InstructorName | InstructorOffice |
-  | -------------- | ---------------- |
-  | Dr. Smith      | Room 302         |
-  | Dr. Jones      | Room 405         |
-  
-  ### 4. Boyce-Codd Normal Form (BCNF)
-  - **Rule:** A stricter version of 3NF. For every functional dependency X→YX \\rightarrow YX→Y, **XXX must be a super key**.
-  - **Scenario where 3NF isn't enough:** Imagine a table tracking **Students**, the **Subjects** they study, and their assigned **Advisors**:
-    - Suppose a student can have multiple advisors for different subjects, but a specific advisor only teaches one specific subject (e.g., Advisor →\\rightarrow→ Subject).
-    - If the table schema is `(StudentID, Advisor, Subject)`:
-      - Primary/Candidate Keys: `(StudentID, Subject)` can identify the advisor, and `(StudentID, Advisor)` can identify the subject.
-      - Functional Dependency: `Advisor` →\\rightarrow→ `Subject` (Because an advisor only handles one subject).
-      - **The Violation:** `Advisor` determines `Subject`, but `Advisor` is **not** a super key on its own.
+**Table after 1NF:**
 
-  **How BCNF fixes it:** We decompose the table so that every determinant is a candidate key:
-  1. **Advisor\_Subject Table:** `(Advisor, Subject)`
-  2. **Student\_Advisor Table:** `(StudentID, Advisor)`
 
-  By breaking them down this way, data anomalies are eliminated, ensuring your database remains clean, scalable, and easy to maintain.
+| StudentID | StudentName | Course    | InstructorName | InstructorOffice |
+| --------- | ----------- | --------- | -------------- | ---------------- |
+| 101       | Alice       | Math      | Dr. Smith      | Room 302         |
+| 101       | Alice       | Physics   | Dr. Smith      | Room 302         |
+| 102       | Bob         | Chemistry | Dr. Jones      | Room 405         |
+| 103       | Charlie     | Math      | Dr. Smith      | Room 302         |
+| 103       | Charlie     | Chemistry | Dr. Jones      | Room 405         |
+
+
+- **Composite Primary Key:** `(StudentID, Course)` is now required to uniquely identify each row.
+- **Remaining Issue:** Redundancy. If Dr. Smith changes his office, we have to update multiple rows. If a student drops a course, we might accidentally delete instructor data.
+
+### 2. Second Normal Form (2NF)
+
+- **Rule:** Must be in 1NF, and **no partial dependencies**. Every non-key attribute must depend on the *entire* primary key, not just a part of it.
+- **Analysis:** Our primary key is `(StudentID, Course)`.
+  - Does `StudentName` depend on *both* StudentID and Course? No, it depends *only* on `StudentID`. (Partial dependency!)
+  - Does `InstructorName` and `InstructorOffice` depend on the student? No, they depend *only* on the `Course`.
+
+To fix this, we split the table into separate tables:
+
+**Table 1: Students**
+
+
+| StudentID | StudentName |
+| --------- | ----------- |
+| 101       | Alice       |
+| 102       | Bob         |
+| 103       | Charlie     |
+
+
+**Table 2: Student\_Courses (Junction Table)**
+
+
+| StudentID | Course    |
+| --------- | --------- |
+| 101       | Math      |
+| 101       | Physics   |
+| 102       | Chemistry |
+| 103       | Math      |
+| 103       | Chemistry |
+
+
+**Table 3: Courses\_Instructors**
+
+
+| Course    | InstructorName | InstructorOffice |
+| --------- | -------------- | ---------------- |
+| Math      | Dr. Smith      | Room 302         |
+| Physics   | Dr. Smith      | Room 302         |
+| Chemistry | Dr. Jones      | Room 405         |
+
+
+### 3. Third Normal Form (3NF)
+
+- **Rule:** Must be in 2NF, and **no transitive dependencies** (a non-key attribute cannot depend on another non-key attribute).
+- **Looking at Table 3 (**`Courses_Instructors`**):**
+  - Primary Key: `Course`
+  - `InstructorName` depends on `Course`.
+  - `InstructorOffice` depends on `InstructorName` (e.g., Dr. Smith always sits in Room 302).
+  - Because `InstructorOffice` depends on a non-key attribute (`InstructorName`), we have a transitive dependency (`Course` → `InstructorName` → `InstructorOffice`).
+
+To fix this, we split Table 3 into two:
+
+**Table A: Courses**
+
+
+| Course    | InstructorName |
+| --------- | -------------- |
+| Math      | Dr. Smith      |
+| Physics   | Dr. Smith      |
+| Chemistry | Dr. Jones      |
+
+
+**Table B: Instructors**
+
+
+| InstructorName | InstructorOffice |
+| -------------- | ---------------- |
+| Dr. Smith      | Room 302         |
+| Dr. Jones      | Room 405         |
+
+
+### 4. Boyce-Codd Normal Form (BCNF)
+
+- **Rule:** A stricter version of 3NF. For every functional dependency X→YX \\rightarrow YX→Y, **XXX must be a super key**.
+- **Scenario where 3NF isn't enough:** Imagine a table tracking **Students**, the **Subjects** they study, and their assigned **Advisors**:
+  - Suppose a student can have multiple advisors for different subjects, but a specific advisor only teaches one specific subject (e.g., Advisor → Subject).
+  - If the table schema is `(StudentID, Advisor, Subject)`:
+    - Primary/Candidate Keys: `(StudentID, Subject)` can identify the advisor, and `(StudentID, Advisor)` can identify the subject.
+    - Functional Dependency: `Advisor` → `Subject` (Because an advisor only handles one subject).
+    - **The Violation:** `Advisor` determines `Subject`, but `Advisor` is **not** a super key on its own.
+
+**How BCNF fixes it:** We decompose the table so that every determinant is a candidate key:
+
+1. **Advisor\_Subject Table:** `(Advisor, Subject)`
+2. **Student\_Advisor Table:** `(StudentID, Advisor)`
+
+By breaking them down this way, data anomalies are eliminated, ensuring your database remains clean, scalable, and easy to maintain.
 
 ## What is denormalization, and when would you use it?
 
@@ -201,7 +218,7 @@ A deadlock occurs when two or more transactions wait on each other’s locks for
 - **Prevention:** acquire locks in a consistent order, keep transactions short, use lower isolation levels or lock timeouts, and avoid user interaction inside a transaction.
 - **Detection and handling:** the DBMS builds a wait-for graph, finds a cycle, and rolls back one transaction (the “victim”). The application should retry it.
 
-##  What is the difference between optimistic and pessimistic locking?
+## What is the difference between optimistic and pessimistic locking?
 
 - **Pessimistic:** assumes conflicts are likely. It locks the row up front (`SELECT ... FOR UPDATE`) so others must wait. Safe, but it reduces concurrency.
 - **Optimistic:** assumes conflicts are rare. There is no lock while working, and a version column is checked at update time. If it changed, the update fails and is retried. Better for read-heavy workloads.
@@ -230,4 +247,16 @@ sql
 
 ```sql
 CREATE INDEX idx_email ON student(email);  -- typically non-clustered
+```
+
+## What is an index, and how does it improve performance? What are its downsides?
+
+An index is a data structure (usually a B+ tree) that lets the database find rows without scanning the whole table, much like a book index. It speeds up `WHERE`, `JOIN`, `ORDER BY`, and `GROUP BY`.
+
+**Downsides:** extra storage, slower `INSERT`/`UPDATE`/`DELETE` (the index must be maintained), and too many indexes can hurt more than help.
+
+sql
+
+```sql
+CREATE INDEX idx_name ON employee(name);
 ```
