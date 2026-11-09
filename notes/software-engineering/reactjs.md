@@ -1228,3 +1228,29 @@ When to use what?
 
 - Fetch: Suitable for simple API requests without additional dependencies.
 - Axios: Useful for applications requiring interceptors, centralized configurations, and convenient request handling
+
+## What are major drawbacks of Reactjs?
+
+**1. It’s only the view layer**  
+React doesn’t give you routing, data fetching, form handling, or global state out of the box. You have to pick and assemble these yourself (React Router, Redux/Zustand, React Query, etc.), which leads to “decision fatigue” and inconsistent project structures across teams.
+
+**2. Steep, shifting learning curve**  
+JSX, hooks, the rules of hooks, `useEffect` dependency arrays, memoization, and now server components all take time to understand. Hooks like `useEffect` are a common source of bugs (stale closures, infinite loops, unnecessary re-renders).
+
+**3. Fast-changing ecosystem**  
+Best practices keep moving: class components to hooks, Create React App being deprecated, the push toward frameworks like Next.js, and server components. Tutorials and libraries go out of date quickly.
+
+**4. Poor SEO by default (client-side rendering)**  
+A plain React SPA ships an almost empty HTML file and builds the page in the browser, which can hurt SEO and first-load performance. You typically need SSR/SSG via Next.js or Remix to fix this.
+
+**5. Performance pitfalls**  
+React’s re-rendering model means a state change can re-render large parts of the tree. Avoiding this requires manual optimization (`useMemo`, `useCallback`, `React.memo`), which adds complexity. The virtual DOM also adds overhead compared to compiler-based frameworks like Svelte or Solid.
+
+**6. Bundle size**  
+React plus ReactDOM adds baseline weight, and apps tend to grow heavy once you add routing, state libraries, and UI kits.
+
+**7. Boilerplate and verbosity**  
+Things like prop drilling, context setup, and Redux (especially older patterns) can involve a lot of repetitive code.
+
+**8. JSX is a mixed blessing**  
+Mixing markup and logic is powerful, but some developers dislike it, and it requires a build step (Babel/TypeScript/bundler).
