@@ -1,7 +1,7 @@
 ---
 title: Data Structures and Algorithms
 date: 2026-10-15
-tags: [ascii, gk, sorting, bit operators, time complexity, space complexity]
+tags: [ascii, gk, sorting, bit operators, time complexity, space complexity, searching, dsa]
 pinned: true
 ---
 
@@ -519,8 +519,6 @@ Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and ret
 | Check power of two            | `a > 0 && (a & (a - 1)) == 0` — True when `a` is a power of two.                                |     |
 
 
-
-
 ## Bitwise OR (`|`)
 
 Bitwise OR (`|`) in C++ compares the corresponding bits of two integers and returns `1` when at least one bit is `1`; it returns `0` only when both bits are `0`. It is commonly used in DSA to set bits, combine bit masks, and enable specific flags.
@@ -555,8 +553,6 @@ XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two i
 | Find a unique number  | XOR all array elements when every number appears twice except one; duplicates cancel, leaving the unique number. |     |
 | Find a missing number | XOR the expected numbers and array elements; matching values cancel, leaving the missing number.                 |     |
 | Swap two numbers      | XOR can swap two integers without a temporary variable, though `std::swap()` is generally clearer and safer.     |     |
-
-
 
 
 # Standard Template Library
