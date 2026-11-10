@@ -174,8 +174,390 @@ This is equivalent to:
 ```
 for (auto itr = mp.begin(); itr != mp.end(); itr++) {
     cout << itr->first << " " << itr->second;
+
 }
 ```
+
+# Sorting Algorithms
+
+---
+
+## 1. Bubble Sort
+
+Compares adjacent elements and swaps them if they are in the wrong order. Repeats until sorted. In each iteration the max element bubbles to the end of the array.
+
+- Easy to understand, but slow for large arrays.
+- Worst time: `O(n²)`
+
+```cpp
+void bubbleSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        bool swapped = false;
+
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (a[j] > a[j + 1]) {
+                swap(a[j], a[j + 1]);
+                swapped = true;
+            }
+        }
+
+        if (!swapped) break;
+    }
+}
+```
+
+## 2. Selection Sort
+
+Finds the smallest element and puts it at the beginning. Repeats for the remaining elements.
+
+- Uses fewer swaps.
+- Time: `O(n²)`
+
+```cpp
+void selectionSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[minIndex])
+                minIndex = j;
+        }
+
+        swap(a[i], a[minIndex]);
+    }
+}
+```
+
+## 3. Insertion Sort
+
+Takes one element at a time and inserts it into the correct position in the already-sorted part.
+
+- Good for small or nearly sorted arrays.
+- Worst time: `O(n²)`
+
+```cpp
+void insertionSort(vector<int>& a) {
+    int n = a.size();
+
+    for (int i = 1; i < n; i++) {
+        int key = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+
+        a[j + 1] = key;
+    }
+}
+```
+
+## 4. Merge Sort
+
+Divides the array into smaller parts, sorts them, and merges them back together.
+
+- Reliable and efficient.
+- Time: `O(n log n)`
+
+```cpp
+void merge(vector<int>& a, int l, int m, int r) {
+    vector<int> temp;
+    int i = l, j = m + 1;
+
+    while (i <= m && j <= r) {
+        if (a[i] <= a[j])
+            temp.push_back(a[i++]);
+        else
+            temp.push_back(a[j++]);
+    }
+
+    while (i <= m) temp.push_back(a[i++]);
+    while (j <= r) temp.push_back(a[j++]);
+
+    for (int k = 0; k < temp.size(); k++)
+        a[l + k] = temp[k];
+}
+
+void mergeSort(vector<int>& a, int l, int r) {
+    if (l >= r) return;
+
+    int m = l + (r - l) / 2;
+
+    mergeSort(a, l, m);
+    mergeSort(a, m + 1, r);
+    merge(a, l, m, r);
+}
+
+// Call: mergeSort(a, 0, a.size() - 1);
+```
+
+## 5.Quick Sort
+
+Picks a pivot, places smaller elements on one side and larger elements on the other, then sorts both sides.
+
+- Usually very fast in practice.
+- Worst time: `O(n²)`
+
+```cpp
+int partition(vector<int>& a, int low, int high) {
+    int pivot = a[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (a[j] <= pivot) {
+            i++;
+            swap(a[i], a[j]);
+        }
+    }
+
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+void quickSort(vector<int>& a, int low, int high) {
+    if (low >= high) return;
+
+    int p = partition(a, low, high);
+
+    quickSort(a, low, p - 1);
+    quickSort(a, p + 1, high);
+}
+
+// Call: quickSort(a, 0, a.size() - 1);
+```
+
+# Searching Algorithms
+
+---
+
+## 1. Linear Search
+
+Checks every element one by one from the start until the target is found or the array ends.
+
+- Works on unsorted data, and is the simplest approach.
+- Slow for large arrays.
+- Worst time: `O(n)`, Space: `O(1)`
+
+cpp
+
+```cpp
+int linearSearch(vector<int>& a, int key) {
+    for (int i = 0; i < a.size(); i++) {
+        if (a[i] == key) return i;
+    }
+    return -1;
+}
+```
+
+## 2. Binary Search
+
+Works on a **sorted** array. Compares the key with the middle element and discards the half that cannot contain it. Repeats on the remaining half.
+
+- Extremely fast, and one of the most common interview topics.
+- Use `l + (r - l) / 2` instead of `(l + r) / 2` to avoid integer overflow.
+- Time: `O(log n)`, Space: `O(1)` (iterative)
+
+cpp
+
+```cpp
+int binarySearch(vector<int>& a, int key) {
+    int l = 0, r = a.size() - 1;
+
+    while (l <= r) {
+        int m = l + (r - l) / 2;
+
+        if (a[m] == key) return m;
+        else if (a[m] < key) l = m + 1;
+        else r = m - 1;
+    }
+
+    return -1;
+}
+```
+
+## 3. Fibonacci Search
+
+Works on a **sorted** array. Similar to binary search, but it uses Fibonacci numbers to split the array into two unequal parts instead of two equal halves. It finds the smallest Fibonacci number greater than or equal to `n`, then uses the previous two Fibonacci numbers to decide which part to discard.
+
+- Uses only addition and subtraction to compute indices (no division), which can help on hardware where division is costly.
+- Accesses elements that are close together, which can be friendlier to the cache than binary search on very large arrays.
+- Time: `O(log n)`, Space: `O(1)`
+
+cpp
+
+```cpp
+int fibonacciSearch(vector<int>& a, int key) {
+    int n = a.size();
+
+    int fib2 = 0;             // (m-2)'th Fibonacci number
+    int fib1 = 1;             // (m-1)'th Fibonacci number
+    int fib = fib2 + fib1;    // m'th Fibonacci number
+
+    // Find the smallest Fibonacci number >= n
+    while (fib < n) {
+        fib2 = fib1;
+        fib1 = fib;
+        fib = fib2 + fib1;
+    }
+
+    int offset = -1;          // eliminated range from the front
+
+    while (fib > 1) {
+        int i = min(offset + fib2, n - 1);
+
+        if (a[i] < key) {
+            // Move three Fibonacci numbers down, discard the left part
+            fib = fib1;
+            fib1 = fib2;
+            fib2 = fib - fib1;
+            offset = i;
+        }
+        else if (a[i] > key) {
+            // Move two Fibonacci numbers down, discard the right part
+            fib = fib2;
+            fib1 = fib1 - fib2;
+            fib2 = fib - fib1;
+        }
+        else return i;
+    }
+
+    // Compare the last remaining element
+    if (fib1 && offset + 1 < n && a[offset + 1] == key)
+        return offset + 1;
+
+    return -1;
+}
+```
+
+## 4. Breadth-First Search (BFS)
+
+Graph/tree searching algorithm. Starts at a source node and explores all neighbours at the current level before moving to the next level, using a **queue**.
+
+- Finds the shortest path in an unweighted graph.
+- Time: `O(V + E)`, Space: `O(V)`
+
+cpp
+
+```cpp
+void bfs(int start, vector<vector<int>>& adj) {
+    vector<bool> visited(adj.size(), false);
+    queue<int> q;
+
+    visited[start] = true;
+    q.push(start);
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+
+        cout << node << " ";
+
+        for (int next : adj[node]) {
+            if (!visited[next]) {
+                visited[next] = true;
+                q.push(next);
+            }
+        }
+    }
+}
+```
+
+## 5. Depth-First Search (DFS)
+
+Graph/tree searching algorithm. Goes as deep as possible along one path before backtracking, using **recursion** (or an explicit stack).
+
+- Useful for cycle detection, topological sort, connected components, and maze/path problems.
+- Time: `O(V + E)`, Space: `O(V)`
+
+cpp
+
+```cpp
+void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
+    visited[node] = true;
+    cout << node << " ";
+
+    for (int next : adj[node]) {
+        if (!visited[next])
+            dfs(next, adj, visited);
+    }
+}
+
+// Call: vector<bool> visited(n, false); dfs(0, adj, visited);
+```
+
+#### Quick Comparison
+
+
+| Algorithm | Needs Sorted Data | Best   | Average    | Worst      |
+| --------- | ----------------- | ------ | ---------- | ---------- |
+| Linear    | No                | `O(1)` | `O(n)`     | `O(n)`     |
+| Binary    | Yes               | `O(1)` | `O(log n)` | `O(log n)` |
+| Fibonacci | Yes               | `O(1)` | `O(log n)` | `O(log n)` |
+| BFS / DFS | No (graph)        | `O(1)` | `O(V + E)` | `O(V +`    |
+
+
+## Bitwise AND (`&`)
+
+Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and returns `1` only when both bits are `1`; otherwise, it returns `0`. It is commonly used in DSA for checking bits, clearing bits, identifying common set bits, and working with bit masks.
+
+
+| Property                      | Description                                                                                     |     |
+| ----------------------------- | ----------------------------------------------------------------------------------------------- | --- |
+| AND with zero                 | `a & 0 = 0` — The result is always `0`.                                                         |     |
+| AND with itself               | `a & a = a` — The number remains unchanged.                                                     |     |
+| AND with all ones             | `a & -1 = a` — For standard C++ integer types, `-1` has all bits set to `1`.                    |     |
+| Commutative                   | `a & b = b & a` — Operand order does not matter.                                                |     |
+| Associative                   | `(a & b) & c = a & (b & c)` — Grouping does not matter.                                         |     |
+| Check a bit                   | `a & (1 << k)` — Checks whether the (k)-th bit is set; a nonzero result means it is set.        |     |
+| Clear the rightmost set bit   | `a & (a - 1)` — Changes the rightmost `1` bit to `0`.                                           |     |
+| Isolate the rightmost set bit | `a & -a` — Keeps only the rightmost set bit for ordinary integer values where negation is safe. |     |
+| Check power of two            | `a > 0 && (a & (a - 1)) == 0` — True when `a` is a power of two.                                |     |
+
+
+
+
+## Bitwise OR (`|`)
+
+Bitwise OR (`|`) in C++ compares the corresponding bits of two integers and returns `1` when at least one bit is `1`; it returns `0` only when both bits are `0`. It is commonly used in DSA to set bits, combine bit masks, and enable specific flags.
+
+
+| Property         | Description                                                                 |     |
+| ---------------- | --------------------------------------------------------------------------- | --- |
+| OR with zero     | `a | 0 = a` — The number remains unchanged.                                 |     |
+| OR with itself   | `a | a = a` — The number remains unchanged.                                 |     |
+| OR with all ones | `a | -1 = -1` — For standard C++ integer types, all result bits become `1`. |     |
+| Commutative      | `a | b = b | a` — Operand order does not matter.                            |     |
+| Associative      | `(a | b) | c = a | (b | c)` — Grouping does not matter.                     |     |
+| Set a bit        | `a | (1 << k)` — Sets the (k)-th bit to `1`, leaving other bits unchanged.  |     |
+| Combine set bits | `a | b` — Combines the set bits of both numbers.                            |     |
+| Idempotent       | `a | a = a` — Repeating the same OR operation does not change the result.   |     |
+
+
+## XOR(^) operator
+
+XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two integers and returns `1` if the bits are different and `0` if they are the same. It is commonly used in bit manipulation and DSA problems because of its cancellation properties, which help find unique or missing numbers efficiently.
+
+
+| Property              | Description                                                                                                      |     |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- | --- |
+| XOR with zero         | `a ^ 0 = a` — XOR with `0` leaves the number unchanged.                                                          |     |
+| XOR with itself       | `a ^ a = 0` — A number XORed with itself becomes `0`.                                                            |     |
+| Commutative           | `a ^ b = b ^ a` — The order of operands does not matter.                                                         |     |
+| Associative           | `(a ^ b) ^ c = a ^ (b ^ c)` — Grouping does not matter.                                                          |     |
+| Cancellation          | `a ^ b ^ a = b` — Identical pairs cancel each other.                                                             |     |
+| Even/odd occurrences  | An even number of occurrences of a value cancel to `0`; an odd number leave one occurrence.                      |     |
+| Bit toggling          | XOR with a bit mask flips bits where the mask has `1` and leaves bits where it has `0` unchanged.                |     |
+| Find a unique number  | XOR all array elements when every number appears twice except one; duplicates cancel, leaving the unique number. |     |
+| Find a missing number | XOR the expected numbers and array elements; matching values cancel, leaving the missing number.                 |     |
+| Swap two numbers      | XOR can swap two integers without a temporary variable, though `std::swap()` is generally clearer and safer.     |     |
+
+
+
 
 # Standard Template Library
 
@@ -361,210 +743,3 @@ Here's a table that might come in very handy to understand the syntax and comple
 | push() (min-heap)           | Min-heap using greater comparator                                     | priority\_queue **(Time Complexity = O(log N))**    | `priority_queue<int,vector<int>,greater<int>> pq; pq.push(5); pq.push(2); cout<<pq.top();` Output: 2          |
 | size()                      | Number of elements stored                                             | priority\_queue **(Time Complexity = O(1))**        | `priority_queue<int> pq; pq.push(1); pq.push(2); cout<<pq.size();` Output: 2                                  |
 | empty()                     | True if container has no elements                                     | priority\_queue **(Time Complexity = O(1))**        | `priority_queue<int> pq; cout<<pq.empty();` Output: 1                                                         |
-
-
-# Sorting Algorithms
-
----
-
-## 1. Bubble Sort
-
-Compares adjacent elements and swaps them if they are in the wrong order. Repeats until sorted. In each iteration the max element bubbles to the end of the array.
-
-- Easy to understand, but slow for large arrays.
-- Worst time: `O(n²)`
-
-```cpp
-void bubbleSort(vector<int>& a) {
-    int n = a.size();
-
-    for (int i = 0; i < n - 1; i++) {
-        bool swapped = false;
-
-        for (int j = 0; j < n - 1 - i; j++) {
-            if (a[j] > a[j + 1]) {
-                swap(a[j], a[j + 1]);
-                swapped = true;
-            }
-        }
-
-        if (!swapped) break;
-    }
-}
-```
-
-## 2. Selection Sort
-
-Finds the smallest element and puts it at the beginning. Repeats for the remaining elements.
-
-- Uses fewer swaps.
-- Time: `O(n²)`
-
-```cpp
-void selectionSort(vector<int>& a) {
-    int n = a.size();
-
-    for (int i = 0; i < n - 1; i++) {
-        int minIndex = i;
-
-        for (int j = i + 1; j < n; j++) {
-            if (a[j] < a[minIndex])
-                minIndex = j;
-        }
-
-        swap(a[i], a[minIndex]);
-    }
-}
-```
-
-## 3. Insertion Sort
-
-Takes one element at a time and inserts it into the correct position in the already-sorted part.
-
-- Good for small or nearly sorted arrays.
-- Worst time: `O(n²)`
-
-```cpp
-void insertionSort(vector<int>& a) {
-    int n = a.size();
-
-    for (int i = 1; i < n; i++) {
-        int key = a[i];
-        int j = i - 1;
-
-        while (j >= 0 && a[j] > key) {
-            a[j + 1] = a[j];
-            j--;
-        }
-
-        a[j + 1] = key;
-    }
-}
-```
-
-## 4. Merge Sort
-
-Divides the array into smaller parts, sorts them, and merges them back together.
-
-- Reliable and efficient.
-- Time: `O(n log n)`
-
-```cpp
-void merge(vector<int>& a, int l, int m, int r) {
-    vector<int> temp;
-    int i = l, j = m + 1;
-
-    while (i <= m && j <= r) {
-        if (a[i] <= a[j])
-            temp.push_back(a[i++]);
-        else
-            temp.push_back(a[j++]);
-    }
-
-    while (i <= m) temp.push_back(a[i++]);
-    while (j <= r) temp.push_back(a[j++]);
-
-    for (int k = 0; k < temp.size(); k++)
-        a[l + k] = temp[k];
-}
-
-void mergeSort(vector<int>& a, int l, int r) {
-    if (l >= r) return;
-
-    int m = l + (r - l) / 2;
-
-    mergeSort(a, l, m);
-    mergeSort(a, m + 1, r);
-    merge(a, l, m, r);
-}
-
-// Call: mergeSort(a, 0, a.size() - 1);
-```
-
-## 5.Quick Sort
-
-Picks a pivot, places smaller elements on one side and larger elements on the other, then sorts both sides.
-
-- Usually very fast in practice.
-- Worst time: `O(n²)`
-
-```cpp
-int partition(vector<int>& a, int low, int high) {
-    int pivot = a[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (a[j] <= pivot) {
-            i++;
-            swap(a[i], a[j]);
-        }
-    }
-
-    swap(a[i + 1], a[high]);
-    return i + 1;
-}
-
-void quickSort(vector<int>& a, int low, int high) {
-    if (low >= high) return;
-
-    int p = partition(a, low, high);
-
-    quickSort(a, low, p - 1);
-    quickSort(a, p + 1, high);
-}
-
-// Call: quickSort(a, 0, a.size() - 1);
-```
-
-## Bitwise AND (`&`)
-
-Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and returns `1` only when both bits are `1`; otherwise, it returns `0`. It is commonly used in DSA for checking bits, clearing bits, identifying common set bits, and working with bit masks.
-
-
-| Property                      | Description                                                                                     |     |
-| ----------------------------- | ----------------------------------------------------------------------------------------------- | --- |
-| AND with zero                 | `a & 0 = 0` — The result is always `0`.                                                         |     |
-| AND with itself               | `a & a = a` — The number remains unchanged.                                                     |     |
-| AND with all ones             | `a & -1 = a` — For standard C++ integer types, `-1` has all bits set to `1`.                    |     |
-| Commutative                   | `a & b = b & a` — Operand order does not matter.                                                |     |
-| Associative                   | `(a & b) & c = a & (b & c)` — Grouping does not matter.                                         |     |
-| Check a bit                   | `a & (1 << k)` — Checks whether the (k)-th bit is set; a nonzero result means it is set.        |     |
-| Clear the rightmost set bit   | `a & (a - 1)` — Changes the rightmost `1` bit to `0`.                                           |     |
-| Isolate the rightmost set bit | `a & -a` — Keeps only the rightmost set bit for ordinary integer values where negation is safe. |     |
-| Check power of two            | `a > 0 && (a & (a - 1)) == 0` — True when `a` is a power of two.                                |     |
-
-
-## Bitwise OR (`|`)
-
-Bitwise OR (`|`) in C++ compares the corresponding bits of two integers and returns `1` when at least one bit is `1`; it returns `0` only when both bits are `0`. It is commonly used in DSA to set bits, combine bit masks, and enable specific flags.
-
-
-| Property         | Description                                                                 |     |
-| ---------------- | --------------------------------------------------------------------------- | --- |
-| OR with zero     | `a | 0 = a` — The number remains unchanged.                                 |     |
-| OR with itself   | `a | a = a` — The number remains unchanged.                                 |     |
-| OR with all ones | `a | -1 = -1` — For standard C++ integer types, all result bits become `1`. |     |
-| Commutative      | `a | b = b | a` — Operand order does not matter.                            |     |
-| Associative      | `(a | b) | c = a | (b | c)` — Grouping does not matter.                     |     |
-| Set a bit        | `a | (1 << k)` — Sets the (k)-th bit to `1`, leaving other bits unchanged.  |     |
-| Combine set bits | `a | b` — Combines the set bits of both numbers.                            |     |
-| Idempotent       | `a | a = a` — Repeating the same OR operation does not change the result.   |     |
-
-
-## XOR(^) operator
-
-XOR (`^`) in C++ is a bitwise operator that compares corresponding bits of two integers and returns `1` if the bits are different and `0` if they are the same. It is commonly used in bit manipulation and DSA problems because of its cancellation properties, which help find unique or missing numbers efficiently.
-
-
-| Property              | Description                                                                                                      |     |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------- | --- |
-| XOR with zero         | `a ^ 0 = a` — XOR with `0` leaves the number unchanged.                                                          |     |
-| XOR with itself       | `a ^ a = 0` — A number XORed with itself becomes `0`.                                                            |     |
-| Commutative           | `a ^ b = b ^ a` — The order of operands does not matter.                                                         |     |
-| Associative           | `(a ^ b) ^ c = a ^ (b ^ c)` — Grouping does not matter.                                                          |     |
-| Cancellation          | `a ^ b ^ a = b` — Identical pairs cancel each other.                                                             |     |
-| Even/odd occurrences  | An even number of occurrences of a value cancel to `0`; an odd number leave one occurrence.                      |     |
-| Bit toggling          | XOR with a bit mask flips bits where the mask has `1` and leaves bits where it has `0` unchanged.                |     |
-| Find a unique number  | XOR all array elements when every number appears twice except one; duplicates cancel, leaving the unique number. |     |
-| Find a missing number | XOR the expected numbers and array elements; matching values cancel, leaving the missing number.                 |     |
-| Swap two numbers      | XOR can swap two integers without a temporary variable, though `std::swap()` is generally clearer and safer.     |     |
