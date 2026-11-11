@@ -732,10 +732,94 @@ HAVING COUNT(*) > 1;
 
 Example: Find departments whose average salary is greater than 50000.
 
-```
+```sql
 SELECT department_id,
        AVG(salary) AS avg_salary
 FROM employees
 GROUP BY department_id
 HAVING AVG(salary) > 50000;
 ```
+
+## What is the difference between WHERE and HAVING?
+
+
+| WHERE                                                    | HAVING                      |
+| -------------------------------------------------------- | --------------------------- |
+| Filters individual rows                                  | Filters groups              |
+| Applied before GROUP BY                                  | Applied after GROUP BY      |
+| Cannot directly use aggregate functions in its condition | Can use aggregate functions |
+| Can be used without GROUP BY                             | Commonly used with GROUP BY |
+
+
+Example:
+
+```sql
+SELECT department_id,
+       AVG(salary) AS avg_salary
+FROM employees
+WHERE salary > 20000
+GROUP BY department_id
+HAVING AVG(salary) > 50000;
+```
+
+Explanation:
+
+1. WHERE removes employees whose salary is 20000 or below.
+2. GROUP BY groups the remaining employees by department.
+3. AVG() calculates the average salary of each department.
+4. HAVING keeps only departments with an average salary above 50000.
+
+## What is the difference between COUNT, SUM, and AVG?
+
+- COUNT() returns the number of records or non-NULL values.
+- SUM() returns the total of numeric values.
+- AVG() returns the average of non-NULL numeric values.
+
+Example:
+
+```
+SELECT
+    COUNT(salary),
+    SUM(salary),
+    AVG(salary)
+FROM employees;
+```
+
+## What is the logical execution order of a SELECT query?
+
+This is a very important interview question.
+
+Although we write SELECT first, SQL logically processes the query in a different order.
+
+**Logical Order of SQL Clause Evaluation**
+
+
+|          |            |                                                               |
+| -------- | ---------- | ------------------------------------------------------------- |
+| **Step** | **Clause** | **Purpose**                                                   |
+| 1        | FROM       | Identifies the tables involved and forms the base result set. |
+| 2        | ON         | Applies join conditions (if JOIN is used).                    |
+| 3        | JOIN       | Combines rows from different tables.                          |
+| 4        | WHERE      | Filters rows **before** grouping (non-aggregated filter).     |
+| 5        | GROUP BY   | Groups rows into summary rows.                                |
+| 6        | HAVING     | Filters groups (after aggregation).                           |
+| 7        | SELECT     | Selects the columns to display, including aggregates.         |
+| 8        | DISTINCT   | Removes duplicates from the final result.                     |
+| 9        | ORDER BY   | Sorts the final result set.                                   |
+| 10       | LIMIT      | Restricts the number of rows returned.                        |
+
+
+Example:
+
+```sql
+SELECT department_id,
+       AVG(salary) AS avg_salary
+FROM employees
+WHERE salary > 20000
+GROUP BY department_id
+HAVING AVG(salary) > 50000
+ORDER BY avg_salary DESC
+LIMIT 3;
+```
+
+Understanding this order helps explain why we cannot normally use an aggregate function in WHERE and why SELECT aliases can be used in ORDER BY but not WHERE.
