@@ -115,3 +115,29 @@ User → Controller → Model
 
 - Can become complex for small apps
 - In client-side apps, bidirectional updates between views and models can get tangled (the issue Flux solved)
+
+## What is Graphical User Interface (GUI)?
+
+A **Graphical User Interface (GUI)** is a type of user interface that allows people to interact with electronic devices such as computers, smartphones, and smart appliances through visual elements rather than text-based commands.  
+Key Characteristics of a GUI
+
+- **Visual Interaction:** Actions are performed directly by clicking, tapping, dragging, or swiping rather than memorizing and typing syntax.
+- **The WIMP Paradigm:** Most modern GUIs are built around **W**indows, **I**cons, **M**enus, and **P**ointer architecture.
+- **Multitasking:** GUIs make it easy to run, view, and switch between multiple applications simultaneously using overlapping windows.
+
+## What is Command Line Interface (CLI)?
+
+A **Command Line Interface (CLI)** is a text-based user interface used to interact with operating systems, software, and servers. Instead of clicking on visual icons, windows, or buttons with a mouse, users type explicit text commands and press Enter to execute them.  
+Key Advantages of a CLI  
+While GUIs are more intuitive for everyday consumers, CLIs are indispensable for developers, system administrators, and power users due to several distinct advantages:
+
+- **Speed and Efficiency:** Once you learn the commands, performing complex operations via keyboard is often significantly faster than navigating deep menus and clicking through graphical dialogs.
+- **Automation and Scripting:** Commands can be easily chained together into shell scripts or configuration files to automate repetitive workflows, testing, deployments, and backups.
+- **Resource Efficiency:** Text interfaces consume minimal memory and processing power. This makes them ideal for running on lightweight servers or embedded systems where a graphical desktop environment would be a waste of resources.
+- **Remote Management:** CLIs can be run efficiently over low-bandwidth network connections (such as via SSH), making it practical to manage cloud servers located anywhere in the world.
+
+### Common Examples of CLIs
+
+- **Bash / Zsh:** The default shells for Linux distributions and macOS.
+- **PowerShell / Command Prompt:** The standard command-line environments for Windows.
+- **Developer Tools:** Specialized CLIs like Git, Docker, and the AWS CLI used for building, containerizing, and managing cloud infrastructure.
