@@ -260,3 +260,24 @@ sql
 ```sql
 CREATE INDEX idx_name ON employee(name);
 ```
+
+## How do you optimize a slow SQL query? (EXPLAIN plans, indexing, avoiding SELECT \*)
+
+### Optimizing a slow SQL query
+
+1. Run `EXPLAIN` (or `EXPLAIN ANALYZE`) to see the execution plan and spot full table scans.
+2. Add suitable indexes on columns used in `WHERE`, `JOIN`, and `ORDER BY`.
+3. Avoid `SELECT *`, and fetch only the columns you need.
+4. Avoid functions on indexed columns in `WHERE` (`WHERE YEAR(d) = 2024` defeats the index).
+5. Prefer `JOIN`/`EXISTS` over inefficient subqueries, and filter early.
+6. Use pagination (`LIMIT`) and avoid large `OFFSET` values.
+7. Consider denormalization, caching, or partitioning for very large tables.
+
+## What is partitioning vs. sharding?
+
+### Partitioning vs sharding
+
+- **Partitioning:** splits one large table into smaller pieces (by range, list, or hash) within a single database server. It improves query performance and maintenance. It is usually transparent to the application.
+- **Sharding:** splits data horizontally across multiple servers, each holding a subset (shard) of the rows. It improves scalability for both storage and throughput, but adds complexity: cross-shard joins, rebalancing, and a shard key choice.
+
+In short, partitioning is within one server, and sharding is across many servers.
