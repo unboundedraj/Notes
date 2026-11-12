@@ -823,3 +823,728 @@ LIMIT 3;
 ```
 
 Understanding this order helps explain why we cannot normally use an aggregate function in WHERE and why SELECT aliases can be used in ORDER BY but not WHERE.
+
+## What is a JOIN, and what are its types?
+
+A JOIN combines records from two or more tables based on a related column.
+
+For example, employees and departments can be joined using department\_id.
+
+Common types:
+
+**1. INNER JOIN**
+
+Returns only matching records from both tables.
+
+**2. LEFT JOIN (LEFT OUTER JOIN)**
+
+Returns all records from the left table and matching records from the right table. If no match exists, right-side columns contain NULL.
+
+**3. RIGHT JOIN (RIGHT OUTER JOIN)**
+
+Returns all records from the right table and matching records from the left table.
+
+**4. FULL OUTER JOIN**
+
+Returns all records from both tables, whether matching or not.
+
+MySQL does not directly support FULL OUTER JOIN.
+
+**5. CROSS JOIN**
+
+Returns the Cartesian product of two tables.
+
+**6. SELF JOIN**
+
+Joins a table with itself.
+
+## How does INNER JOIN work?
+
+Example:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees AS e
+INNER JOIN departments AS d
+    ON e.department_id = d.department_id;
+```
+
+Explanation:
+
+- `e` is an alias for employees.
+- `d` is an alias for departments.
+- ON specifies the matching condition.
+- Only employees having a matching department are returned.
+
+The same result can be obtained using an implicit join:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees e,
+     departments d
+WHERE e.department_id = d.department_id;
+```
+
+However, explicit JOIN syntax is generally preferred because it makes relationships and conditions easier to understand.
+
+## How do LEFT JOIN and RIGHT JOIN work?
+
+LEFT JOIN example:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees AS e
+LEFT JOIN departments AS d
+    ON e.department_id = d.department_id;
+```
+
+Returns all employees, even if they are not assigned to a department.
+
+RIGHT JOIN example:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees AS e
+RIGHT JOIN departments AS d
+    ON e.department_id = d.department_id;
+```
+
+Returns all departments, even if no employee belongs to them.
+
+## How do you perform a FULL OUTER JOIN in MySQL?
+
+MySQL does not directly support FULL OUTER JOIN.
+
+We can simulate it using LEFT JOIN and RIGHT JOIN with UNION.
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees AS e
+LEFT JOIN departments AS d
+    ON e.department_id = d.department_id
+
+UNION
+
+SELECT
+    e.name,
+    d.department_name
+FROM employees AS e
+RIGHT JOIN departments AS d
+    ON e.department_id = d.department_id;
+```
+
+UNION combines both results and removes duplicate rows.
+
+A more explicit alternative that preserves duplicate rows is:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees e
+LEFT JOIN departments d
+    ON e.department_id = d.department_id
+
+UNION ALL
+
+SELECT
+    e.name,
+    d.department_name
+FROM departments d
+LEFT JOIN employees e
+    ON e.department_id = d.department_id
+WHERE e.emp_id IS NULL;
+```
+
+This second approach adds only departments that did not find a matching employee.
+
+## What is a CROSS JOIN?
+
+A CROSS JOIN returns every possible combination of rows from two tables.
+
+Example:
+
+```sql
+SELECT
+    e.name,
+    d.department_name
+FROM employees e
+CROSS JOIN departments d;
+```
+
+If employees contains 5 records and departments contains 3 records, the result contains:
+
+5 × 3 = 15 rows.
+
+Interview follow-up: What is a Cartesian product?
+
+A Cartesian product is the result of combining every row from one table with every row from another table.
+
+## How do you find records present in one table but not another?
+
+This is commonly asked in interviews.
+
+Example: Find departments that do not have any employees.
+
+```
+SELECT d.department_id,
+       d.department_name
+FROM departments d
+LEFT JOIN employees e
+    ON d.department_id = e.department_id
+WHERE e.emp_id IS NULL;
+```
+
+Explanation:
+
+1. LEFT JOIN keeps all departments.
+2. Matching employees are joined.
+3. Departments without employees have NULL in employee columns.
+4. WHERE filters those departments.
+
+This technique is called an anti-join pattern.
+
+## What is a subquery, and when is it used?
+
+A subquery is a SQL query nested inside another SQL query.
+
+It is used when:
+
+- We need to filter records using the result of another query.
+- We need to compare values with an aggregate result.
+- We need to fetch related information indirectly.
+- We need to create a temporary result set for another query.
+
+## What is a subquery in the FROM clause?
+
+A subquery inside FROM is also called a derived table.
+
+Example: Find departments whose average salary is greater than 50000.
+
+```sql
+SELECT department_id,
+       avg_salary
+FROM (
+    SELECT
+        department_id,
+        AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department_id
+) AS dept_avg
+WHERE avg_salary > 50000;
+```
+
+Explanation:
+
+1. The inner query calculates the average salary for each department.
+2. Its result behaves like a temporary table.
+3. The outer query filters departments based on their average salary.
+
+Note: MySQL requires a derived table to have an alias.
+
+## What is a correlated subquery?
+
+A correlated subquery depends on the outer query.
+
+Example: Retrieve every employee's department name.
+
+```sql
+SELECT
+    name,
+    (
+        SELECT department_name
+        FROM departments
+        WHERE departments.department_id =
+              employees.department_id
+    ) AS dept_name
+FROM employees;
+```
+
+The inner query refers to `employees.department_id`, which comes from the outer query.
+
+Interview follow-up: What is the difference between a normal subquery and a correlated subquery?
+
+- A normal subquery can execute independently of the outer query.
+- A correlated subquery depends on the outer query's current row.
+
+A correlated subquery is conceptually evaluated for each relevant outer row, although the optimizer may transform its execution.
+
+## How do you use IN with a subquery?
+
+Example: Find employees working in departments having more than one employee.
+
+```sql
+SELECT name
+FROM employees
+WHERE department_id IN (
+    SELECT department_id
+    FROM employees
+    GROUP BY department_id
+    HAVING COUNT(*) > 1
+);
+```
+
+The inner query returns department IDs having more than one employee.
+
+The outer query retrieves employees belonging to those departments.
+
+## What is a nested subquery?
+
+A nested subquery is a subquery placed inside another subquery.
+
+Example: Find employees earning more than the highest-paid employee in HR.
+
+```sql
+SELECT name, salary
+FROM employees
+WHERE salary > (
+    SELECT MAX(salary)
+    FROM employees
+    WHERE department_id = (
+        SELECT department_id
+        FROM departments
+        WHERE department_name = 'HR'
+    )
+);
+```
+
+Explanation:
+
+1. The innermost query finds the HR department ID.
+2. The middle query finds the highest salary in HR.
+3. The outer query finds employees earning more than that salary.
+
+## When should you use a subquery versus a JOIN?
+
+- Return one calculated value: Scalar subquery.
+- Filter records based on a list: IN subquery.
+- Retrieve related columns from another table: JOIN.
+- Perform aggregation on an intermediate result: Derived table or subquery in FROM.
+
+Both JOINs and subqueries can often solve the same problem. The best choice depends on readability, correctness, and execution performance.
+
+## What is the difference between UNION and UNION ALL?
+
+Both combine results from multiple SELECT statements.
+
+UNION
+
+Combines results and removes duplicate rows.
+
+```
+SELECT name
+FROM employees
+
+UNION
+
+SELECT name
+FROM managers;
+```
+
+UNION ALL
+
+Combines results without removing duplicates.
+
+```
+SELECT name
+FROM employees
+
+UNION ALL
+
+SELECT name
+FROM managers;
+```
+
+Comparison:
+
+
+| UNION                          | UNION ALL                              |
+| ------------------------------ | -------------------------------------- |
+| Removes duplicates             | Keeps duplicates                       |
+| Usually slower                 | Usually faster                         |
+| Performs duplicate elimination | Does not perform duplicate elimination |
+
+
+Important rules:
+
+- Both queries must return the same number of columns.
+- Corresponding columns must have compatible data types.
+- Column names in the result generally come from the first SELECT.
+
+## How do you add IF/ELSE logic to a SQL query?
+
+Use CASE.
+
+CASE works similarly to if/else conditions in programming languages.
+
+Example:
+
+```
+SELECT
+    name,
+    salary,
+    CASE
+        WHEN salary >= 80000 THEN 'High'
+        WHEN salary >= 50000 THEN 'Medium'
+        ELSE 'Low'
+    END AS salary_band
+FROM employees;
+```
+
+Explanation:
+
+- Salary greater than or equal to 80000 → High.
+- Salary greater than or equal to 50000 → Medium.
+- All remaining salaries → Low.
+
+### What happens if none of the CASE conditions match and ELSE is not provided?
+
+CASE returns NULL.
+
+## What is COALESCE in SQL?
+
+COALESCE returns the first non-NULL value from a list of expressions.
+
+Example:
+
+```
+SELECT
+    name,
+    COALESCE(phone_number, 'No number') AS phone
+FROM employees;
+```
+
+If phone\_number is NULL, it returns 'No number'.
+
+Otherwise, it returns the actual phone number.
+
+## What is a VIEW in SQL?
+
+A VIEW is a saved SQL query that behaves like a virtual table.
+
+It generally does not store the actual result data. Instead, it retrieves data from the underlying tables whenever queried.
+
+Example:
+
+```
+CREATE VIEW high_earners AS
+SELECT name, salary
+FROM employees
+WHERE salary > 80000;
+```
+
+Retrieve data:
+
+```
+SELECT *
+FROM high_earners;
+```
+
+Delete the view:
+
+```
+DROP VIEW high_earners;
+```
+
+Advantages:
+
+- Simplifies complex queries.
+- Provides an additional layer of security by exposing selected columns.
+- Makes frequently used queries reusable.
+- Helps organize database logic.
+
+### Does a VIEW store data?
+
+A normal view does not store its result data. It stores the query definition.
+
+### Can we perform INSERT, UPDATE, and DELETE on a VIEW?
+
+Yes, some views are updatable.
+
+However, views involving operations such as GROUP BY, aggregate functions, DISTINCT, and certain joins may not be directly updatable.
+
+### What is the difference between a VIEW and a TABLE?
+
+- A table physically stores data.
+- A normal view stores a query definition and displays data from underlying tables.
+
+## What is an INDEX in SQL?
+
+An index is a database object that helps retrieve records faster.
+
+It works similarly to the index of a book: instead of scanning every page, we can locate the required information more efficiently.
+
+Example:
+
+```
+CREATE INDEX idx_salary
+ON employees(salary);
+```
+
+Delete an index:
+
+```
+DROP INDEX idx_salary
+ON employees;
+```
+
+### When should you use indexes?
+
+- On columns frequently used in WHERE conditions.
+- On columns used in JOIN conditions.
+- On columns used in ORDER BY.
+- On foreign key columns.
+- On large tables where read performance is important.
+
+Disadvantages:
+
+- Indexes consume additional storage.
+- They can slow down INSERT, UPDATE, and DELETE operations because indexes also need to be maintained.
+- Too many indexes can negatively affect performance.
+
+### What are the different types of indexes in MySQL?
+
+Common types include:
+
+1. PRIMARY KEY index – Created automatically for the primary key.
+2. UNIQUE index – Prevents duplicate indexed values, with MySQL's NULL handling rules.
+3. INDEX (non-unique index) – Improves data retrieval.
+4. FULLTEXT index – Supports full-text searching.
+5. SPATIAL index – Supports spatial data searching.
+
+MySQL InnoDB also uses clustered primary-key storage and secondary indexes.
+
+## What is a TRIGGER in SQL?
+
+A trigger is a database object that automatically executes when a specified event occurs on a table.
+
+Triggers can execute before or after:
+
+- INSERT
+- UPDATE
+- DELETE
+
+Example:
+
+```sql
+DELIMITER //
+
+CREATE TRIGGER before_insert_check_salary
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+
+    IF NEW.salary < 0 THEN
+
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Salary cannot be negative';
+
+    END IF;
+
+END //
+
+DELIMITER ;
+```
+
+Explanation:
+
+- DELIMITER changes the statement delimiter in the MySQL client so that semicolons inside the trigger body do not terminate the CREATE TRIGGER statement.
+- BEFORE INSERT executes before a new record is inserted.
+- FOR EACH ROW executes the trigger for every affected row.
+- NEW refers to the incoming row.
+- SIGNAL generates an error if the condition is violated.
+
+Delete the trigger:
+
+```
+DROP TRIGGER before_insert_check_salary;
+```
+
+### What is the difference between NEW and OLD in triggers?
+
+- NEW represents the new row values.
+- OLD represents the existing row values.
+
+Usage:
+
+
+| Trigger | NEW | OLD |
+| ------- | --- | --- |
+| INSERT  | Yes | No  |
+| UPDATE  | Yes | Yes |
+| DELETE  | No  | Yes |
+
+
+## What is a TRANSACTION in SQL?
+
+A transaction is a group of SQL operations treated as one logical unit of work.
+
+Either all operations succeed and are committed, or the transaction can be rolled back to undo the changes.
+
+Example: Transferring 100 from one bank account to another.
+
+```sql
+START TRANSACTION;
+
+UPDATE accounts
+SET balance = balance - 100
+WHERE id = 1;
+
+UPDATE accounts
+SET balance = balance + 100
+WHERE id = 2;
+
+COMMIT;
+```
+
+If something goes wrong before committing:
+
+```
+ROLLBACK;
+```
+
+This undoes the uncommitted changes.
+
+## What are the ACID properties of a transaction?
+
+ACID represents four important transaction properties.
+
+1. Atomicity
+
+All operations in a transaction succeed together, or none of them are applied.
+
+Example: If money is deducted from one account but cannot be credited to another, the transaction should be rolled back.
+
+2. Consistency
+
+A transaction should take the database from one valid state to another valid state, maintaining database constraints and rules.
+
+3. Isolation
+
+Concurrent transactions should not interfere with each other in ways that violate the chosen isolation level.
+
+4. Durability
+
+Once a transaction is committed, its changes are expected to persist even after a system failure, subject to the database's durability configuration.
+
+### Why is ACID important?
+
+ACID ensures reliable and consistent database operations, especially in banking, payment systems, and other applications where data accuracy is critical.
+
+## What is the difference between COMMIT and ROLLBACK?
+
+
+| COMMIT                       | ROLLBACK                                                             |
+| ---------------------------- | -------------------------------------------------------------------- |
+| Saves transaction changes    | Undoes uncommitted changes                                           |
+| Makes changes permanent      | Returns to the previous transaction state                            |
+| Ends the current transaction | Ends the current transaction when rolling back the whole transaction |
+
+
+## What are WINDOW FUNCTIONS in SQL?
+
+Window functions perform calculations across a set of related rows without combining those rows into a single result.
+
+Unlike GROUP BY, window functions preserve individual rows.
+
+Common window functions:
+
+- ROW\_NUMBER()
+- RANK()
+- DENSE\_RANK()
+- LEAD()
+- LAG()
+- SUM() OVER()
+- AVG() OVER()
+
+Example:
+
+```sql
+SELECT
+    name,
+    department_id,
+    salary,
+
+    ROW_NUMBER() OVER (
+        PARTITION BY department_id
+        ORDER BY salary DESC
+    ) AS row_num
+
+FROM employees;
+```
+
+Explanation:
+
+- PARTITION BY divides employees into departments.
+- ORDER BY sorts employees by salary within each department.
+- ROW\_NUMBER assigns a unique sequential number within each department.
+
+## What is the difference between ROW\_NUMBER(), RANK(), and DENSE\_RANK()?
+
+This is one of the most important SQL interview questions.
+
+Suppose the salaries are:
+
+
+| Employee | Salary |
+| -------- | ------ |
+| A        | 90000  |
+| B        | 80000  |
+| C        | 80000  |
+| D        | 70000  |
+
+
+Results:
+
+
+| Employee | ROW\_NUMBER | RANK | DENSE\_RANK |
+| -------- | ----------- | ---- | ----------- |
+| A        | 1           | 1    | 1           |
+| B        | 2           | 2    | 2           |
+| C        | 3           | 2    | 2           |
+| D        | 4           | 4    | 3           |
+
+
+ROW\_NUMBER()
+
+Assigns a unique sequential number to each row.
+
+RANK()
+
+Assigns the same rank to tied values but skips the next rank.
+
+DENSE\_RANK()
+
+Assigns the same rank to tied values without skipping the next rank.
+
+Example:
+
+```sql
+SELECT
+    name,
+    salary,
+
+    ROW_NUMBER() OVER (
+        ORDER BY salary DESC
+    ) AS row_num,
+
+    RANK() OVER (
+        ORDER BY salary DESC
+    ) AS salary_rank,
+
+    DENSE_RANK() OVER (
+        ORDER BY salary DESC
+    ) AS dense_salary_rank
+
+FROM employees;
+```
