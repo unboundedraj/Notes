@@ -501,6 +501,486 @@ void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
 | BFS / DFS | No (graph)        | `O(1)` | `O(V + E)` | `O(V +`    |
 
 
+## Linked Lists
+
+### What is a Linked List?
+
+A Linked List is a linear data structure in which elements, called nodes, are stored at non-contiguous memory locations.
+
+Each node consists of:
+
+1. Data: Stores the actual value.
+2. Pointer: Stores the address of the next node.
+
+Example:
+
+```
+10 → 20 → 30 → 40 → NULL
+```
+
+### What is a Node in a Linked List?
+
+A node is an individual element of a linked list that contains data and pointer(s) to other nodes.
+
+### What is the Head of a Linked List?
+
+Head is a pointer that stores the address of the first node of a linked list.
+
+### What is the Tail of a Linked List?
+
+Tail is the last node of a linked list. In a singly linked list, its `next` pointer contains `NULL`.
+
+### Why is Linked List called a dynamic data structure?
+
+Because memory is allocated dynamically at runtime, and nodes can be inserted or deleted without requiring a fixed size.
+
+### How is a Linked List different from an Array?
+
+
+| Array                            | Linked List                             |
+| -------------------------------- | --------------------------------------- |
+| Contiguous memory allocation     | Non-contiguous memory allocation        |
+| Fixed size in basic arrays       | Dynamic size                            |
+| Random access O(1)               | Sequential access O(n)                  |
+| Insertion/deletion can take O(n) | O(1) if relevant node/position is known |
+| No pointer overhead              | Extra memory for pointers               |
+
+
+### What are the advantages of Linked Lists?
+
+- Dynamic memory allocation.
+- Easy insertion and deletion when the relevant position is known.
+- Does not require contiguous memory.
+- Useful for implementing stacks, queues and other data structures.
+
+### What are the disadvantages of Linked Lists?
+
+- No direct/random access.
+- Extra memory required for pointers.
+- Traversal is slower than array indexing.
+- Pointer manipulation can be complex.
+
+### What are the different types of Linked Lists?
+
+There are four major types:
+
+1. Singly Linked List.
+2. Doubly Linked List.
+3. Circular Singly Linked List.
+4. Circular Doubly Linked List.
+
+### What is a Singly Linked List?
+
+A Singly Linked List is a linked list in which every node contains data and a pointer to the next node.
+
+```
+10 → 20 → 30 → NULL
+```
+
+Each node can move only in the forward direction.
+
+### What is a Doubly Linked List?
+
+A Doubly Linked List is a linked list in which every node contains three parts:
+
+- Data.
+- Pointer to the previous node (`prev`).
+- Pointer to the next node (`next`).
+
+```
+NULL ← 10 ⇄ 20 ⇄ 30 → NULL
+```
+
+### What is a Circular Singly Linked List?
+
+It is a linked list in which the last node points back to the first node instead of pointing to `NULL`.
+
+```
+10 → 20 → 30
+↑         ↓
+└─────────┘
+```
+
+### What is a Circular Doubly Linked List?
+
+It is a doubly linked list in which:
+
+- Last node's `next` points to the first node.
+- First node's `prev` points to the last node.
+
+It supports circular traversal in both directions.
+
+### How do we create a Node in C++?
+
+We can create a node using a `struct` or `class`.
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+```
+
+### What is the use of the `new` keyword?
+
+The `new` keyword dynamically allocates memory at runtime.
+
+Example:
+
+```
+Node* head = new Node(10);
+```
+
+It creates a node containing 10 and stores its address in `head`
+
+### What is the difference between `.` and `->` operators?
+
+- `.` is used to access members through an object.
+- `->` is used to access members through a pointer.
+
+Example:
+
+```sql
+Node obj(10);
+cout << obj.data;
+
+Node* ptr = new Node(20);
+cout << ptr->data;
+```
+
+### What is the difference between `NULL` and `nullptr`?
+
+Both represent a null pointer, but `nullptr` is the modern C++ keyword and is type-safe.
+
+Prefer `nullptr` in modern C++.
+
+### How do we traverse and print a Linked List in C++?
+
+```
+void printList(Node* head) {
+    Node* temp = head;
+
+    while (temp != nullptr) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+```
+
+### Why do we use a temporary pointer during traversal?
+
+We use a temporary pointer so that the original head pointer remains unchanged.
+
+### What is the time and space complexity of traversal?
+
+- Time Complexity: O(n).
+- Auxiliary Space Complexity: O(1).
+
+### What are the different ways to insert a node in a Singly Linked List?
+
+There are three common ways:
+
+1. Insertion at the beginning.
+2. Insertion at the end.
+3. Insertion at a given position.
+
+### How do we insert a node at the beginning of a Linked List?
+
+Create a new node, point its `next` to the current head, and update head to the new node.
+
+```
+Node* insertAtHead(Node* head, int val) {
+    Node* newNode = new Node(val);
+
+    newNode->next = head;
+    head = newNode;
+
+    return head;
+}
+```
+
+Time Complexity: O(1).
+
+### How do we insert a node at the end of a Linked List?
+
+Traverse until the last node and connect its `next` pointer to the new node.
+
+```cpp
+Node* insertAtTail(Node* head, int val) {
+    Node* newNode = new Node(val);
+
+    if (head == nullptr)
+        return newNode;
+
+    Node* temp = head;
+
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+
+    return head;
+}
+```
+
+Time Complexity: O(n) without a tail pointer.
+
+### How do we insert a node at a given position?
+
+Assuming positions are 1-based:
+
+```cpp
+Node* insertAtPosition(Node* head, int pos, int val) {
+    if (pos < 1) return head;
+
+    if (pos == 1)
+        return insertAtHead(head, val);
+
+    Node* temp = head;
+
+    for (int i = 1; temp != nullptr && i < pos - 1; i++) {
+        temp = temp->next;
+    }
+
+    if (temp == nullptr)
+        return head;
+
+    Node* newNode = new Node(val);
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    return head;
+}
+```
+
+Time Complexity: O(n).
+
+### How do we delete the first node of a Linked List?
+
+```cpp
+Node* deleteHead(Node* head) {
+    if (head == nullptr)
+        return nullptr;
+
+    Node* temp = head;
+    head = head->next;
+
+    delete temp;
+
+    return head;
+}
+```
+
+Time Complexity: O(1).
+
+### How do we delete the last node of a Linked List?
+
+```cpp
+Node* deleteTail(Node* head) {
+    if (head == nullptr || head->next == nullptr) {
+        delete head;
+        return nullptr;
+    }
+
+    Node* temp = head;
+
+    while (temp->next->next != nullptr) {
+        temp = temp->next;
+    }
+
+    delete temp->next;
+    temp->next = nullptr;
+
+    return head;
+}
+```
+
+Time Complexity: O(n).
+
+### How do we delete a node at a given position?
+
+Assuming positions are 1-based:
+
+```cpp
+Node* deleteAtPosition(Node* head, int pos) {
+    if (head == nullptr || pos < 1)
+        return head;
+
+    if (pos == 1)
+        return deleteHead(head);
+
+    Node* temp = head;
+
+    for (int i = 1; temp != nullptr && i < pos - 1; i++) {
+        temp = temp->next;
+    }
+
+    if (temp == nullptr || temp->next == nullptr)
+        return head;
+
+    Node* toDelete = temp->next;
+
+    temp->next = toDelete->next;
+
+    delete toDelete;
+
+    return head;
+}
+```
+
+Time Complexity: O(n).
+
+### Why do we use the `delete` keyword?
+
+The `delete` keyword releases dynamically allocated memory and prevents memory leaks.
+
+### How do we reverse a Linked List using an iterative approach?
+
+```cpp
+Node* reverseList(Node* head) {
+    Node* prev = nullptr;
+    Node* curr = head;
+
+    while (curr != nullptr) {
+        Node* nextNode = curr->next;
+
+        curr->next = prev;
+
+        prev = curr;
+        curr = nextNode;
+    }
+
+    return prev;
+}
+```
+
+Example:
+
+```
+Before: 10 → 20 → 30 → NULL
+
+After:  30 → 20 → 10 → NULL
+```
+
+Time Complexity: O(n).
+
+Space Complexity: O(1).
+
+### How can we find the middle node of a Linked List?
+
+We use the Slow and Fast Pointer approach, also called the Tortoise and Hare algorithm.
+
+- Slow pointer moves one step at a time.
+- Fast pointer moves two steps at a time.
+
+When the fast pointer reaches the end, the slow pointer reaches the middle.
+
+### Write the C++ code to find the middle node of a Linked List.
+
+```cpp
+Node* middleNode(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow;
+}
+```
+
+Time Complexity: O(n).
+
+Space Complexity: O(1).
+
+### What happens when a Linked List contains an even number of nodes?
+
+This implementation returns the second middle node.
+
+Example:
+
+```
+10 → 20 → 30 → 40
+
+Middle = 30
+```
+
+### What is a Cycle in a Linked List?
+
+A cycle exists when a node points back to a previously visited node instead of pointing to `NULL`.
+
+Example:
+
+```
+10 → 20 → 30 → 40
+     ↑         ↓
+     └─────────┘
+```
+
+### How can we detect a cycle in a Linked List?
+
+We use Floyd's Cycle Detection Algorithm.
+
+It uses two pointers:
+
+- Slow pointer moves one step.
+- Fast pointer moves two steps.
+
+If both pointers meet, a cycle exists.
+
+### Write the C++ code to detect a cycle in a Linked List.
+
+```
+bool hasCycle(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+            return true;
+    }
+
+    return false;
+}
+```
+
+Time Complexity: O(n).
+
+Space Complexity: O(1).
+
+### What are the most important Linked List problems to practise for interviews?
+
+
+| No. | Problem                          | Main concept           |
+| --- | -------------------------------- | ---------------------- |
+| 1   | Reverse Linked List              | Three pointers         |
+| 2   | Middle of Linked List            | Slow/Fast pointers     |
+| 3   | Detect Cycle                     | Floyd's algorithm      |
+| 4   | Find Starting Point of Cycle     | Slow/Fast pointers     |
+| 5   | Remove Nth Node From End         | Two pointers           |
+| 6   | Palindrome Linked List           | Reverse second half    |
+| 7   | Merge Two Sorted Lists           | Two pointers           |
+| 8   | Intersection of Two Lists        | Pointer switching      |
+| 9   | Add Two Numbers                  | Carry handling         |
+| 10  | Sort List                        | Merge Sort             |
+| 11  | Reverse Nodes in K-Group         | Pointer manipulation   |
+| 12  | Flatten a Multilevel Linked List | Recursion and pointers |
+
+
 ## Bitwise AND (`&`)
 
 Bitwise AND (`&`) in C++ compares the corresponding bits of two integers and returns `1` only when both bits are `1`; otherwise, it returns `0`. It is commonly used in DSA for checking bits, clearing bits, identifying common set bits, and working with bit masks.
