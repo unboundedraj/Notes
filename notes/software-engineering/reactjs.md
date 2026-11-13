@@ -1319,3 +1319,76 @@ In React, the **react-redux** library connects components to the store using `us
 1. **Single source of truth**: one store for the whole app
 2. **State is read-only**: change it only by dispatching actions
 3. **Changes are made with pure functions**: reducers
+
+## What are sockets or websockets?
+
+In the context of React and web applications, a **socket** (specifically **WebSockets**) refers to a communication protocol that enables **real-time, bidirectional, and persistent** communication between a client (your React app running in a browser) and a server.
+
+Unlike standard HTTP requests—which follow a strict **request-response** pattern (the client asks, the server answers, and the connection closes)—a WebSocket connection stays open. This allows the server to instantly "push" data to the React app the moment something happens, without the browser needing to continuously ask (poll) for updates.
+
+### How Sockets Work in a Web App
+
+1. **The Handshake:** The React app sends a standard HTTP request to the server asking to upgrade the connection to a WebSocket.
+2. **Persistent Connection:** Once accepted, the connection switches (`ws://` or `wss://` for secure connections) and stays open.
+3. **Real-Time Data Flow:** Either side can send messages at any time.
+   - *Client to Server:* "User typed a message in the chat."
+   - *Server to Client:* "Another user just sent a new message; here it is."
+
+## Why Use Sockets with React?
+
+Standard HTTP is great for loading web pages, submitting forms, or fetching data on demand. However, it falls short for features requiring instant updates. React apps use sockets for:
+
+- **Live Chat &amp; Messaging:** Delivering instant messages without page reloads.
+- **Live Dashboards &amp; Analytics:** Updating stock tickers, cryptocurrency prices, or server health metrics in real-time.
+- **Collaborative Tools:** Google Docs-style multi-user editing, whiteboards (like Miro/Figma), or shared project boards (like Trello).
+- **Notifications:** Instant alerts for new likes, orders, or system events.
+
+### How to Use Sockets in React?
+
+Because React components mount, update, and unmount, managing a persistent socket connection requires careful lifecycle management (usually using the `useEffect` hook) to avoid memory leaks or duplicate connections.
+
+Here is a simplified example of how a WebSocket is typically used inside a React functional component:
+
+JavaScript
+
+```javascript
+import React, { useState, useEffect } from 'react';
+
+function LiveTicker() {
+  const [price, setPrice] = useState(null);
+
+  useEffect(() => {
+    // 1. Establish the WebSocket connection when the component mounts
+    const socket = new WebSocket('wss://api.example.com/price-feed');
+
+    // 2. Listen for messages from the server
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setPrice(data.price);
+    };
+
+    // 3. Clean up and close the connection when the component unmounts
+    return () => {
+      socket.close();
+    };
+  }, []); // Empty dependency array ensures this runs once on mount
+
+  return (
+    <div>
+      <h3>Live Asset Price:</h3>
+      <p>{price ? `$${price}` : 'Connecting...'}</p>
+    </div>
+  );
+}
+
+export default LiveTicker;
+
+```
+
+### Popular Libraries for Sockets
+
+While you can use the native browser `WebSocket` API, developers often use higher-level libraries that handle automatic reconnections, fallbacks, and room management:
+
+- **[Socket.IO](http://Socket.IO):** The most popular library for Node.js backends and React frontends. It supports automatic reconnection, event-based messaging, and broadcasting to specific "rooms."
+- **WebSocket API (Native):** Built directly into modern browsers, great for lightweight setups or custom backend protocols.
+- **Ably / Pusher:** Third-party cloud services that manage WebSocket infrastructure for you, saving you from scaling your own WebSocket servers.
