@@ -46,7 +46,17 @@ Authorization is the process of deciding *what* an authenticated user is permitt
 - **How it works:** The system checks the user's roles, groups, or permissions against the requested resource.
 - **Common Models:**
   - **RBAC (Role-Based Access Control):** Permissions are assigned to roles (e.g., "Manager", "Employee"), and users are assigned to those roles.
-  - **ABAC (Attribute-Based Access Control):** Access is granted based on attributes like user location, time of day, and security clearance level.
+
+**ABAC (Attribute-Based Access Control):** Access is granted based on attributes like user location, time of day, and security clearance level.
+
+## What do you mean by CORS (Cross-Origin Resource Sharing)?
+
+CORS (Cross-Origin Resource Sharing) is a browser security mechanism that enables controlled access to resources from a different origin. It extends the Same-Origin Policy (SOP) by allowing cross-origin requests only when permitted by the server.
+
+- Allows secure communication between different domains, ports, or protocols.
+- Uses HTTP headers (e.g., Access-Control-Allow-Origin) to control access.
+- Prevents unauthorized cross-origin requests by default.
+- Commonly used when the frontend and backend are hosted on different origins.
 
 ## What are the stages a source code file goes through from compilation to execution?
 
