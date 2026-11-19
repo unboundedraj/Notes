@@ -27,7 +27,69 @@ DNS stands for **Domain Name System**. It is like the phonebook of the internet.
 
 An IP address (Internet Protocol address) is a numerical address assigned to a device or network interface so it can be identified and communicate over an IP network.
 
-## Difference between Authentication and Authorization
+## What is the Port number linked to HTTP and HTTPS?
+
+**The default port number for HTTP** is **80**, and the default port number for **HTTPS** is **443**
+
+## What is reverse proxy?
+
+A **reverse proxy** is a server that sits in front of your backend servers and receives requests from clients (such as browsers), then forwards those requests to the appropriate backend server on their behalf.
+
+Think of it as a **receptionist for your servers**. Visitors don't go directly to individual departments; they go to reception, which directs them to the right place.  
+The flow is:
+
+1. A client (browser) sends a request, e.g. `https://example.com`.
+2. The reverse proxy receives the request.
+3. It decides which backend server should handle it.
+4. It forwards the request to that server.
+5. The backend server processes the request and returns a response.
+6. The reverse proxy sends the response back to the client.
+
+## **Why do we use a reverse proxy?**
+
+
+| Purpose                 | What it does                                                |
+| ----------------------- | ----------------------------------------------------------- |
+| **Load balancing**      | Distributes traffic across multiple backend servers         |
+| **Security**            | Hides backend server IPs and reduces direct exposure        |
+| **SSL/TLS termination** | Handles HTTPS encryption at the proxy                       |
+| **Caching**             | Stores responses to reduce backend workload                 |
+| **Routing**             | Sends requests to different services based on domain or URL |
+| **Rate limiting**       | Limits excessive requests to protect applications           |
+| **High availability**   | Helps redirect traffic when a backend server is unavailable |
+
+
+### **Reverse proxy vs forward proxy**
+
+- Forward proxy → protects or represents the **client**.
+- Reverse proxy → protects or represents the **server**.
+
+### **Popular reverse proxy software**
+
+- Nginx
+- HAProxy
+- Traefik
+- Apache HTTP Server
+
+**In one line:** A reverse proxy is an intermediary server that accepts client requests and forwards them to backend servers, providing routing, security, load balancing, and other services.
+
+## What is Nginx?
+
+Nginx is an open-source web server, reverse proxy, load balancer, and HTTP cache widely used to deliver websites, APIs, and web applications. It is known for its event-driven architecture, which allows it to handle large numbers of concurrent connections efficiently, making it a common choice for high-traffic internet services.
+
+### Core Functionality
+
+**Nginx** serves static content, proxies requests to application servers, terminates TLS/SSL connections, and distributes traffic across multiple backend systems. Its configuration-driven design allows administrators to define routing, caching, compression, security policies, and load-balancing behavior through text-based configuration files.
+
+### Architecture and Performance
+
+A key characteristic of **Nginx** is its *event-driven, asynchronous* architecture. Unlike traditional thread-per-connection approaches, a small number of worker processes can manage thousands of simultaneous connections. This design contributes to low memory consumption and strong performance under heavy traffic loads, particularly when serving static files or acting as a reverse proxy.
+
+### Common Use Cases
+
+Nginx is frequently deployed as the public-facing entry point for web applications. It often sits in front of application platforms such as PHP, Python, Java, Go, or Node.js services, handling client connections while forwarding requests to backend processes. Organizations also use it for API gateways, content caching, TLS termination, media streaming, and containerized or cloud-native workloads.
+
+## What is the difference between Authentication and Authorization?
 
 #### [**1. Authentication (AuthN)**](https://cortex-psi-rose.vercel.app/notes/software-engineering/authentication-vs-authorization#h-1-authentication-authn)
 
