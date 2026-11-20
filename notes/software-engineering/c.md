@@ -517,14 +517,24 @@ Accessible by keys (not index), and each key is unique.
 Automatically sorted in ascending order by their keys.  
 Maps store the pair of values in the sorted order on account of the first value however memory allocation is not sequential
 
-```
+```cpp
 //SYNTAX:
 map<key's data type, value's data type>map name;
+//typically you traverse in a map like this:
+for (auto &itr : mp) {
+    // ...
+}
+//but to traverse in the reverse order decreasing order of keys you may declare your map like 
+map<int, int, greater<int>> mp;
+//and then use the same range based loop
+for (auto &itr : mp) {
+    // ...
+}
 ```
 
 > When accessing elements using the **\[\] operator**, if the key does not already exist, it is inserted into the map with a default-constructed value. For primitive types like int, this default construction results in zero initialization. Therefore, if you access **map\[key\]** for a non-existent key, the map will create a new entry with that key and a value of 0. If the key exists, the current value will be returned.
 
-**A list of popular vector functions can be found in the table below.**
+**A list of popular map functions can be found in the table below.**
 
 
 | Function                                                            | Description                                                                                                                             | Example                                          | Importance |     |
