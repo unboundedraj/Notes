@@ -501,6 +501,37 @@ void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
 | BFS / DFS | No (graph)        | `O(1)` | `O(V + E)` | `O(V +`    |
 
 
+# Arrays in C++
+
+An array in C++ is a fixed-size sequence container that stores elements of the same type in contiguous memory locations. You can use either raw C-style arrays or the safer `std::array` from the `<array>` header.
+
+```cpp
+#include <iostream>
+#include <array>
+using namespace std;
+
+int main() {
+    // 1. C-style array
+    int arr[4] = {10, 20, 30, 40};
+
+    // 2. std::array (STL)
+    array<int, 4> stlArr = {10, 20, 30, 40};
+
+    // Zero-initialized array
+    int zeros[5] = {0}; 
+
+    cout << stlArr[2] << " " << arr[0]; // Output: 30 10
+    return 0;
+}
+```
+
+### Common Array Operations
+
+- **Access (**`arr[i]` **/** `at(i)`**):** O(1)
+- **Traversal:** O(N)
+- **Sorting (**`sort(arr, arr + n)` **or** `sort(stlArr.begin(), stlArr.end())`**):** O(N log N)
+- **Fill (**`stlArr.fill(val)`**):** O(N)
+
 # **Vectors in C++**
 
 ---
@@ -712,7 +743,7 @@ A Stack is a linear data structure that strictly follows the **Last-In, First-Ou
 > }
 > ```
 
-## Linked Lists
+# Linked Lists
 
 ### What is a Linked List?
 
@@ -1191,6 +1222,126 @@ Space Complexity: O(1).
 | 11  | Reverse Nodes in K-Group         | Pointer manipulation   |
 | 12  | Flatten a Multilevel Linked List | Recursion and pointers |
 
+
+# Trees in C++
+
+A tree is a hierarchical, non-linear data structure consisting of nodes connected by edges, starting from a **root** node. In a **Binary Search Tree (BST)**, left children hold smaller values and right children hold larger values.
+
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+// Inorder Traversal (Left -> Root -> Right) - O(N)
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+// Level Order Traversal (BFS) - O(N)
+void levelOrder(Node* root) {
+    if (!root) return;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        Node* curr = q.front();
+        q.pop();
+        cout << curr->data << " ";
+        if (curr->left) q.push(curr->left);
+        if (curr->right) q.push(curr->right);
+    }
+}
+
+int main() {
+    Node* root = new Node(10);
+    root->left = new Node(5);
+    root->right = new Node(15);
+
+    inorder(root); // Output: 5 10 15
+    return 0;
+}
+```
+
+### Tree Time Complexities
+
+- **BST Search / Insert / Delete:** O(log N) average (balanced), O(N) worst-case (skewed)
+
+# Graphs in C++
+
+A graph is a collection of **vertices (nodes)** V and **edges** E connecting pairs of vertices. In competitive programming and interviews, graphs are most commonly represented using an **Adjacency List** (`vector<vector<int>>`).
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+// Depth-First Search (DFS) - O(V + E)
+void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
+    visited[node] = true;
+    cout << node << " ";
+    for (int neighbor : adj[node]) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, adj, visited);
+        }
+    }
+}
+
+// Breadth-First Search (BFS) - O(V + E)
+void bfs(int start, vector<vector<int>>& adj, int V) {
+    vector<bool> visited(V, false);
+    queue<int> q;
+    visited[start] = true;
+    q.push(start);
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
+
+int main() {
+    int V = 4;
+    vector<vector<int>> adj(V);
+
+    // Adding undirected edges
+    auto addEdge = [&](int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    };
+
+    addEdge(0, 1);
+    addEdge(0, 2);
+    addEdge(1, 3);
+
+    bfs(0, adj, V); // Output: 0 1 2 3
+    return 0;
+}
+```
+
+### Graph Complexity Summary
+
+- **Adjacency List Space:** O(V + E)
+- **Adjacency Matrix Space:** O(V^2)
+- **BFS / DFS Traversal Time:** O(V + E)
+- **Dijkstra’s Shortest Path (Min-Heap):** O((V + E) log V)
 
 ## Bitwise AND (`&`)
 
