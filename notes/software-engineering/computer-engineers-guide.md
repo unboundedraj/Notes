@@ -31,6 +31,36 @@ An IP address (Internet Protocol address) is a numerical address assigned to a d
 
 **The default port number for HTTP** is **80**, and the default port number for **HTTPS** is **443**
 
+## What are common HTTP response status codes?
+
+### HTTP response status codes
+
+HTTP response status codes indicate whether a specific [HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) request has been successfully completed. Responses are grouped in five classes:
+
+1. [Informational responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#informational_responses) (`100` – `199`)
+2. [Successful responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#successful_responses) (`200` – `299`)
+3. [Redirection messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#redirection_messages) (`300` – `399`)
+4. [Client error responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#client_error_responses) (`400` – `499`)
+5. [Server error responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#server_error_responses) (`500` – `599`) 
+
+## **What is Middleware?**
+
+**Middleware is code that runs in between two stages of a request-response process.** It can inspect a request, perform some work, modify the request or response, or decide whether the request should continue.
+
+**Think of it like a security guard at the entrance of a building:**  
+A person (request) arrives.  
+The security guard (middleware) checks their ID.  
+If they are allowed, they go inside to the appropriate department (controller).  
+If they are not allowed, they are stopped.  
+  
+**In backend development, middleware can be used for:**  
+Authentication (is the user logged in?)  
+Authorization (is the user allowed to do this?)  
+Logging (who made a request?)  
+Request validation  
+Error handling  
+Rate limiting
+
 ## What is reverse proxy?
 
 A **reverse proxy** is a server that sits in front of your backend servers and receives requests from clients (such as browsers), then forwards those requests to the appropriate backend server on their behalf.
@@ -191,7 +221,7 @@ User → Controller → Model
 ## What is Graphical User Interface (GUI)?
 
 A **Graphical User Interface (GUI)** is a type of user interface that allows people to interact with electronic devices such as computers, smartphones, and smart appliances through visual elements rather than text-based commands.  
-Key Characteristics of a GUI
+**Key Characteristics of a GUI**
 
 - **Visual Interaction:** Actions are performed directly by clicking, tapping, dragging, or swiping rather than memorizing and typing syntax.
 - **The WIMP Paradigm:** Most modern GUIs are built around **W**indows, **I**cons, **M**enus, and **P**ointer architecture.
