@@ -40,6 +40,8 @@ In competitive programming, use:
 > //Both min_element() and max_element() take O(n) time, where n is the number of elements.
 > ```
 
+> ***In C++, the*** `std::ceil()` ***function rounds a number upward, returning the smallest integer value that is greater than or equal to the input. It is defined in the*** `<cmath>` ***header file.***
+
 ## Time Complexity
 
 **Time Complexity** measures how the runtime of an algorithm scales as the input size (N) grows. It does not measure absolute seconds, as that depends on hardware; instead, it counts the total number of fundamental operations executed.
