@@ -5,6 +5,39 @@ tags: [ascii, gk, sorting, bit operators, time complexity, space complexity, sea
 pinned: true
 ---
 
+## **Ceil and Floor Functions in C++**
+
+In C++, `ceil()` and `floor()` are mathematical functions available in the `<cmath>` header file.
+
+### **1. ceil() Function**
+
+- Returns the **smallest integer greater than or equal to** the given number.
+- It rounds a number **upward**.
+
+### **2. floor() Function**
+
+- Returns the **largest integer less than or equal to** the given number.
+- It rounds a number **downward**.
+
+```cpp
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    double x = 4.3;
+
+    cout << "Ceil: " << ceil(x) << endl;
+    cout << "Floor: " << floor(x) << endl;
+
+    return 0;
+}
+//output
+Ceil: 5
+Floor: 4
+```
+
 ## Approximate Range for numerical variables
 
 In competitive programming, use:
