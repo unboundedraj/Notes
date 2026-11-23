@@ -1,8 +1,59 @@
 ---
-title: NodeJS
+title: Express & NodeJS
 date: 2026-11-04
 tags: [node, nodejs]
 ---
+
+## What is ExpressJS?
+
+**Express.js (ExpressJS)** is a **fast, minimal, and flexible web framework for Node.js**. It makes it easier to build web servers, APIs, and backend applications using JavaScript.
+
+In simple terms, Node.js lets you run JavaScript on the server, while Express.js makes building that server much easier.
+
+## **Why do we use Express.js?**
+
+Without Express, you can create a server using Node.js's built-in `http` module, but you have to handle many things manually.
+
+Express simplifies tasks like:
+
+- Handling HTTP requests (GET, POST, PUT, DELETE)
+- Creating API endpoints (routes)
+- Sending responses to clients
+- Handling middleware
+- Connecting to databases
+- Building backend services for websites and mobile apps
+
+## **What is the difference between** `req.params`**,** `req.query`**, and** `req.body`**?**
+
+This is a **very common interview question**.
+
+
+| Property     | Data comes from     | Example           |
+| ------------ | ------------------- | ----------------- |
+| `req.params` | URL path parameters | `/users/10`       |
+| `req.query`  | Query string        | `/users?page=2`   |
+| `req.body`   | Request body        | JSON sent in POST |
+
+
+Example:
+
+```javascript
+app.use(express.json());
+
+app.get('/users/:id', (req, res) => {
+  console.log(req.params.id);
+  console.log(req.query.role);
+});
+
+app.post('/users', (req, res) => {
+  console.log(req.body);
+});
+```
+
+Requests:
+
+- `/users/10?role=admin` → `params.id = 10`, `query.role = admin`
+- POST `/users` with JSON → data available in `req.body`
 
 ## What is Node.js, and how is it different from traditional backend technologies?
 
@@ -77,7 +128,7 @@ Microtasks, including Promise callbacks and `process.nextTick()` callbacks, are 
 
 Example:
 
-```
+```javascript
 console.log("Start");
 
 process.nextTick(() => console.log("Next Tick"));
@@ -214,6 +265,90 @@ async function fetchUser() {
 }
 ```
 
+## **How do you handle 404 errors in Express?**
+
+**Answer:** A 404 error occurs when no route matches the requested URL. We handle it using a middleware placed after all routes.
+
+```
+app.use((req, res) => {
+  res.status(404).json({
+    message: 'Route not found'
+  });
+});
+```
+
+Because Express executes middleware in order, this middleware should be placed after all valid routes.
+
+## **What is the purpose of** `next()` **in Express?**
+
+**Answer:** `next()` passes control to the next middleware function in the stack.
+
+```javascript
+app.use((req, res, next) => {
+  console.log('First middleware');
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log('Second middleware');
+  next();
+});
+```
+
+If we don't call `next()` or send a response, the request may hang, unless the middleware is intentionally ending the request or transferring control another way.
+
+There are also special cases:
+
+- `next(err)` → transfers control to error-handling middleware.
+- `next('route')` → skips the remaining callbacks for the current route and moves to the next matching route.
+
+## **What is CORS in Express.js?**
+
+**Answer:** CORS stands for Cross-Origin Resource Sharing. It is a browser security mechanism that controls whether a frontend from one origin can access resources from another origin.
+
+For example:
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:3000`
+
+Since they have different origins, the browser may block the frontend from accessing the backend unless the backend allows the origin through CORS headers.
+
+Using the `cors` package:
+
+```javascript
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+```
+
+**Important interview point:** CORS is enforced by browsers. It is not authentication or authorization, and it doesn't stop non-browser clients from making requests.
+
+### **What is the difference between** `res.send()`**,** `res.json()`**, and** `res.end()`**?**
+
+**Answer:**
+
+
+| Method       | Purpose                                      |
+| ------------ | -------------------------------------------- |
+| `res.send()` | Sends a response of various types            |
+| `res.json()` | Sends a JSON response                        |
+| `res.end()`  | Ends the response without Express formatting |
+
+
+Example:
+
+```javascript
+res.send('Hello World');
+
+res.json({ name: 'John', age: 25 });
+
+res.status(200).end();
+```
+
+`res.json()` automatically serializes a JavaScript object to JSON and sets the appropriate content type.
+
 ## What is the difference between the Call Stack, Callback Queue, and Event Loop?
 
 - Call Stack: Maintains the execution context of currently running JavaScript functions.
@@ -344,7 +479,7 @@ Example:
 - `__filename`: Returns the absolute file path of the current CommonJS module.
 - `path`: Provides utilities for working with file and directory paths across operating systems.
 
-```
+```javascript
 const path = require("path");
 
 console.log(__dirname);
