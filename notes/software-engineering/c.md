@@ -53,6 +53,12 @@ These are the fundamental data types native to the C++ compiler.
 >
 > *Note on Modifiers:* C++ allows you to modify the size or range of these primitive types using **type modifiers**: `signed`, `unsigned`, `short`, and `long`. For instance, an `unsigned int` only holds positive numbers, effectively doubling its positive range, while a `long long` increases the storage capacity for massive integers.
 
+> ### ***Quick Key Rules***
+>
+> - ***Type modifiers (***`short`***,*** `long`***,*** `long long`***,*** `signed`***,*** `unsigned`***): Adjust the range and sign of integer types (***`sizeof(short) <= sizeof(int) <= sizeof(long) <= sizeof(long long)`***).***
+> - *for* `long` *(and* `short`*,* `int`*,* `long long`*, and* `long double`*), the exact range depends on your **system's data model, CPU architecture, and compiler/OS**, within the minimum bounds set by the C++ standard.*
+> - ***Mixed-type arithmetic (***`int` ***×*** `double`***): When combining an*** `int` ***and a*** `double` ***(such as*** `3 * 4.5`***), C++ automatically promotes the*** `int` ***to a*** `double`***, producing a*** `double` ***result.***
+
 **2. Derived Data Types:**  
 These types are constructed by modifying or grouping built-in data types.
 
